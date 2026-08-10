@@ -1,0 +1,28 @@
+{
+  "business": {
+    "phone": "+63 993 551 5531",
+    "phoneSms": "+639935515531",
+    "email": "koolmateadmin070826@gmail.com",
+    "address": "244 Mikas Street, Real 1, Bacoor, Cavite, Philippines, 4102",
+    "messenger": "https://m.me/61591997337938"
+  },
+  "en": {
+    "heroTitle": "Cooler Air.<br><span>Cleaner Comfort.</span><br>Smarter Savings.",
+    "heroTagline": "Choose Kool Mate!",
+    "heroLead": "Professional air-conditioning service for a cooler, cleaner and more energy-efficient home or business.",
+    "workText": "Real installation, cleaning and repair project photos will be posted soon."
+  },
+  "fil": {
+    "heroTitle": "Mas Malamig.<br><span>Mas Malinis.</span><br>Mas Tipid.",
+    "heroTagline": "I-Kool Mate Mo Yan!",
+    "heroLead": "Propesyonal na aircon service para sa mas malamig, malinis at matipid na tahanan o negosyo.",
+    "workText": "Malapit nang maipakita ang totoong installation, cleaning at repair project photos."
+  },
+  "workItems": [
+    { "type": "empty", "title": { "en": "Installation Work", "fil": "Installation Work" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" },
+    { "type": "empty", "title": { "en": "Aircon Cleaning", "fil": "Aircon Cleaning" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" },
+    { "type": "empty", "title": { "en": "Repair Service", "fil": "Repair Service" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" },
+    { "type": "empty", "title": { "en": "Maintenance Visit", "fil": "Maintenance Visit" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" },
+    { "type": "empty", "title": { "en": "Commercial Service", "fil": "Commercial Service" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" }
+  ]
+}
