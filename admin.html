@@ -92,6 +92,7 @@
           <button type="button" class="active" data-tab="business" data-ui="tabBusiness">Business</button>
           <button type="button" data-tab="home" data-ui="tabHome">Home Text</button>
           <button type="button" data-tab="work" data-ui="tabWork">Our Work</button>
+          <button type="button" data-tab="inquiries" data-ui="tabInquiries">Inquiries</button>
         </nav>
 
         <form id="cmsForm">
@@ -137,6 +138,17 @@
 
           <section class="tab-panel" data-panel="work">
             <div class="work-editor" id="workEditor"></div>
+          </section>
+
+          <section class="tab-panel" data-panel="inquiries">
+            <div class="inquiry-toolbar">
+              <div>
+                <strong data-ui="inquiriesTitle">Customer inquiries</strong>
+                <p data-ui="inquiriesHelp">New quote requests from the website form appear here.</p>
+              </div>
+              <button type="button" class="secondary" id="refreshInquiriesBtn" data-ui="refreshInquiries">Refresh</button>
+            </div>
+            <div class="inquiry-list" id="inquiryList"></div>
           </section>
 
           <div class="save-bar">

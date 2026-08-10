@@ -8,6 +8,7 @@ The website and CMS are static, while Netlify Functions handle secure saving.
 CMS edits are saved by committing updates to the GitHub repository:
 
 - `data/content.json` for text/contact/work content
+- `data/inquiries.json` for customer quote inquiries
 - `uploads/` for CMS-uploaded work photos
 
 ## Why Not GitHub Pages Only?
@@ -42,6 +43,24 @@ Contents: Read and write
 ```
 
 This lets the CMS update `data/content.json` and add images under `uploads/`.
+
+## Where The Client Sees Inquiries
+
+After deployment, the client opens:
+
+```text
+https://your-site.netlify.app/admin.html
+```
+
+Login with `CMS_PASSWORD`, then open the **Inquiries** tab.
+
+Website form submissions are saved to:
+
+```text
+data/inquiries.json
+```
+
+The CMS shows each inquiry with call, SMS, email, and mark done/new actions.
 
 ## Netlify Build Settings
 

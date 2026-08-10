@@ -130,7 +130,7 @@ const translations = {
     copyright: "© 2026 Kool Mate Air-Conditioning Services and Maintenance. All Rights Reserved.",
     close: "Close",
     formError: "Please complete all required fields with valid information.",
-    formSuccess: "Thank you, {name}. Your inquiry is ready. Choose Messenger, SMS, or call Kool Mate for the fastest response.",
+    formSuccess: "Thank you, {name}. Your inquiry has been received. You may also continue on Messenger, SMS, or call Kool Mate for the fastest response.",
     continueMessenger: "Continue on Messenger",
     sendSms: "Send SMS",
     callNow: "Call Now",
@@ -261,7 +261,7 @@ const translations = {
     copyright: "© 2026 Kool Mate Air-Conditioning Services and Maintenance. All Rights Reserved.",
     close: "Isara",
     formError: "Pakikumpleto ang lahat ng required fields gamit ang tamang impormasyon.",
-    formSuccess: "Salamat, {name}. Handa na ang inyong inquiry. Pumili ng Messenger, SMS, o tawag para mas mabilis ang response ng Kool Mate.",
+    formSuccess: "Salamat, {name}. Natanggap na ang inyong inquiry. Maaari rin kayong mag-Messenger, SMS, o tumawag para mas mabilis ang response ng Kool Mate.",
     continueMessenger: "Ituloy sa Messenger",
     sendSms: "Mag-send ng SMS",
     callNow: "Tumawag Ngayon",
@@ -515,13 +515,23 @@ function buildInquiryMessage(data) {
   ].join("\n");
 }
 
+async function submitInquiry(data) {
+  const apiUrl = location.hostname === "localhost" ? "/api/inquiries" : "/.netlify/functions/inquiries";
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(data)
+  });
+  if (!response.ok) throw new Error("Inquiry save failed.");
+}
+
 function setupForm() {
   const form = document.getElementById("quoteForm");
   const status = form.querySelector(".form-status");
   const handoff = form.querySelector(".handoff-actions");
   const messenger = form.querySelector('[data-handoff="messenger"]');
   const sms = form.querySelector('[data-handoff="sms"]');
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!form.checkValidity()) {
       status.textContent = t().formError;
@@ -532,7 +542,14 @@ function setupForm() {
     const data = Object.fromEntries(new FormData(form).entries());
     const message = buildInquiryMessage(data);
     const encodedMessage = encodeURIComponent(message);
-    status.textContent = t().formSuccess.replace("{name}", data.name);
+    status.textContent = "Sending inquiry...";
+    try {
+      await submitInquiry(data);
+      status.textContent = t().formSuccess.replace("{name}", data.name);
+      form.reset();
+    } catch {
+      status.textContent = "Your message is ready. Please continue through Messenger, SMS, or call Kool Mate.";
+    }
     messenger.href = `${business.messenger}?text=${encodedMessage}`;
     sms.href = `sms:${business.phoneSms}?body=${encodedMessage}`;
     handoff.hidden = false;

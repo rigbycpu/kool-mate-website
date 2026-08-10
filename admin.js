@@ -5,6 +5,7 @@ const API_SESSION = `${API_BASE}/session`;
 const API_LOGIN = `${API_BASE}/login`;
 const API_LOGOUT = `${API_BASE}/logout`;
 const API_UPLOAD = `${API_BASE}/upload`;
+const API_INQUIRIES = `${API_BASE}/inquiries`;
 
 const defaults = {
   business: {
@@ -55,6 +56,7 @@ const uiText = {
     tabBusiness: "Business",
     tabHome: "Home Text",
     tabWork: "Our Work",
+    tabInquiries: "Inquiries",
     phone: "Phone",
     smsPhone: "SMS Phone",
     email: "Email",
@@ -79,7 +81,13 @@ const uiText = {
     workTitleFil: "Title Filipino",
     workStatusEn: "Custom status English",
     workStatusFil: "Custom status Filipino",
-    previewLabel: "Live Look"
+    previewLabel: "Live Look",
+    inquiriesTitle: "Customer inquiries",
+    inquiriesHelp: "New quote requests from the website form appear here.",
+    refreshInquiries: "Refresh",
+    noInquiries: "No inquiries yet.",
+    markDone: "Mark done",
+    markNew: "Mark new"
   },
   fil: {
     cmsLabel: "Self-Edit CMS",
@@ -100,6 +108,7 @@ const uiText = {
     tabBusiness: "Business",
     tabHome: "Home Text",
     tabWork: "Our Work",
+    tabInquiries: "Inquiries",
     phone: "Phone",
     smsPhone: "SMS Phone",
     email: "Email",
@@ -124,12 +133,19 @@ const uiText = {
     workTitleFil: "Title Filipino",
     workStatusEn: "Custom status English",
     workStatusFil: "Custom status Filipino",
-    previewLabel: "Live Look"
+    previewLabel: "Live Look",
+    inquiriesTitle: "Customer inquiries",
+    inquiriesHelp: "Dito lalabas ang bagong quote requests mula sa website form.",
+    refreshInquiries: "Refresh",
+    noInquiries: "Wala pang inquiries.",
+    markDone: "Mark done",
+    markNew: "Mark new"
   }
 };
 
 let cmsLanguage = localStorage.getItem("koolMateCmsLanguage") || "en";
 let state = clone(defaults);
+let inquiries = [];
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -242,6 +258,14 @@ function setStatus(message) {
   document.getElementById("saveStatus").textContent = message;
 }
 
+function formatDate(value) {
+  if (!value) return "";
+  return new Intl.DateTimeFormat("en-PH", {
+    dateStyle: "medium",
+    timeStyle: "short"
+  }).format(new Date(value));
+}
+
 function stripHtml(value) {
   const template = document.createElement("template");
   template.innerHTML = (value || "").replace(/<br\s*\/?>/gi, " ");
@@ -310,6 +334,72 @@ function updatePreview() {
   }).join("");
 }
 
+async function loadInquiries() {
+  const list = document.getElementById("inquiryList");
+  if (!list) return;
+  list.innerHTML = `<p class="inquiry-empty">Loading inquiries...</p>`;
+  try {
+    const response = await fetch(API_INQUIRIES, { cache: "no-store" });
+    if (!response.ok) throw new Error((await response.json()).message || "Unable to load inquiries.");
+    const payload = await response.json();
+    inquiries = payload.inquiries || [];
+    renderInquiries();
+  } catch (error) {
+    list.innerHTML = `<p class="inquiry-empty">${error.message || "Unable to load inquiries."}</p>`;
+  }
+}
+
+function renderInquiries() {
+  const copy = uiText[cmsLanguage];
+  const list = document.getElementById("inquiryList");
+  if (!list) return;
+  if (!inquiries.length) {
+    list.innerHTML = `<p class="inquiry-empty">${copy.noInquiries}</p>`;
+    return;
+  }
+  list.innerHTML = inquiries.map((item) => {
+    const phoneHref = `tel:${String(item.phone || "").replace(/[^\d+]/g, "")}`;
+    const smsHref = `sms:${String(item.phone || "").replace(/[^\d+]/g, "")}`;
+    const mailHref = `mailto:${item.email || ""}`;
+    return `
+      <article class="inquiry-card ${item.status === "done" ? "is-done" : ""}">
+        <div class="inquiry-head">
+          <div>
+            <strong>${item.name || "Customer"}</strong>
+            <span>${formatDate(item.createdAt)}</span>
+          </div>
+          <span class="status-pill">${item.status === "done" ? "Done" : "New"}</span>
+        </div>
+        <div class="inquiry-meta">
+          <a href="${phoneHref}">${item.phone || "No phone"}</a>
+          <a href="${mailHref}">${item.email || "No email"}</a>
+          <span>${item.service || "Service not set"}</span>
+          <span>${item.date || "No preferred date"}</span>
+        </div>
+        <p>${item.message || ""}</p>
+        <div class="inquiry-actions">
+          <a class="secondary" href="${phoneHref}">Call</a>
+          <a class="secondary" href="${smsHref}">SMS</a>
+          <a class="secondary" href="${mailHref}">Email</a>
+          <button type="button" class="secondary" data-inquiry-status="${item.status === "done" ? "new" : "done"}" data-inquiry-id="${item.id}">
+            ${item.status === "done" ? copy.markNew : copy.markDone}
+          </button>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+async function updateInquiryStatus(id, status) {
+  const response = await fetch(API_INQUIRIES, {
+    method: "PATCH",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ id, status })
+  });
+  if (!response.ok) throw new Error((await response.json()).message || "Unable to update inquiry.");
+  await loadInquiries();
+}
+
 document.querySelectorAll("[data-lang]").forEach((button) => {
   button.addEventListener("click", () => {
     cmsLanguage = button.dataset.lang;
@@ -322,7 +412,22 @@ document.querySelectorAll("[data-tab]").forEach((button) => {
   button.addEventListener("click", () => {
     document.querySelectorAll("[data-tab]").forEach((node) => node.classList.toggle("active", node === button));
     document.querySelectorAll("[data-panel]").forEach((panel) => panel.classList.toggle("active", panel.dataset.panel === button.dataset.tab));
+    if (button.dataset.tab === "inquiries") loadInquiries();
   });
+});
+
+document.getElementById("refreshInquiriesBtn").addEventListener("click", loadInquiries);
+
+document.getElementById("inquiryList").addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-inquiry-id]");
+  if (!button) return;
+  try {
+    button.disabled = true;
+    await updateInquiryStatus(button.dataset.inquiryId, button.dataset.inquiryStatus);
+  } catch (error) {
+    setStatus(error.message || "Unable to update inquiry.");
+    button.disabled = false;
+  }
 });
 
 document.getElementById("cmsForm").addEventListener("submit", async (event) => {
@@ -423,6 +528,7 @@ function setupLogin() {
 
 async function initializeEditor() {
   state = await loadState();
+  await loadInquiries();
   placePreviewBesideEditor();
   applyUiLanguage();
   fillForm();

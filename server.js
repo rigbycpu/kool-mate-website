@@ -8,6 +8,7 @@ const root = __dirname;
 const dataDir = path.join(root, "data");
 const uploadsDir = path.join(root, "uploads");
 const contentPath = path.join(dataDir, "content.json");
+const inquiriesPath = path.join(dataDir, "inquiries.json");
 const port = Number(process.env.PORT || 4173);
 const adminPassword = process.env.CMS_PASSWORD || "koolmate-admin";
 const sessions = new Set();
@@ -27,6 +28,7 @@ const mimeTypes = {
 
 fs.mkdirSync(dataDir, { recursive: true });
 fs.mkdirSync(uploadsDir, { recursive: true });
+if (!fs.existsSync(inquiriesPath)) fs.writeFileSync(inquiriesPath, "[]\n");
 
 function send(res, status, body, headers = {}) {
   res.writeHead(status, headers);
@@ -81,6 +83,23 @@ function readContent() {
 
 function writeContent(content) {
   fs.writeFileSync(contentPath, `${JSON.stringify(content, null, 2)}\n`);
+}
+
+function readInquiries() {
+  try {
+    const parsed = JSON.parse(fs.readFileSync(inquiriesPath, "utf8"));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeInquiries(items) {
+  fs.writeFileSync(inquiriesPath, `${JSON.stringify(items, null, 2)}\n`);
+}
+
+function clean(value, max = 500) {
+  return String(value || "").trim().slice(0, max);
 }
 
 function safeStaticPath(urlPath) {
@@ -162,6 +181,49 @@ async function handleApi(req, res, pathname) {
     const payload = JSON.parse(await readBody(req) || "{}");
     sendJson(res, 200, { ok: true, url: saveUpload(payload) });
     return;
+  }
+
+  if (pathname === "/api/inquiries") {
+    if (req.method === "GET") {
+      if (!requireAuth(req, res)) return;
+      sendJson(res, 200, { ok: true, inquiries: readInquiries() });
+      return;
+    }
+
+    if (req.method === "POST") {
+      const payload = JSON.parse(await readBody(req) || "{}");
+      const inquiry = {
+        id: `inq-${Date.now()}`,
+        createdAt: new Date().toISOString(),
+        status: "new",
+        name: clean(payload.name, 120),
+        phone: clean(payload.phone, 80),
+        email: clean(payload.email, 160),
+        service: clean(payload.service, 160),
+        date: clean(payload.date, 80),
+        message: clean(payload.message, 1200)
+      };
+      if (!inquiry.name || !inquiry.phone || !inquiry.email || !inquiry.service || !inquiry.message) {
+        sendJson(res, 400, { ok: false, message: "Missing required inquiry fields." });
+        return;
+      }
+      const items = readInquiries();
+      items.unshift(inquiry);
+      writeInquiries(items.slice(0, 200));
+      sendJson(res, 200, { ok: true, inquiry });
+      return;
+    }
+
+    if (req.method === "PATCH") {
+      if (!requireAuth(req, res)) return;
+      const payload = JSON.parse(await readBody(req) || "{}");
+      const next = readInquiries().map((item) => (
+        item.id === payload.id ? { ...item, status: payload.status === "done" ? "done" : "new" } : item
+      ));
+      writeInquiries(next);
+      sendJson(res, 200, { ok: true });
+      return;
+    }
   }
 
   sendJson(res, 404, { ok: false, message: "API route not found." });
