@@ -1,8 +1,8 @@
 {
-  "name": "kool-mate-website-cms",
+  "name": "KOOLMATE-website-cms",
   "version": "1.0.0",
   "private": true,
-  "description": "Kool Mate website with a lightweight self-edit CMS.",
+  "description": "KOOLMATE website with a lightweight self-edit CMS.",
   "scripts": {
     "start": "node server.js"
   },

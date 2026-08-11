@@ -15,6 +15,7 @@ const productImages = {
 };
 
 const CMS_STORAGE_KEY = "koolMateCmsContent";
+const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Koppel", "Chiq", "Other Aircon Brands"];
 
 let workItems = [
   { titleKey: "workSlotInstall", type: "empty", image: "", url: "" },
@@ -30,6 +31,17 @@ let promos = [
   { enabled: true, title: { en: "Cool comfort every day", fil: "Komportableng lamig araw-araw" }, image: "assets/promo-comfort-everyday.jpg", url: "#quote" },
   { enabled: true, title: { en: "Fast maintenance service", fil: "Mabilis na maintenance service" }, image: "assets/promo-lamig-solusyon.jpg", url: "#services" }
 ];
+
+let airconUnits = AIRCON_BRANDS.map((brand) => ({
+  enabled: true,
+  brand,
+  model: "",
+  name: { en: "", fil: "" },
+  type: { en: "", fil: "" },
+  price: "",
+  image: "",
+  url: "#quote"
+}));
 
 let activePromoIndex = 0;
 
@@ -60,7 +72,7 @@ const translations = {
     quoteBtn: "Get a Quote",
     heroTrust: "Trusted by many homes & businesses",
     heroTitle: "Cooler Air.<br><span>Cleaner Comfort.</span><br>Smarter Savings.",
-    heroTagline: "Choose Kool Mate!",
+    heroTagline: "Choose KOOLMATE!",
     heroLead: "Professional air-conditioning service for a cooler, cleaner and more energy-efficient home or business.",
     freeQuote: "Get a Free Quote",
     viewServices: "View Our Services",
@@ -76,7 +88,7 @@ const translations = {
     servicesTitle: "Complete air-conditioning services for homes and businesses",
     registered: "DTI & BIR Registered",
     whyEyebrow: "Trusted Aircon Service",
-    whyTitle: "Why choose Kool Mate?",
+    whyTitle: "Why choose KOOLMATE?",
     sellEyebrow: "We Sell",
     sellTitle: "All types of brand new aircon units",
     sellText: "We offer a wide range of trusted and high-quality air-conditioning brands to suit different home and business needs.",
@@ -88,6 +100,13 @@ const translations = {
     unitBadgeInstallText: "Sales and service in one team",
     unitBadgeQuote: "Inquiry-Based Pricing",
     unitBadgeQuoteText: "Ask for the right unit for your space",
+    unitCarouselEyebrow: "Available Brands",
+    unitCarouselTitle: "Open a brand to view model number and price",
+    unitInquireNow: "Inquire Now",
+    unitUnavailable: "Unavailable",
+    unitModelLabel: "Model No.",
+    unitPriceLabel: "Price",
+    unitPriceFallback: "",
     brandsEyebrow: "We Service All Major Brands",
     brandsTitle: "Reliable service for leading aircon brands",
     workEyebrow: "Our Work",
@@ -119,7 +138,7 @@ const translations = {
     quoteBenefitResponse: "Fast response and on-time service",
     quoteBenefitSatisfaction: "100% customer satisfaction",
     quoteContactLabel: "Call / Text / Message",
-    quoteSocial: "Kool Mate Air-Con Services",
+    quoteSocial: "KOOLMATE Air-Con Services",
     quoteRepairAll: "We repair and sell",
     quoteRepairSell: "All types / brands of aircon",
     fieldName: "Full Name",
@@ -136,10 +155,10 @@ const translations = {
     footerServicesTitle: "Services",
     quickLinks: "Quick Links",
     contactTitle: "Contact",
-    copyright: "© 2026 Kool Mate Air-Conditioning Services and Maintenance. All Rights Reserved.",
+    copyright: "© 2026 KOOLMATE Air-Conditioning Services and Maintenance. All Rights Reserved.",
     close: "Close",
     formError: "Please complete all required fields with valid information.",
-    formSuccess: "Thank you, {name}. Your inquiry has been received. You may also continue on Messenger, SMS, or call Kool Mate for the fastest response.",
+    formSuccess: "Thank you, {name}. Your inquiry has been received. You may also continue on Messenger, SMS, or call KOOLMATE for the fastest response.",
     continueMessenger: "Continue on Messenger",
     sendSms: "Send SMS",
     callNow: "Call Now",
@@ -164,8 +183,8 @@ const translations = {
       ["Window Type", "Compact brand-new units for practical home cooling.", productImages.panasonic],
       ["Inverter Split Type", "Energy-saving aircon units for efficient daily use.", productImages.inverter],
       ["Non-Inverter", "Dependable cooling options with straightforward operation.", productImages.samsung],
-      ["Floor Mounted", "Strong airflow for larger rooms and commercial spaces.", "assets/kool-mate-reference.png"],
-      ["Cassette Type", "Ceiling-mounted comfort for clean commercial interiors.", "assets/kool-mate-reference.png"],
+      ["Floor Mounted", "Strong airflow for larger rooms and commercial spaces.", "assets/KOOLMATE-reference.png"],
+      ["Cassette Type", "Ceiling-mounted comfort for clean commercial interiors.", "assets/KOOLMATE-reference.png"],
       ["Ceiling / Commercial Units", "Brand-new units for offices, shops and business spaces.", productImages.lg]
     ],
     serviceOptions: {
@@ -191,7 +210,7 @@ const translations = {
     quoteBtn: "Humingi ng Quote",
     heroTrust: "Pinagkakatiwalaan ng maraming tahanan at negosyo",
     heroTitle: "Mas Malamig.<br><span>Mas Malinis.</span><br>Mas Tipid.",
-    heroTagline: "I-Kool Mate Mo Yan!",
+    heroTagline: "I-KOOLMATE Mo Yan!",
     heroLead: "Propesyonal na aircon service para sa mas malamig, malinis at matipid na tahanan o negosyo.",
     freeQuote: "Kumuha ng Libreng Quote",
     viewServices: "Tingnan ang Serbisyo",
@@ -207,7 +226,7 @@ const translations = {
     servicesTitle: "Kumpletong air-conditioning services para sa bahay at negosyo",
     registered: "DTI & BIR Registered",
     whyEyebrow: "Trusted Aircon Service",
-    whyTitle: "Bakit Kool Mate ang piliin?",
+    whyTitle: "Bakit KOOLMATE ang piliin?",
     sellEyebrow: "Nagbebenta Kami",
     sellTitle: "Iba't ibang brand new aircon units",
     sellText: "Nag-aalok kami ng trusted at high-quality air-conditioning brands para sa iba't ibang pangangailangan ng bahay at negosyo.",
@@ -219,6 +238,13 @@ const translations = {
     unitBadgeInstallText: "Sales at service sa iisang team",
     unitBadgeQuote: "Presyo Batay sa Inquiry",
     unitBadgeQuoteText: "Magtanong para sa tamang unit sa inyong space",
+    unitCarouselEyebrow: "Available Brands",
+    unitCarouselTitle: "Buksan ang brand para makita ang model number at price",
+    unitInquireNow: "Inquire Now",
+    unitUnavailable: "Unavailable",
+    unitModelLabel: "Model No.",
+    unitPriceLabel: "Price",
+    unitPriceFallback: "",
     brandsEyebrow: "Nagseserbisyo Kami ng Major Brands",
     brandsTitle: "Maaasahang serbisyo para sa kilalang aircon brands",
     workEyebrow: "Our Work",
@@ -250,7 +276,7 @@ const translations = {
     quoteBenefitResponse: "Mabilis na response at on-time service",
     quoteBenefitSatisfaction: "100% customer satisfaction",
     quoteContactLabel: "Call / Text / Message",
-    quoteSocial: "Kool Mate Air-Con Services",
+    quoteSocial: "KOOLMATE Air-Con Services",
     quoteRepairAll: "Nag-aayos at nagbebenta kami",
     quoteRepairSell: "Lahat ng types / brands ng aircon",
     fieldName: "Buong Pangalan",
@@ -267,10 +293,10 @@ const translations = {
     footerServicesTitle: "Mga Serbisyo",
     quickLinks: "Quick Links",
     contactTitle: "Contact",
-    copyright: "© 2026 Kool Mate Air-Conditioning Services and Maintenance. All Rights Reserved.",
+    copyright: "© 2026 KOOLMATE Air-Conditioning Services and Maintenance. All Rights Reserved.",
     close: "Isara",
     formError: "Pakikumpleto ang lahat ng required fields gamit ang tamang impormasyon.",
-    formSuccess: "Salamat, {name}. Natanggap na ang inyong inquiry. Maaari rin kayong mag-Messenger, SMS, o tumawag para mas mabilis ang response ng Kool Mate.",
+    formSuccess: "Salamat, {name}. Natanggap na ang inyong inquiry. Maaari rin kayong mag-Messenger, SMS, o tumawag para mas mabilis ang response ng KOOLMATE.",
     continueMessenger: "Ituloy sa Messenger",
     sendSms: "Mag-send ng SMS",
     callNow: "Tumawag Ngayon",
@@ -295,8 +321,8 @@ const translations = {
       ["Window Type", "Compact brand-new units para sa praktikal na home cooling.", productImages.panasonic],
       ["Inverter Split Type", "Energy-saving aircon units para sa efficient daily use.", productImages.inverter],
       ["Non-Inverter", "Dependable cooling options na madaling gamitin.", productImages.samsung],
-      ["Floor Mounted", "Malakas na airflow para sa mas malalaking rooms at commercial spaces.", "assets/kool-mate-reference.png"],
-      ["Cassette Type", "Ceiling-mounted comfort para sa malinis na commercial interiors.", "assets/kool-mate-reference.png"],
+      ["Floor Mounted", "Malakas na airflow para sa mas malalaking rooms at commercial spaces.", "assets/KOOLMATE-reference.png"],
+      ["Cassette Type", "Ceiling-mounted comfort para sa malinis na commercial interiors.", "assets/KOOLMATE-reference.png"],
       ["Ceiling / Commercial Units", "Brand-new units para sa offices, shops at business spaces.", productImages.lg]
     ],
     serviceOptions: {
@@ -325,6 +351,37 @@ const brandLogos = [
   ["Haier", "https://commons.wikimedia.org/wiki/Special:Redirect/file/Haier_logo.svg"],
   ["AUX", "https://commons.wikimedia.org/wiki/Special:Redirect/file/Logo_AUX_Air_Conditioner_(China).svg"]
 ];
+
+const brandLogoMap = new Map([
+  ...brandLogos,
+  ["Midea", "assets/brand-midea.svg"],
+  ["Carrier", "assets/brand-carrier.svg"],
+  ["American Home", "assets/brand-american-home.svg"],
+  ["TCL", "assets/brand-tcl.svg"],
+  ["Daikin", "assets/brand-daikin.svg"],
+  ["LG", "assets/brand-lg.svg"],
+  ["Haier", "assets/brand-haier.svg"],
+  ["Koppel", "assets/brand-koppel.svg"],
+  ["Chiq", "assets/brand-chiq.svg"],
+  ["Other Aircon Brands", "assets/brand-other-aircon.svg"]
+]);
+
+const inlineBrandMarks = {
+  "Midea": '<svg viewBox="0 0 220 72" aria-hidden="true"><path d="M34 49c-12-8-12-24 0-32 11-8 28-6 39 3-11-4-23-2-31 4-9 7-9 18 0 25 8 6 20 8 31 4-11 9-28 11-39 3z" fill="#12a8e0"/><text x="78" y="47" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#12a8e0">Midea</text></svg>',
+  "Carrier": '<svg viewBox="0 0 220 72" aria-hidden="true"><ellipse cx="110" cy="36" rx="86" ry="26" fill="#061b7a"/><ellipse cx="110" cy="36" rx="78" ry="20" fill="none" stroke="#fff" stroke-width="3"/><text x="54" y="46" font-family="Georgia, serif" font-size="32" font-style="italic" fill="#fff">Carrier</text></svg>',
+  "American Home": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="18" y="32" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#132f63">AMERICAN</text><text x="18" y="54" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900" fill="#d51f2a">HOME</text><path d="M148 50V29l25-16 25 16v21h-14V35h-22v15z" fill="#132f63"/></svg>',
+  "TCL": '<svg viewBox="0 0 220 72" aria-hidden="true"><rect x="50" y="17" width="120" height="38" rx="4" fill="#e2231a"/><text x="70" y="46" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900" fill="#fff">TCL</text></svg>',
+  "Daikin": '<svg viewBox="0 0 220 72" aria-hidden="true"><path d="M24 17h42L24 55z" fill="#00a8df"/><path d="M33 17h54L45 55H24z" fill="#008bd2" opacity=".55"/><text x="73" y="46" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="900" font-style="italic" fill="#00a8df">DAIKIN</text></svg>',
+  "LG": '<svg viewBox="0 0 220 72" aria-hidden="true"><circle cx="75" cy="36" r="23" fill="#a50034"/><circle cx="67" cy="29" r="3.5" fill="#fff"/><path d="M75 21v30h17" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><text x="111" y="47" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#555">LG</text></svg>',
+  "Haier": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="42" y="48" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#005baa">Haier</text></svg>',
+  "Koppel": '<svg viewBox="0 0 220 72" aria-hidden="true"><path d="M36 20h28l-22 16 24 16H37L21 39v13H6V20h15v13z" fill="#073f8f"/><text x="76" y="47" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900" fill="#073f8f">KOPPEL</text></svg>',
+  "Chiq": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="52" y="47" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="900" fill="#ec1c24">CHiQ</text></svg>',
+  "Other Aircon Brands": '<svg viewBox="0 0 220 72" aria-hidden="true"><circle cx="42" cy="36" r="18" fill="#0676ff"/><path d="M32 36h20M42 26v20" stroke="#fff" stroke-width="5" stroke-linecap="round"/><text x="72" y="33" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900" fill="#06152f">OTHER AIRCON</text><text x="72" y="53" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900" fill="#06152f">BRANDS</text></svg>',
+  "Panasonic": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="30" y="47" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900" fill="#004b9b">Panasonic</text></svg>',
+  "Mitsubishi Electric": '<svg viewBox="0 0 220 72" aria-hidden="true"><path d="M65 14l17 30H48zM48 44l17 30H31zM82 44l17 30H65z" transform="translate(0 -8)" fill="#e60012"/><text x="105" y="34" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" fill="#111">MITSUBISHI</text><text x="105" y="52" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" fill="#111">ELECTRIC</text></svg>',
+  "Samsung": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="36" y="47" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="900" letter-spacing="2" fill="#1428a0">SAMSUNG</text></svg>',
+  "AUX": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="55" y="46" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="900" fill="#073f8f">AUX</text><text x="73" y="58" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="800" fill="#073f8f">AIR CONDITIONER</text></svg>'
+};
 
 let currentLanguage = "en";
 
@@ -380,6 +437,17 @@ async function applyCmsContent() {
       ...item
     }));
   }
+
+  if (Array.isArray(saved.airconUnits)) {
+    airconUnits = airconUnits.map((item, index) => ({
+      ...item,
+      ...(saved.airconUnits[index] || {})
+    }));
+  }
+  airconUnits = airconUnits.map((unit, index) => ({
+    ...unit,
+    brand: unit.brand || AIRCON_BRANDS[index] || "Other Aircon Brands"
+  }));
 }
 
 function phoneHref(phone) {
@@ -417,6 +485,16 @@ function t() {
   return translations[currentLanguage];
 }
 
+function renderBrandMark(brand, compact = false) {
+  const safeBrand = brand || "Aircon Brand";
+  return `
+    <span class="brand-mark ${compact ? "compact" : ""}" aria-label="${safeBrand} logo">
+      ${inlineBrandMarks[safeBrand] || ""}
+      <b>${safeBrand}</b>
+    </span>
+  `;
+}
+
 function applyTranslations() {
   const copy = t();
   document.documentElement.lang = currentLanguage === "fil" ? "fil" : "en";
@@ -442,8 +520,7 @@ function renderCards() {
   const copy = t();
   const renderBrandLogo = ([brand, logo], compact = false) => `
     <div class="brand-card ${compact ? "compact" : ""} reveal visible" aria-label="${brand} aircon brand">
-      <img src="${logo}" alt="${brand} logo" loading="lazy" onerror="this.parentElement.classList.add('logo-fallback'); this.remove();">
-      <span>${brand}</span>
+      ${renderBrandMark(brand, compact)}
     </div>
   `;
   const renderWorkItem = (item, index) => {
@@ -489,7 +566,64 @@ function renderCards() {
 
   const workGrid = document.querySelector('[data-render="work"]');
   if (workGrid) workGrid.innerHTML = workItems.map(renderWorkItem).join("");
+  renderUnitCarousel();
   renderPromos();
+}
+
+function renderUnitCarousel() {
+  const carousel = document.querySelector('[data-render="unit-carousel"]');
+  if (!carousel) return;
+  const copy = t();
+  carousel.innerHTML = AIRCON_BRANDS.map((brand, index) => {
+    const units = airconUnits.filter((unit) => unit.enabled !== false && (unit.brand || AIRCON_BRANDS[index]) === brand);
+    const availableUnits = units.filter((unit) => unit.model || unit.price || unit.image || unit.name?.[currentLanguage] || unit.name?.en);
+    const isOpen = index === 0 ? " open" : "";
+    return `
+      <details class="brand-unit-panel reveal visible"${isOpen}>
+        <summary>
+          ${renderBrandMark(brand, true)}
+          <small>${availableUnits.length ? `${availableUnits.length} unit${availableUnits.length > 1 ? "s" : ""}` : copy.unitUnavailable}</small>
+        </summary>
+        <div class="brand-unit-body">
+          ${availableUnits.length ? availableUnits.map((unit) => {
+            const model = unit.model || unit.name?.[currentLanguage] || unit.name?.en || "";
+            const price = unit.price || "";
+            const url = unit.url || "#quote";
+            const image = unit.image || "";
+            return `
+              <article class="brand-unit-row">
+                <div class="unit-image-slot ${image ? "" : "is-empty"}">
+                  ${image ? `<img src="${image}" alt="${brand} ${model || "aircon unit"}" loading="lazy">` : `<span>${copy.unitUnavailable}</span>`}
+                </div>
+                <div>
+                  <span>${copy.unitModelLabel}</span>
+                  <strong>${model || copy.unitUnavailable}</strong>
+                </div>
+                <div>
+                  <span>${copy.unitPriceLabel}</span>
+                  <strong>${price || copy.unitUnavailable}</strong>
+                </div>
+                <a href="${url}" class="unit-inquire">${copy.unitInquireNow}</a>
+              </article>
+            `;
+          }).join("") : `
+            <article class="brand-unit-row is-empty">
+              <div class="unit-image-slot is-empty"><span>${copy.unitUnavailable}</span></div>
+              <div>
+                <span>${copy.unitModelLabel}</span>
+                <strong>${copy.unitUnavailable}</strong>
+              </div>
+              <div>
+                <span>${copy.unitPriceLabel}</span>
+                <strong>${copy.unitUnavailable}</strong>
+              </div>
+              <span class="unit-unavailable">${copy.unitUnavailable}</span>
+            </article>
+          `}
+        </div>
+      </details>
+    `;
+  }).join("");
 }
 
 function getActivePromos() {
@@ -505,7 +639,7 @@ function renderPromos() {
 
   if (activePromoIndex >= activePromos.length) activePromoIndex = 0;
   const promo = activePromos[activePromoIndex];
-  const title = promo.title?.[currentLanguage] || promo.title?.en || "Kool Mate Promo";
+  const title = promo.title?.[currentLanguage] || promo.title?.en || "KOOLMATE Promo";
 
   wrapper.querySelector("[data-promo-count]").textContent = activePromos.length;
   wrapper.querySelector("[data-promo-link]").href = promo.url || "#quote";
@@ -569,10 +703,22 @@ function setupLanguageSwitcher() {
   });
 }
 
+function setupUnitCarousel() {
+  const carousel = document.querySelector('[data-render="unit-carousel"]');
+  if (!carousel) return;
+  const scrollAmount = () => Math.max(280, Math.round(carousel.clientWidth * 0.78));
+  document.querySelector("[data-unit-prev]")?.addEventListener("click", () => {
+    carousel.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
+  });
+  document.querySelector("[data-unit-next]")?.addEventListener("click", () => {
+    carousel.scrollBy({ left: scrollAmount(), behavior: "smooth" });
+  });
+}
+
 function buildInquiryMessage(data) {
   const dateLine = data.date ? `Preferred Date: ${data.date}` : "Preferred Date: Not specified";
   return [
-    "Hi Kool Mate, I would like to request a quote.",
+    "Hi KOOLMATE, I would like to request a quote.",
     "",
     `Name: ${data.name}`,
     `Phone: ${data.phone}`,
@@ -618,7 +764,7 @@ function setupForm() {
       status.textContent = t().formSuccess.replace("{name}", data.name);
       form.reset();
     } catch {
-      status.textContent = "Your message is ready. Please continue through Messenger, SMS, or call Kool Mate.";
+      status.textContent = "Your message is ready. Please continue through Messenger, SMS, or call KOOLMATE.";
     }
     messenger.href = `${business.messenger}?text=${encodedMessage}`;
     sms.href = `sms:${business.phoneSms}?body=${encodedMessage}`;
@@ -647,6 +793,7 @@ async function bootSite() {
   renderCards();
   setupMenu();
   setupLanguageSwitcher();
+  setupUnitCarousel();
   setupForm();
   setupPromos();
   setupReveal();

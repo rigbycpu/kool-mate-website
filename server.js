@@ -243,6 +243,6 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`Kool Mate website + CMS running at http://localhost:${port}`);
+  console.log(`KOOLMATE website + CMS running at http://localhost:${port}`);
   console.log(`CMS password: ${adminPassword}`);
 });

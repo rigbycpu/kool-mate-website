@@ -8,13 +8,13 @@
   },
   "en": {
     "heroTitle": "Cooler Air.<br><span>Cleaner Comfort.</span><br>Smarter Savings.",
-    "heroTagline": "Choose Kool Mate!",
+    "heroTagline": "Choose KOOLMATE!",
     "heroLead": "Professional air-conditioning service for a cooler, cleaner and more energy-efficient home or business.",
     "workText": "Real installation, cleaning and repair project photos will be posted soon."
   },
   "fil": {
     "heroTitle": "Mas Malamig.<br><span>Mas Malinis.</span><br>Mas Tipid.",
-    "heroTagline": "I-Kool Mate Mo Yan!",
+    "heroTagline": "I-KOOLMATE Mo Yan!",
     "heroLead": "Propesyonal na aircon service para sa mas malamig, malinis at matipid na tahanan o negosyo.",
     "workText": "Malapit nang maipakita ang totoong installation, cleaning at repair project photos."
   },
@@ -30,5 +30,17 @@
     { "enabled": true, "title": { "en": "Aircon not cooling?", "fil": "Hindi nagpapalamig ang aircon?" }, "image": "assets/promo-aircon-solution.jpg", "url": "#services" },
     { "enabled": true, "title": { "en": "Cool comfort every day", "fil": "Komportableng lamig araw-araw" }, "image": "assets/promo-comfort-everyday.jpg", "url": "#quote" },
     { "enabled": true, "title": { "en": "Fast maintenance service", "fil": "Mabilis na maintenance service" }, "image": "assets/promo-lamig-solusyon.jpg", "url": "#services" }
+  ],
+  "airconUnits": [
+    { "enabled": true, "brand": "Midea", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
+    { "enabled": true, "brand": "Carrier", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
+    { "enabled": true, "brand": "American Home", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
+    { "enabled": true, "brand": "TCL", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
+    { "enabled": true, "brand": "Daikin", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
+    { "enabled": true, "brand": "LG", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
+    { "enabled": true, "brand": "Haier", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
+    { "enabled": true, "brand": "Koppel", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
+    { "enabled": true, "brand": "Chiq", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
+    { "enabled": true, "brand": "Other Aircon Brands", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" }
   ]
 }

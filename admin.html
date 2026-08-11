@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kool Mate CMS</title>
+    <title>KOOLMATE CMS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="admin.css?v=20260811-inline-brand-logos">
   </head>
   <body>
     <section class="login-screen" id="loginScreen" hidden>
       <form class="login-card" id="loginForm">
-        <img src="assets/kool-mate-logo-transparent.png" alt="Kool Mate logo">
+        <img src="assets/koolmate-logo.png" alt="KOOLMATE logo">
         <p class="eyebrow">Protected CMS</p>
-        <h1>Kool Mate Website Editor</h1>
+        <h1>KOOLMATE Website Editor</h1>
         <p>Enter the CMS password to edit live website content.</p>
         <label>
           <span>Password</span>
@@ -27,10 +27,10 @@
 
     <header class="cms-header">
       <div>
-        <img src="assets/kool-mate-logo-transparent.png" alt="Kool Mate logo">
+        <img src="assets/koolmate-logo.png" alt="KOOLMATE logo">
         <div>
           <p class="eyebrow" data-ui="cmsLabel">Self-Edit CMS</p>
-          <h1 data-ui="title">Kool Mate Website Editor</h1>
+          <h1 data-ui="title">KOOLMATE Website Editor</h1>
         </div>
       </div>
       <div class="header-actions">
@@ -58,13 +58,13 @@
         </div>
         <div class="mini-site-preview" aria-label="Website preview">
           <div class="mini-nav">
-            <img src="assets/kool-mate-logo-transparent.png" alt="">
+            <img src="assets/koolmate-logo.png" alt="">
             <span data-ui="previewLabel">Live Look</span>
           </div>
           <div class="mini-hero">
             <p id="previewTrust">Trusted by many homes & businesses</p>
             <h3 id="previewHeroTitle">Cooler Air. Cleaner Comfort. Smarter Savings.</h3>
-            <strong id="previewHeroTagline">Choose Kool Mate!</strong>
+            <strong id="previewHeroTagline">Choose KOOLMATE!</strong>
             <span id="previewHeroLead">Professional air-conditioning service for homes and businesses.</span>
           </div>
           <div class="mini-contact">
@@ -92,6 +92,7 @@
           <button type="button" class="active" data-tab="business" data-ui="tabBusiness">Business</button>
           <button type="button" data-tab="home" data-ui="tabHome">Home Text</button>
           <button type="button" data-tab="work" data-ui="tabWork">Our Work</button>
+          <button type="button" data-tab="units" data-ui="tabUnits">Aircon Units</button>
           <button type="button" data-tab="promos" data-ui="tabPromos">Promos</button>
           <button type="button" data-tab="inquiries" data-ui="tabInquiries">Inquiries</button>
         </nav>
@@ -141,6 +142,11 @@
             <div class="work-editor" id="workEditor"></div>
           </section>
 
+          <section class="tab-panel" data-panel="units">
+            <div class="language-note" data-ui="unitsHelp">Edit the 10 aircon unit slots shown in the product carousel.</div>
+            <div class="unit-editor" id="unitEditor"></div>
+          </section>
+
           <section class="tab-panel" data-panel="promos">
             <div class="language-note" data-ui="promoHelp">Control the floating featured ads shown on the public website.</div>
             <div class="promo-editor" id="promoEditor"></div>
@@ -166,6 +172,6 @@
       </section>
     </main>
 
-    <script src="admin.js"></script>
+    <script src="admin.js?v=20260811-inline-brand-logos"></script>
   </body>
 </html>

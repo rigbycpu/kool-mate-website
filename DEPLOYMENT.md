@@ -1,4 +1,4 @@
-# Kool Mate Website + CMS Deployment for Netlify/GitHub
+# KOOLMATE Website + CMS Deployment for Netlify/GitHub
 
 ## Recommended Setup
 

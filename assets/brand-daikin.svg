@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 72" role="img" aria-label="Daikin logo">
+  <rect width="220" height="72" rx="12" fill="#fff"/>
+  <path d="M24 17h42L24 55z" fill="#00a8df"/>
+  <path d="M33 17h54L45 55H24z" fill="#008bd2" opacity=".55"/>
+  <text x="73" y="46" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="900" font-style="italic" fill="#00a8df">DAIKIN</text>
+</svg>

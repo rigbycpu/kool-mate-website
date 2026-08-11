@@ -1,4 +1,5 @@
 const CMS_STORAGE_KEY = "koolMateCmsContent";
+const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Koppel", "Chiq", "Other Aircon Brands"];
 const API_BASE = location.hostname === "localhost" ? "/api" : "/.netlify/functions";
 const API_CONTENT = `${API_BASE}/content`;
 const API_SESSION = `${API_BASE}/session`;
@@ -17,13 +18,13 @@ const defaults = {
   },
   en: {
     heroTitle: "Cooler Air.<br><span>Cleaner Comfort.</span><br>Smarter Savings.",
-    heroTagline: "Choose Kool Mate!",
+    heroTagline: "Choose KOOLMATE!",
     heroLead: "Professional air-conditioning service for a cooler, cleaner and more energy-efficient home or business.",
     workText: "Real installation, cleaning and repair project photos will be posted soon."
   },
   fil: {
     heroTitle: "Mas Malamig.<br><span>Mas Malinis.</span><br>Mas Tipid.",
-    heroTagline: "I-Kool Mate Mo Yan!",
+    heroTagline: "I-KOOLMATE Mo Yan!",
     heroLead: "Propesyonal na aircon service para sa mas malamig, malinis at matipid na tahanan o negosyo.",
     workText: "Malapit nang maipakita ang totoong installation, cleaning at repair project photos."
   },
@@ -39,13 +40,23 @@ const defaults = {
     { enabled: true, title: { en: "Aircon not cooling?", fil: "Hindi nagpapalamig ang aircon?" }, image: "assets/promo-aircon-solution.jpg", url: "#services" },
     { enabled: true, title: { en: "Cool comfort every day", fil: "Komportableng lamig araw-araw" }, image: "assets/promo-comfort-everyday.jpg", url: "#quote" },
     { enabled: true, title: { en: "Fast maintenance service", fil: "Mabilis na maintenance service" }, image: "assets/promo-lamig-solusyon.jpg", url: "#services" }
-  ]
+  ],
+  airconUnits: AIRCON_BRANDS.map((brand) => ({
+    enabled: true,
+    brand,
+    model: "",
+    name: { en: "", fil: "" },
+    type: { en: "", fil: "" },
+    price: "",
+    image: "",
+    url: "#quote"
+  }))
 };
 
 const uiText = {
   en: {
     cmsLabel: "Self-Edit CMS",
-    title: "Kool Mate Website Editor",
+    title: "KOOLMATE Website Editor",
     viewSite: "View Site",
     manualEyebrow: "Manual",
     manualTitle: "How to edit",
@@ -62,6 +73,7 @@ const uiText = {
     tabBusiness: "Business",
     tabHome: "Home Text",
     tabWork: "Our Work",
+    tabUnits: "Aircon Units",
     tabPromos: "Promos",
     tabInquiries: "Inquiries",
     phone: "Phone",
@@ -94,6 +106,17 @@ const uiText = {
     promoTitleFil: "Promo title Filipino",
     promoImage: "Poster image URL",
     promoUrl: "Click link",
+    unitsHelp: "Edit the 10 aircon unit slots shown in the product carousel. Fill the price slot only when the client provides a price.",
+    unitShow: "Show unit",
+    unitBrand: "Brand",
+    unitModel: "Model No.",
+    unitNameEn: "Unit name English",
+    unitNameFil: "Unit name Filipino",
+    unitTypeEn: "Unit type English",
+    unitTypeFil: "Unit type Filipino",
+    unitPrice: "Price label",
+    unitImage: "Unit image URL",
+    unitUrl: "Inquire button link",
     previewLabel: "Live Look",
     inquiriesTitle: "Customer inquiries",
     inquiriesHelp: "New quote requests from the website form appear here.",
@@ -104,7 +127,7 @@ const uiText = {
   },
   fil: {
     cmsLabel: "Self-Edit CMS",
-    title: "Kool Mate Website Editor",
+    title: "KOOLMATE Website Editor",
     viewSite: "Tingnan ang Site",
     manualEyebrow: "Manual",
     manualTitle: "Paano mag-edit",
@@ -121,6 +144,7 @@ const uiText = {
     tabBusiness: "Business",
     tabHome: "Home Text",
     tabWork: "Our Work",
+    tabUnits: "Aircon Units",
     tabPromos: "Promos",
     tabInquiries: "Inquiries",
     phone: "Phone",
@@ -153,6 +177,17 @@ const uiText = {
     promoTitleFil: "Promo title Filipino",
     promoImage: "Poster image URL",
     promoUrl: "Click link",
+    unitsHelp: "I-edit ang 10 aircon unit slots na makikita sa product carousel. Lagyan lang ang price slot kapag may final price na ang client.",
+    unitShow: "Ipakita ang unit",
+    unitBrand: "Brand",
+    unitModel: "Model No.",
+    unitNameEn: "Unit name English",
+    unitNameFil: "Unit name Filipino",
+    unitTypeEn: "Unit type English",
+    unitTypeFil: "Unit type Filipino",
+    unitPrice: "Price label",
+    unitImage: "Unit image URL",
+    unitUrl: "Inquire button link",
     previewLabel: "Live Look",
     inquiriesTitle: "Customer inquiries",
     inquiriesHelp: "Dito lalabas ang bagong quote requests mula sa website form.",
@@ -222,6 +257,7 @@ function applyUiLanguage() {
     button.classList.toggle("active", button.dataset.lang === cmsLanguage);
   });
   renderWorkEditor();
+  renderUnitEditor();
   renderPromoEditor();
 }
 
@@ -303,6 +339,43 @@ function renderPromoEditor() {
           <label><span>${copy.promoImage}</span><input name="promos.${index}.image" placeholder="assets/promo.jpg or https://..."></label>
           <label><span>${copy.workUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp" data-promo-upload="${index}"></label>
           <label class="wide"><span>${copy.promoUrl}</span><input name="promos.${index}.url" placeholder="#quote or https://..."></label>
+        </div>
+      </div>
+    </article>
+  `).join("");
+  fillForm();
+  setupUploads();
+}
+
+function renderUnitEditor() {
+  const copy = uiText[cmsLanguage];
+  const editor = document.getElementById("unitEditor");
+  if (!editor) return;
+  editor.innerHTML = state.airconUnits.map((unit, index) => `
+    <article class="unit-edit-card">
+      <div class="unit-edit-preview">
+        ${unit.image ? `<img src="${unit.image}" alt="${unit.brand || "Aircon"} unit preview">` : `<span>Unit image</span>`}
+      </div>
+      <div class="unit-edit-fields">
+        <div class="promo-edit-head">
+          <strong>Unit ${String(index + 1).padStart(2, "0")}</strong>
+          <label class="toggle-field">
+            <input type="checkbox" name="airconUnits.${index}.enabled">
+            <span>${copy.unitShow}</span>
+          </label>
+        </div>
+        <div class="work-fields">
+          <label>
+            <span>${copy.unitBrand}</span>
+            <select name="airconUnits.${index}.brand">
+              ${AIRCON_BRANDS.map((brand) => `<option value="${brand}">${brand}</option>`).join("")}
+            </select>
+          </label>
+          <label><span>${copy.unitModel}</span><input name="airconUnits.${index}.model" placeholder="Example: MSAG-09CRN8"></label>
+          <label><span>${copy.unitPrice}</span><input name="airconUnits.${index}.price" placeholder=""></label>
+          <label><span>${copy.unitImage}</span><input name="airconUnits.${index}.image" placeholder="assets/unit.jpg or https://..."></label>
+          <label><span>${copy.workUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp" data-unit-upload="${index}"></label>
+          <label><span>${copy.unitUrl}</span><input name="airconUnits.${index}.url" placeholder="#quote"></label>
         </div>
       </div>
     </article>
@@ -396,11 +469,36 @@ function setupUploads() {
       }
     });
   });
+  document.querySelectorAll("[data-unit-upload]").forEach((input) => {
+    input.addEventListener("change", async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+      const index = Number(input.dataset.unitUpload);
+      setStatus("Uploading unit image...");
+      try {
+        const dataUrl = await readFileAsDataUrl(file);
+        const response = await fetch(API_UPLOAD, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ filename: file.name, dataUrl })
+        });
+        if (!response.ok) throw new Error((await response.json()).message || "Upload failed.");
+        const payload = await response.json();
+        state.airconUnits[index].image = payload.url;
+        state.airconUnits[index].enabled = true;
+        fillForm();
+        renderUnitEditor();
+        setStatus("Unit image uploaded. Click Save Changes to publish.");
+      } catch (error) {
+        setStatus(error.message || "Upload failed.");
+      }
+    });
+  });
 }
 
 function updatePreview() {
   document.getElementById("previewHeroTitle").textContent = stripHtml(state.en.heroTitle);
-  document.getElementById("previewHeroTagline").textContent = state.en.heroTagline || "Choose Kool Mate!";
+  document.getElementById("previewHeroTagline").textContent = state.en.heroTagline || "Choose KOOLMATE!";
   document.getElementById("previewHeroLead").textContent = state.en.heroLead || "";
   document.getElementById("previewPhone").textContent = state.business.phone || "";
   document.getElementById("previewEmail").textContent = state.business.email || "";
@@ -538,7 +636,7 @@ document.getElementById("exportBtn").addEventListener("click", () => {
   const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "kool-mate-cms-backup.json";
+  link.download = "KOOLMATE-cms-backup.json";
   link.click();
   URL.revokeObjectURL(link.href);
 });
