@@ -24,5 +24,11 @@
     { "type": "empty", "title": { "en": "Repair Service", "fil": "Repair Service" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" },
     { "type": "empty", "title": { "en": "Maintenance Visit", "fil": "Maintenance Visit" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" },
     { "type": "empty", "title": { "en": "Commercial Service", "fil": "Commercial Service" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" }
+  ],
+  "promos": [
+    { "enabled": true, "title": { "en": "Cooler, cleaner comfort", "fil": "Mas malamig at malinis" }, "image": "assets/promo-cool-home.jpg", "url": "#quote" },
+    { "enabled": true, "title": { "en": "Aircon not cooling?", "fil": "Hindi nagpapalamig ang aircon?" }, "image": "assets/promo-aircon-solution.jpg", "url": "#services" },
+    { "enabled": true, "title": { "en": "Cool comfort every day", "fil": "Komportableng lamig araw-araw" }, "image": "assets/promo-comfort-everyday.jpg", "url": "#quote" },
+    { "enabled": true, "title": { "en": "Fast maintenance service", "fil": "Mabilis na maintenance service" }, "image": "assets/promo-lamig-solusyon.jpg", "url": "#services" }
   ]
 }

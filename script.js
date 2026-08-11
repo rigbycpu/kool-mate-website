@@ -24,6 +24,15 @@ let workItems = [
   { titleKey: "workSlotCommercial", type: "empty", image: "", url: "" }
 ];
 
+let promos = [
+  { enabled: true, title: { en: "Cooler, cleaner comfort", fil: "Mas malamig at malinis" }, image: "assets/promo-cool-home.jpg", url: "#quote" },
+  { enabled: true, title: { en: "Aircon not cooling?", fil: "Hindi nagpapalamig ang aircon?" }, image: "assets/promo-aircon-solution.jpg", url: "#services" },
+  { enabled: true, title: { en: "Cool comfort every day", fil: "Komportableng lamig araw-araw" }, image: "assets/promo-comfort-everyday.jpg", url: "#quote" },
+  { enabled: true, title: { en: "Fast maintenance service", fil: "Mabilis na maintenance service" }, image: "assets/promo-lamig-solusyon.jpg", url: "#services" }
+];
+
+let activePromoIndex = 0;
+
 const icons = {
   install: '<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="12" width="44" height="18" rx="3"/><path d="M15 37h34"/><path d="M22 30v9M42 30v9"/><path class="accent-fill" d="M23 45l4-7 4 7-4 7zM34 47l3-5 3 5-3 5z"/><path d="M18 19h28"/></svg>',
   maintenance: '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 8l20 8v14c0 13-8 22-20 27-12-5-20-14-20-27V16z"/><path d="M23 32l6 6 13-16"/><path d="M21 17l11-4 11 4"/></svg>',
@@ -364,6 +373,13 @@ async function applyCmsContent() {
       ...(saved.workItems[index] || {})
     }));
   }
+
+  if (Array.isArray(saved.promos)) {
+    promos = saved.promos.map((item, index) => ({
+      ...(promos[index] || {}),
+      ...item
+    }));
+  }
 }
 
 function phoneHref(phone) {
@@ -473,6 +489,60 @@ function renderCards() {
 
   const workGrid = document.querySelector('[data-render="work"]');
   if (workGrid) workGrid.innerHTML = workItems.map(renderWorkItem).join("");
+  renderPromos();
+}
+
+function getActivePromos() {
+  return promos.filter((promo) => promo.enabled && promo.image);
+}
+
+function renderPromos() {
+  const wrapper = document.querySelector("[data-promos]");
+  if (!wrapper) return;
+  const activePromos = getActivePromos();
+  wrapper.hidden = activePromos.length === 0;
+  if (!activePromos.length) return;
+
+  if (activePromoIndex >= activePromos.length) activePromoIndex = 0;
+  const promo = activePromos[activePromoIndex];
+  const title = promo.title?.[currentLanguage] || promo.title?.en || "Kool Mate Promo";
+
+  wrapper.querySelector("[data-promo-count]").textContent = activePromos.length;
+  wrapper.querySelector("[data-promo-link]").href = promo.url || "#quote";
+  wrapper.querySelector("[data-promo-title]").textContent = title;
+  wrapper.querySelector("[data-promo-image]").src = promo.image;
+  wrapper.querySelector("[data-promo-image]").alt = title;
+  wrapper.querySelector("[data-promo-position]").textContent = `${activePromoIndex + 1} / ${activePromos.length}`;
+}
+
+function setupPromos() {
+  const wrapper = document.querySelector("[data-promos]");
+  if (!wrapper) return;
+  const toggle = wrapper.querySelector("[data-promo-toggle]");
+  const close = wrapper.querySelector("[data-promo-close]");
+  const prev = wrapper.querySelector("[data-promo-prev]");
+  const next = wrapper.querySelector("[data-promo-next]");
+  const setOpen = (open) => {
+    wrapper.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+  };
+
+  toggle.addEventListener("click", () => setOpen(!wrapper.classList.contains("is-open")));
+  close.addEventListener("click", () => setOpen(false));
+  prev.addEventListener("click", () => {
+    const activePromos = getActivePromos();
+    activePromoIndex = (activePromoIndex - 1 + activePromos.length) % activePromos.length;
+    renderPromos();
+  });
+  next.addEventListener("click", () => {
+    const activePromos = getActivePromos();
+    activePromoIndex = (activePromoIndex + 1) % activePromos.length;
+    renderPromos();
+  });
+
+  setTimeout(() => {
+    if (getActivePromos().length) setOpen(true);
+  }, 1600);
 }
 
 function setupMenu() {
@@ -578,6 +648,7 @@ async function bootSite() {
   setupMenu();
   setupLanguageSwitcher();
   setupForm();
+  setupPromos();
   setupReveal();
 }
 

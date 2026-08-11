@@ -33,6 +33,12 @@ const defaults = {
     { type: "empty", title: { en: "Repair Service", fil: "Repair Service" }, status: { en: "", fil: "" }, image: "", url: "" },
     { type: "empty", title: { en: "Maintenance Visit", fil: "Maintenance Visit" }, status: { en: "", fil: "" }, image: "", url: "" },
     { type: "empty", title: { en: "Commercial Service", fil: "Commercial Service" }, status: { en: "", fil: "" }, image: "", url: "" }
+  ],
+  promos: [
+    { enabled: true, title: { en: "Cooler, cleaner comfort", fil: "Mas malamig at malinis" }, image: "assets/promo-cool-home.jpg", url: "#quote" },
+    { enabled: true, title: { en: "Aircon not cooling?", fil: "Hindi nagpapalamig ang aircon?" }, image: "assets/promo-aircon-solution.jpg", url: "#services" },
+    { enabled: true, title: { en: "Cool comfort every day", fil: "Komportableng lamig araw-araw" }, image: "assets/promo-comfort-everyday.jpg", url: "#quote" },
+    { enabled: true, title: { en: "Fast maintenance service", fil: "Mabilis na maintenance service" }, image: "assets/promo-lamig-solusyon.jpg", url: "#services" }
   ]
 };
 
@@ -56,6 +62,7 @@ const uiText = {
     tabBusiness: "Business",
     tabHome: "Home Text",
     tabWork: "Our Work",
+    tabPromos: "Promos",
     tabInquiries: "Inquiries",
     phone: "Phone",
     smsPhone: "SMS Phone",
@@ -81,6 +88,12 @@ const uiText = {
     workTitleFil: "Title Filipino",
     workStatusEn: "Custom status English",
     workStatusFil: "Custom status Filipino",
+    promoHelp: "Control the floating featured ads shown on the public website.",
+    promoShow: "Show ad",
+    promoTitleEn: "Promo title English",
+    promoTitleFil: "Promo title Filipino",
+    promoImage: "Poster image URL",
+    promoUrl: "Click link",
     previewLabel: "Live Look",
     inquiriesTitle: "Customer inquiries",
     inquiriesHelp: "New quote requests from the website form appear here.",
@@ -108,6 +121,7 @@ const uiText = {
     tabBusiness: "Business",
     tabHome: "Home Text",
     tabWork: "Our Work",
+    tabPromos: "Promos",
     tabInquiries: "Inquiries",
     phone: "Phone",
     smsPhone: "SMS Phone",
@@ -133,6 +147,12 @@ const uiText = {
     workTitleFil: "Title Filipino",
     workStatusEn: "Custom status English",
     workStatusFil: "Custom status Filipino",
+    promoHelp: "Kontrolin ang floating featured ads na makikita sa public website.",
+    promoShow: "Ipakita ang ad",
+    promoTitleEn: "Promo title English",
+    promoTitleFil: "Promo title Filipino",
+    promoImage: "Poster image URL",
+    promoUrl: "Click link",
     previewLabel: "Live Look",
     inquiriesTitle: "Customer inquiries",
     inquiriesHelp: "Dito lalabas ang bagong quote requests mula sa website form.",
@@ -202,11 +222,17 @@ function applyUiLanguage() {
     button.classList.toggle("active", button.dataset.lang === cmsLanguage);
   });
   renderWorkEditor();
+  renderPromoEditor();
 }
 
 function fillForm() {
   document.querySelectorAll("[name]").forEach((input) => {
-    input.value = getPath(state, input.name) || "";
+    const value = getPath(state, input.name);
+    if (input.type === "checkbox") {
+      input.checked = Boolean(value);
+      return;
+    }
+    input.value = value || "";
   });
   lockCodeFields();
 }
@@ -254,6 +280,37 @@ function renderWorkEditor() {
   setupUploads();
 }
 
+function renderPromoEditor() {
+  const copy = uiText[cmsLanguage];
+  const editor = document.getElementById("promoEditor");
+  if (!editor) return;
+  editor.innerHTML = state.promos.map((promo, index) => `
+    <article class="promo-edit-card">
+      <div class="promo-edit-preview">
+        <img src="${promo.image || "assets/promo-cool-home.jpg"}" alt="">
+      </div>
+      <div class="promo-edit-fields">
+        <div class="promo-edit-head">
+          <strong>Promo ${String(index + 1).padStart(2, "0")}</strong>
+          <label class="toggle-field">
+            <input type="checkbox" name="promos.${index}.enabled">
+            <span>${copy.promoShow}</span>
+          </label>
+        </div>
+        <div class="work-fields">
+          <label><span>${copy.promoTitleEn}</span><input name="promos.${index}.title.en"></label>
+          <label><span>${copy.promoTitleFil}</span><input name="promos.${index}.title.fil"></label>
+          <label><span>${copy.promoImage}</span><input name="promos.${index}.image" placeholder="assets/promo.jpg or https://..."></label>
+          <label><span>${copy.workUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp" data-promo-upload="${index}"></label>
+          <label class="wide"><span>${copy.promoUrl}</span><input name="promos.${index}.url" placeholder="#quote or https://..."></label>
+        </div>
+      </div>
+    </article>
+  `).join("");
+  fillForm();
+  setupUploads();
+}
+
 function setStatus(message) {
   document.getElementById("saveStatus").textContent = message;
 }
@@ -275,7 +332,7 @@ function stripHtml(value) {
 function collectFormState() {
   document.querySelectorAll("#cmsForm [name]").forEach((input) => {
     if (input.type === "file") return;
-    setPath(state, input.name, input.value.trim());
+    setPath(state, input.name, input.type === "checkbox" ? input.checked : input.value.trim());
   });
 }
 
@@ -309,6 +366,31 @@ function setupUploads() {
         fillForm();
         updatePreview();
         setStatus("Image uploaded. Click Save Changes to publish.");
+      } catch (error) {
+        setStatus(error.message || "Upload failed.");
+      }
+    });
+  });
+  document.querySelectorAll("[data-promo-upload]").forEach((input) => {
+    input.addEventListener("change", async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+      const index = Number(input.dataset.promoUpload);
+      setStatus("Uploading promo image...");
+      try {
+        const dataUrl = await readFileAsDataUrl(file);
+        const response = await fetch(API_UPLOAD, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ filename: file.name, dataUrl })
+        });
+        if (!response.ok) throw new Error((await response.json()).message || "Upload failed.");
+        const payload = await response.json();
+        state.promos[index].image = payload.url;
+        state.promos[index].enabled = true;
+        fillForm();
+        renderPromoEditor();
+        setStatus("Promo image uploaded. Click Save Changes to publish.");
       } catch (error) {
         setStatus(error.message || "Upload failed.");
       }
@@ -469,6 +551,7 @@ document.getElementById("importFile").addEventListener("change", async (event) =
   await saveState().catch((error) => setStatus(error.message || "Imported locally, but server save failed."));
   fillForm();
   renderWorkEditor();
+  renderPromoEditor();
   updatePreview();
   setStatus(uiText[cmsLanguage].imported);
 });
@@ -480,6 +563,7 @@ document.getElementById("resetBtn").addEventListener("click", async () => {
   await saveState().catch((error) => setStatus(error.message || "Reset locally, but server save failed."));
   fillForm();
   renderWorkEditor();
+  renderPromoEditor();
   updatePreview();
   setStatus(uiText[cmsLanguage].resetDone);
 });
