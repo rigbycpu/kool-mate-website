@@ -51,6 +51,7 @@ let airconUnits = AIRCON_BRANDS.flatMap((brand) => [1, 2].map((slot) => ({
   slot,
   tag: slot === 1 ? "mostPopular" : "bestPrice",
   model: "",
+  capacity: "",
   name: { en: "", fil: "" },
   type: { en: "", fil: "" },
   price: "",
@@ -130,6 +131,7 @@ const translations = {
     unitFullList: "View Full Price List",
     unitUnavailable: "Unavailable",
     unitModelLabel: "Model No.",
+    unitCapacityLabel: "Capacity",
     unitPriceLabel: "Price",
     unitMostPopular: "Most Popular",
     unitBestPrice: "Best Price",
@@ -274,6 +276,7 @@ const translations = {
     unitFullList: "Tingnan ang Full Price List",
     unitUnavailable: "Unavailable",
     unitModelLabel: "Model No.",
+    unitCapacityLabel: "Capacity",
     unitPriceLabel: "Price",
     unitMostPopular: "Most Popular",
     unitBestPrice: "Best Price",
@@ -491,6 +494,7 @@ async function applyCmsContent() {
         slot: slotIndex + 1,
         tag: slotIndex === 0 ? "mostPopular" : "bestPrice",
         model: "",
+        capacity: "",
         name: { en: "", fil: "" },
         type: { en: "", fil: "" },
         price: "",
@@ -645,6 +649,7 @@ function renderUnitCarousel() {
         <div class="brand-unit-body">
           ${availableUnits.length ? availableUnits.map((unit) => {
             const model = unit.model || unit.name?.[currentLanguage] || unit.name?.en || "";
+            const capacity = unit.capacity || "";
             const price = unit.price || "";
             const url = unit.url || "#quote";
             const image = unit.image || "";
@@ -660,6 +665,10 @@ function renderUnitCarousel() {
                   <strong>${model || copy.unitUnavailable}</strong>
                 </div>
                 <div>
+                  <span>${copy.unitCapacityLabel}</span>
+                  <strong>${capacity || copy.unitUnavailable}</strong>
+                </div>
+                <div>
                   <span>${copy.unitPriceLabel}</span>
                   <strong>${price || copy.unitUnavailable}</strong>
                 </div>
@@ -671,6 +680,10 @@ function renderUnitCarousel() {
               <div class="unit-image-slot is-empty"><span>${copy.unitUnavailable}</span></div>
               <div>
                 <span>${copy.unitModelLabel}</span>
+                <strong>${copy.unitUnavailable}</strong>
+              </div>
+              <div>
+                <span>${copy.unitCapacityLabel}</span>
                 <strong>${copy.unitUnavailable}</strong>
               </div>
               <div>

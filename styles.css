@@ -799,7 +799,7 @@ h2 { font-size: clamp(30px, 4vw, 52px); line-height: 1.04; text-transform: upper
 }
 .brand-unit-row {
   display: grid;
-  grid-template-columns: 96px 1fr 1fr auto;
+  grid-template-columns: 96px minmax(120px, 1.25fr) minmax(92px, .8fr) minmax(92px, .8fr) auto;
   align-items: end;
   gap: 10px;
   padding: 12px;

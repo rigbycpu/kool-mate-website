@@ -59,6 +59,7 @@ const defaults = {
     slot,
     tag: slot === 1 ? "mostPopular" : "bestPrice",
     model: "",
+    capacity: "",
     name: { en: "", fil: "" },
     type: { en: "", fil: "" },
     price: "",
@@ -134,6 +135,7 @@ const uiText = {
     unitTagMostPopular: "Most Popular",
     unitTagBestPrice: "Best Price",
     unitModel: "Model No.",
+    unitCapacity: "Capacity",
     unitNameEn: "Unit name English",
     unitNameFil: "Unit name Filipino",
     unitTypeEn: "Unit type English",
@@ -215,6 +217,7 @@ const uiText = {
     unitTagMostPopular: "Most Popular",
     unitTagBestPrice: "Best Price",
     unitModel: "Model No.",
+    unitCapacity: "Capacity",
     unitNameEn: "Unit name English",
     unitNameFil: "Unit name Filipino",
     unitTypeEn: "Unit type English",
@@ -263,6 +266,7 @@ function normalizeStateContent(content) {
       slot: slotIndex + 1,
       tag: slotIndex === 0 ? "mostPopular" : "bestPrice",
       model: "",
+      capacity: "",
       name: { en: "", fil: "" },
       type: { en: "", fil: "" },
       price: "",
@@ -462,6 +466,7 @@ function renderUnitEditor() {
             </select>
           </label>
           <label><span>${copy.unitModel}</span><input name="airconUnits.${index}.model" placeholder="Example: MSAG-09CRN8"></label>
+          <label><span>${copy.unitCapacity}</span><input name="airconUnits.${index}.capacity" placeholder="Example: 1.5HP"></label>
           <label><span>${copy.unitPrice}</span><input name="airconUnits.${index}.price" placeholder=""></label>
           <label><span>${copy.unitImage}</span><input name="airconUnits.${index}.image" placeholder="assets/unit.jpg or https://..."></label>
           <label><span>${copy.workUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp" data-unit-upload="${index}"></label>
