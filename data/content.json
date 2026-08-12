@@ -20,7 +20,7 @@
   },
   "workItems": [
     {
-      "type": "photo",
+      "type": "link",
       "title": {
         "en": "Installation Work",
         "fil": "Installation Work"
@@ -29,7 +29,7 @@
         "en": "",
         "fil": ""
       },
-      "image": "/uploads/cms-1786578984950-618a186f.png",
+      "image": "",
       "url": ""
     },
     {
