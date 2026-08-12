@@ -1,5 +1,9 @@
 const CMS_STORAGE_KEY = "koolMateCmsContent";
 const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Koppel", "Chiq", "Other Aircon Brands"];
+const UNIT_TAGS = {
+  mostPopular: "Most Popular",
+  bestPrice: "Best Price"
+};
 const API_BASE = location.hostname === "localhost" ? "/api" : "/.netlify/functions";
 const API_CONTENT = `${API_BASE}/content`;
 const API_SESSION = `${API_BASE}/session`;
@@ -41,16 +45,26 @@ const defaults = {
     { enabled: true, title: { en: "Cool comfort every day", fil: "Komportableng lamig araw-araw" }, image: "assets/promo-comfort-everyday.jpg", url: "#quote" },
     { enabled: true, title: { en: "Fast maintenance service", fil: "Mabilis na maintenance service" }, image: "assets/promo-lamig-solusyon.jpg", url: "#services" }
   ],
-  airconUnits: AIRCON_BRANDS.map((brand) => ({
+  priceList: {
+    url: "",
+    label: { en: "View Full Price List", fil: "Tingnan ang Full Price List" },
+    note: {
+      en: "Prices and availability may change. Please message us to confirm the latest stock and final quote.",
+      fil: "Maaaring magbago ang presyo at availability. Mag-message para ma-confirm ang latest stock at final quote."
+    }
+  },
+  airconUnits: AIRCON_BRANDS.flatMap((brand) => [1, 2].map((slot) => ({
     enabled: true,
     brand,
+    slot,
+    tag: slot === 1 ? "mostPopular" : "bestPrice",
     model: "",
     name: { en: "", fil: "" },
     type: { en: "", fil: "" },
     price: "",
     image: "",
     url: "#quote"
-  }))
+  })))
 };
 
 const uiText = {
@@ -106,9 +120,19 @@ const uiText = {
     promoTitleFil: "Promo title Filipino",
     promoImage: "Poster image URL",
     promoUrl: "Click link",
-    unitsHelp: "Edit the 10 aircon unit slots shown in the product carousel. Fill the price slot only when the client provides a price.",
-    unitShow: "Show unit",
+    unitsHelp: "Edit 1-2 featured units per brand. Use the Full Price List upload/link for the complete available aircon list.",
+    priceListTitle: "Full price list",
+    priceListUrl: "Price list link",
+    priceListUpload: "Upload price list image/PDF",
+    priceListLabelEn: "Button label English",
+    priceListLabelFil: "Button label Filipino",
+    priceListNoteEn: "Small note English",
+    priceListNoteFil: "Small note Filipino",
+    unitShow: "Show featured unit",
     unitBrand: "Brand",
+    unitTag: "Tag",
+    unitTagMostPopular: "Most Popular",
+    unitTagBestPrice: "Best Price",
     unitModel: "Model No.",
     unitNameEn: "Unit name English",
     unitNameFil: "Unit name Filipino",
@@ -177,9 +201,19 @@ const uiText = {
     promoTitleFil: "Promo title Filipino",
     promoImage: "Poster image URL",
     promoUrl: "Click link",
-    unitsHelp: "I-edit ang 10 aircon unit slots na makikita sa product carousel. Lagyan lang ang price slot kapag may final price na ang client.",
-    unitShow: "Ipakita ang unit",
+    unitsHelp: "Mag-edit ng 1-2 featured units kada brand. Gamitin ang Full Price List upload/link para sa kumpletong available aircon list.",
+    priceListTitle: "Full price list",
+    priceListUrl: "Price list link",
+    priceListUpload: "Upload price list image/PDF",
+    priceListLabelEn: "Button label English",
+    priceListLabelFil: "Button label Filipino",
+    priceListNoteEn: "Small note English",
+    priceListNoteFil: "Small note Filipino",
+    unitShow: "Ipakita ang featured unit",
     unitBrand: "Brand",
+    unitTag: "Tag",
+    unitTagMostPopular: "Most Popular",
+    unitTagBestPrice: "Best Price",
     unitModel: "Model No.",
     unitNameEn: "Unit name English",
     unitNameFil: "Unit name Filipino",
@@ -206,17 +240,52 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function normalizeStateContent(content) {
+  const next = { ...clone(defaults), ...(content || {}) };
+  next.business = { ...defaults.business, ...(content?.business || {}) };
+  next.en = { ...defaults.en, ...(content?.en || {}) };
+  next.fil = { ...defaults.fil, ...(content?.fil || {}) };
+  next.priceList = {
+    ...defaults.priceList,
+    ...(content?.priceList || {}),
+    label: { ...defaults.priceList.label, ...(content?.priceList?.label || {}) },
+    note: { ...defaults.priceList.note, ...(content?.priceList?.note || {}) }
+  };
+
+  const savedUnits = Array.isArray(content?.airconUnits) ? content.airconUnits : [];
+  next.airconUnits = AIRCON_BRANDS.flatMap((brand) => {
+    const brandUnits = savedUnits.filter((unit) => (unit.brand || "") === brand).slice(0, 2);
+    const legacyUnit = savedUnits[AIRCON_BRANDS.indexOf(brand)] || {};
+    const slots = brandUnits.length ? brandUnits : [legacyUnit];
+    return [0, 1].map((slotIndex) => ({
+      enabled: true,
+      brand,
+      slot: slotIndex + 1,
+      tag: slotIndex === 0 ? "mostPopular" : "bestPrice",
+      model: "",
+      name: { en: "", fil: "" },
+      type: { en: "", fil: "" },
+      price: "",
+      image: "",
+      url: "#quote",
+      ...(slots[slotIndex] || {})
+    }));
+  });
+
+  return next;
+}
+
 async function loadState() {
   try {
     const response = await fetch(API_CONTENT, { cache: "no-store" });
-    if (response.ok) return { ...clone(defaults), ...(await response.json()) };
+    if (response.ok) return normalizeStateContent(await response.json());
   } catch {
     // Static preview fallback.
   }
   try {
-    return { ...clone(defaults), ...(JSON.parse(localStorage.getItem(CMS_STORAGE_KEY)) || {}) };
+    return normalizeStateContent(JSON.parse(localStorage.getItem(CMS_STORAGE_KEY)) || {});
   } catch {
-    return clone(defaults);
+    return normalizeStateContent({});
   }
 }
 
@@ -351,14 +420,28 @@ function renderUnitEditor() {
   const copy = uiText[cmsLanguage];
   const editor = document.getElementById("unitEditor");
   if (!editor) return;
-  editor.innerHTML = state.airconUnits.map((unit, index) => `
+  editor.innerHTML = `
+    <article class="price-list-edit-card">
+      <div class="promo-edit-head">
+        <strong>${copy.priceListTitle}</strong>
+      </div>
+      <div class="work-fields">
+        <label class="wide"><span>${copy.priceListUrl}</span><input name="priceList.url" placeholder="assets/aircon-price-list.jpg or https://..."></label>
+        <label><span>${copy.priceListUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp,application/pdf" data-price-list-upload></label>
+        <label><span>${copy.priceListLabelEn}</span><input name="priceList.label.en"></label>
+        <label><span>${copy.priceListLabelFil}</span><input name="priceList.label.fil"></label>
+        <label><span>${copy.priceListNoteEn}</span><input name="priceList.note.en"></label>
+        <label><span>${copy.priceListNoteFil}</span><input name="priceList.note.fil"></label>
+      </div>
+    </article>
+    ${state.airconUnits.map((unit, index) => `
     <article class="unit-edit-card">
       <div class="unit-edit-preview">
         ${unit.image ? `<img src="${unit.image}" alt="${unit.brand || "Aircon"} unit preview">` : `<span>Unit image</span>`}
       </div>
       <div class="unit-edit-fields">
         <div class="promo-edit-head">
-          <strong>Unit ${String(index + 1).padStart(2, "0")}</strong>
+          <strong>${unit.brand || "Aircon"} Featured ${unit.slot || (index % 2) + 1}</strong>
           <label class="toggle-field">
             <input type="checkbox" name="airconUnits.${index}.enabled">
             <span>${copy.unitShow}</span>
@@ -371,6 +454,13 @@ function renderUnitEditor() {
               ${AIRCON_BRANDS.map((brand) => `<option value="${brand}">${brand}</option>`).join("")}
             </select>
           </label>
+          <label>
+            <span>${copy.unitTag}</span>
+            <select name="airconUnits.${index}.tag">
+              <option value="mostPopular">${copy.unitTagMostPopular}</option>
+              <option value="bestPrice">${copy.unitTagBestPrice}</option>
+            </select>
+          </label>
           <label><span>${copy.unitModel}</span><input name="airconUnits.${index}.model" placeholder="Example: MSAG-09CRN8"></label>
           <label><span>${copy.unitPrice}</span><input name="airconUnits.${index}.price" placeholder=""></label>
           <label><span>${copy.unitImage}</span><input name="airconUnits.${index}.image" placeholder="assets/unit.jpg or https://..."></label>
@@ -379,7 +469,8 @@ function renderUnitEditor() {
         </div>
       </div>
     </article>
-  `).join("");
+  `).join("")}
+  `;
   fillForm();
   setupUploads();
 }
@@ -418,22 +509,43 @@ function readFileAsDataUrl(file) {
   });
 }
 
+async function uploadFile(file, statusMessage) {
+  setStatus(statusMessage);
+  const dataUrl = await readFileAsDataUrl(file);
+  const response = await fetch(API_UPLOAD, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ filename: file.name, dataUrl })
+  });
+  if (!response.ok) throw new Error((await response.json()).message || "Upload failed.");
+  return response.json();
+}
+
 function setupUploads() {
+  document.querySelectorAll("[data-price-list-upload]").forEach((input) => {
+    input.addEventListener("change", async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+      try {
+        const payload = await uploadFile(file, "Uploading price list...");
+        state.priceList = state.priceList || clone(defaults.priceList);
+        state.priceList.url = payload.url;
+        fillForm();
+        renderUnitEditor();
+        updatePreview();
+        setStatus("Price list uploaded. Click Save Changes to publish.");
+      } catch (error) {
+        setStatus(error.message || "Upload failed.");
+      }
+    });
+  });
   document.querySelectorAll("[data-work-upload]").forEach((input) => {
     input.addEventListener("change", async () => {
       const file = input.files?.[0];
       if (!file) return;
       const index = Number(input.dataset.workUpload);
-      setStatus("Uploading image...");
       try {
-        const dataUrl = await readFileAsDataUrl(file);
-        const response = await fetch(API_UPLOAD, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ filename: file.name, dataUrl })
-        });
-        if (!response.ok) throw new Error((await response.json()).message || "Upload failed.");
-        const payload = await response.json();
+        const payload = await uploadFile(file, "Uploading image...");
         state.workItems[index].image = payload.url;
         state.workItems[index].type = "photo";
         fillForm();
@@ -449,16 +561,8 @@ function setupUploads() {
       const file = input.files?.[0];
       if (!file) return;
       const index = Number(input.dataset.promoUpload);
-      setStatus("Uploading promo image...");
       try {
-        const dataUrl = await readFileAsDataUrl(file);
-        const response = await fetch(API_UPLOAD, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ filename: file.name, dataUrl })
-        });
-        if (!response.ok) throw new Error((await response.json()).message || "Upload failed.");
-        const payload = await response.json();
+        const payload = await uploadFile(file, "Uploading promo image...");
         state.promos[index].image = payload.url;
         state.promos[index].enabled = true;
         fillForm();
@@ -474,16 +578,8 @@ function setupUploads() {
       const file = input.files?.[0];
       if (!file) return;
       const index = Number(input.dataset.unitUpload);
-      setStatus("Uploading unit image...");
       try {
-        const dataUrl = await readFileAsDataUrl(file);
-        const response = await fetch(API_UPLOAD, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ filename: file.name, dataUrl })
-        });
-        if (!response.ok) throw new Error((await response.json()).message || "Upload failed.");
-        const payload = await response.json();
+        const payload = await uploadFile(file, "Uploading unit image...");
         state.airconUnits[index].image = payload.url;
         state.airconUnits[index].enabled = true;
         fillForm();
@@ -503,7 +599,11 @@ function updatePreview() {
   document.getElementById("previewPhone").textContent = state.business.phone || "";
   document.getElementById("previewEmail").textContent = state.business.email || "";
 
-  document.getElementById("previewWork").innerHTML = state.workItems.slice(0, 5).map((item, index) => {
+  const visibleWorkItems = state.workItems.slice(0, 5).filter((item) => {
+    const type = item.type || "empty";
+    return (type === "photo" && item.image) || (type === "link" && item.url);
+  });
+  document.getElementById("previewWork").innerHTML = visibleWorkItems.length ? visibleWorkItems.map((item, index) => {
     const type = item.type || "empty";
     const title = item.title?.en || `Work ${index + 1}`;
     const isPhoto = type === "photo" && item.image;
@@ -511,7 +611,7 @@ function updatePreview() {
     const media = isPhoto ? `<img src="${item.image}" alt="">` : `<span>${String(index + 1).padStart(2, "0")}</span>`;
     const status = item.status?.en || (isPhoto ? "View Photo" : isLink ? "Open Link" : "Unavailable");
     return `<article class="mini-work-card ${isPhoto ? "has-photo" : ""}">${media}<strong>${title}</strong><small>${status}</small></article>`;
-  }).join("");
+  }).join("") : `<p class="mini-work-empty">Work photos or links will appear here after publishing.</p>`;
 }
 
 async function loadInquiries() {
@@ -645,10 +745,11 @@ document.getElementById("importBtn").addEventListener("click", () => document.ge
 document.getElementById("importFile").addEventListener("change", async (event) => {
   const file = event.target.files[0];
   if (!file) return;
-  state = { ...clone(defaults), ...JSON.parse(await file.text()) };
+  state = normalizeStateContent(JSON.parse(await file.text()));
   await saveState().catch((error) => setStatus(error.message || "Imported locally, but server save failed."));
   fillForm();
   renderWorkEditor();
+  renderUnitEditor();
   renderPromoEditor();
   updatePreview();
   setStatus(uiText[cmsLanguage].imported);
@@ -656,11 +757,12 @@ document.getElementById("importFile").addEventListener("change", async (event) =
 
 document.getElementById("resetBtn").addEventListener("click", async () => {
   if (!confirm("Reset all CMS edits?")) return;
-  state = clone(defaults);
+  state = normalizeStateContent({});
   localStorage.removeItem(CMS_STORAGE_KEY);
   await saveState().catch((error) => setStatus(error.message || "Reset locally, but server save failed."));
   fillForm();
   renderWorkEditor();
+  renderUnitEditor();
   renderPromoEditor();
   updatePreview();
   setStatus(uiText[cmsLanguage].resetDone);

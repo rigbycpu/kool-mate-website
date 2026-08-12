@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20260812-logo-blend">
+    <link rel="stylesheet" href="styles.css?v=20260812-uploadable-price-list">
   </head>
   <body>
     <header class="site-header" id="top">
@@ -28,7 +28,9 @@
         </div>
       </div>
       <nav class="main-nav" aria-label="Primary navigation">
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navLinks" data-i18n="menu">Menu</button>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+          <span aria-hidden="true">☰</span>
+        </button>
         <div class="nav-links" id="navLinks">
           <a href="#home" data-i18n="navHome">Home</a>
           <a href="#about" data-i18n="navAbout">About Us</a>
@@ -36,8 +38,12 @@
           <a href="#units" data-i18n="navUnits">Aircon Units</a>
           <a href="#work" data-i18n="navWork">Our Work</a>
           <a href="#contact" data-i18n="navContact">Contact Us</a>
+          <div class="language-switcher mobile-language" aria-label="Language selector">
+            <button type="button" class="active" data-lang="en">EN</button>
+            <button type="button" data-lang="fil">FIL</button>
+          </div>
         </div>
-        <div class="language-switcher" aria-label="Language selector">
+        <div class="language-switcher desktop-language" aria-label="Language selector">
           <button type="button" class="active" data-lang="en">EN</button>
           <button type="button" data-lang="fil">FIL</button>
         </div>
@@ -61,7 +67,7 @@
           </div>
         </div>
         <div class="hero-art reveal">
-          <img src="assets/KOOLMATE-hero-reference-mascot.png" alt="KOOLMATE mascot technician with air-conditioning units and cool airflow">
+          <img src="assets/kool-mate-hero-reference-mascot.png" alt="KOOLMATE mascot technician with air-conditioning units and cool airflow">
         </div>
       </section>
 
@@ -131,11 +137,16 @@
             <span data-i18n="unitBadgeQuoteText">Ask for the right unit for your space</span>
           </div>
         </div>
+        <div class="unit-offer-note reveal">
+          <strong data-i18n="unitFreeInstallTitle">Free installation included</strong>
+          <span data-i18n="unitFreeInstallText">All brand-new aircon units come with free standard installation.</span>
+        </div>
         <div class="unit-carousel-wrap reveal">
           <div class="unit-carousel-head">
             <div>
               <p class="eyebrow blue" data-i18n="unitCarouselEyebrow">Available Aircon Units</p>
               <h3 data-i18n="unitCarouselTitle">Inventory slots for brand-new units</h3>
+              <p class="unit-carousel-subcopy" data-i18n="unitCarouselText">View our recommended and best-value units below. For the full available list, open the complete price list or message us for the latest stock and prices.</p>
             </div>
           </div>
           <div class="unit-carousel" data-render="unit-carousel" tabindex="0" aria-label="Brand-new aircon units for sale"></div>
@@ -327,6 +338,7 @@
         </div>
       </div>
       <p class="copyright" data-i18n="copyright">&copy; 2026 KOOLMATE Air-Conditioning Services and Maintenance. All Rights Reserved.</p>
+      <p class="footer-credit">Website Design &amp; Development by SMM Solutions by Pabs Rivera</p>
     </footer>
 
     <aside class="floating-promos" data-promos hidden aria-label="Featured service promos">
@@ -354,6 +366,23 @@
       </div>
     </aside>
 
-    <script src="script.js?v=20260811-inline-brand-logos"></script>
+    <div class="price-list-modal" data-price-list-modal hidden>
+      <div class="price-list-dialog" role="dialog" aria-modal="true" aria-labelledby="priceListTitle">
+        <div class="price-list-head">
+          <div>
+            <span data-i18n="unitCarouselEyebrow">Available Brands</span>
+            <strong id="priceListTitle" data-i18n="unitFullList">View Full Price List</strong>
+          </div>
+          <button type="button" data-price-list-close aria-label="Close price list">x</button>
+        </div>
+        <div class="price-list-viewer" data-price-list-viewer></div>
+        <div class="price-list-actions">
+          <p data-price-list-note>Prices and availability may change. Please message us to confirm the latest stock and final quote.</p>
+          <a class="btn primary" href="#quote" data-price-list-inquire data-i18n="unitInquireNow">Inquire Now</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js?v=20260812-uploadable-price-list"></script>
   </body>
 </html>

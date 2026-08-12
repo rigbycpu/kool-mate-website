@@ -16,6 +16,10 @@ const productImages = {
 
 const CMS_STORAGE_KEY = "koolMateCmsContent";
 const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Koppel", "Chiq", "Other Aircon Brands"];
+const UNIT_TAGS = {
+  mostPopular: "Most Popular",
+  bestPrice: "Best Price"
+};
 
 let workItems = [
   { titleKey: "workSlotInstall", type: "empty", image: "", url: "" },
@@ -32,18 +36,35 @@ let promos = [
   { enabled: true, title: { en: "Fast maintenance service", fil: "Mabilis na maintenance service" }, image: "assets/promo-lamig-solusyon.jpg", url: "#services" }
 ];
 
-let airconUnits = AIRCON_BRANDS.map((brand) => ({
+let priceList = {
+  url: "",
+  label: { en: "View Full Price List", fil: "Tingnan ang Full Price List" },
+  note: {
+    en: "Prices and availability may change. Please message us to confirm the latest stock and final quote.",
+    fil: "Maaaring magbago ang presyo at availability. Mag-message para ma-confirm ang latest stock at final quote."
+  }
+};
+
+let airconUnits = AIRCON_BRANDS.flatMap((brand) => [1, 2].map((slot) => ({
   enabled: true,
   brand,
+  slot,
+  tag: slot === 1 ? "mostPopular" : "bestPrice",
   model: "",
   name: { en: "", fil: "" },
   type: { en: "", fil: "" },
   price: "",
   image: "",
   url: "#quote"
-}));
+})));
 
 let activePromoIndex = 0;
+
+function resetHorizontalScroll() {
+  if (window.scrollX) window.scrollTo(0, window.scrollY);
+  document.documentElement.scrollLeft = 0;
+  document.body.scrollLeft = 0;
+}
 
 const icons = {
   install: '<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="12" width="44" height="18" rx="3"/><path d="M15 37h34"/><path d="M22 30v9M42 30v9"/><path class="accent-fill" d="M23 45l4-7 4 7-4 7zM34 47l3-5 3 5-3 5z"/><path d="M18 19h28"/></svg>',
@@ -100,12 +121,18 @@ const translations = {
     unitBadgeInstallText: "Sales and service in one team",
     unitBadgeQuote: "Inquiry-Based Pricing",
     unitBadgeQuoteText: "Ask for the right unit for your space",
+    unitFreeInstallTitle: "Free installation included",
+    unitFreeInstallText: "All brand-new aircon units come with free standard installation.",
     unitCarouselEyebrow: "Available Brands",
-    unitCarouselTitle: "Open a brand to view model number and price",
+    unitCarouselTitle: "Featured aircon units by brand",
+    unitCarouselText: "View our recommended and best-value units below. For the full available list, open the complete price list or message us for the latest stock and prices.",
     unitInquireNow: "Inquire Now",
+    unitFullList: "View Full Price List",
     unitUnavailable: "Unavailable",
     unitModelLabel: "Model No.",
     unitPriceLabel: "Price",
+    unitMostPopular: "Most Popular",
+    unitBestPrice: "Best Price",
     unitPriceFallback: "",
     brandsEyebrow: "We Service All Major Brands",
     brandsTitle: "Reliable service for leading aircon brands",
@@ -238,12 +265,18 @@ const translations = {
     unitBadgeInstallText: "Sales at service sa iisang team",
     unitBadgeQuote: "Presyo Batay sa Inquiry",
     unitBadgeQuoteText: "Magtanong para sa tamang unit sa inyong space",
+    unitFreeInstallTitle: "Kasama ang free installation",
+    unitFreeInstallText: "Lahat ng brand-new aircon units ay may kasamang free standard installation.",
     unitCarouselEyebrow: "Available Brands",
-    unitCarouselTitle: "Buksan ang brand para makita ang model number at price",
+    unitCarouselTitle: "Featured aircon units by brand",
+    unitCarouselText: "Tingnan ang recommended at best-value units sa ibaba. Para sa full available list, buksan ang complete price list o mag-message para sa latest stock at presyo.",
     unitInquireNow: "Inquire Now",
+    unitFullList: "Tingnan ang Full Price List",
     unitUnavailable: "Unavailable",
     unitModelLabel: "Model No.",
     unitPriceLabel: "Price",
+    unitMostPopular: "Most Popular",
+    unitBestPrice: "Best Price",
     unitPriceFallback: "",
     brandsEyebrow: "Nagseserbisyo Kami ng Major Brands",
     brandsTitle: "Maaasahang serbisyo para sa kilalang aircon brands",
@@ -376,7 +409,7 @@ const inlineBrandMarks = {
   "Haier": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="42" y="48" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#005baa">Haier</text></svg>',
   "Koppel": '<svg viewBox="0 0 220 72" aria-hidden="true"><path d="M36 20h28l-22 16 24 16H37L21 39v13H6V20h15v13z" fill="#073f8f"/><text x="76" y="47" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900" fill="#073f8f">KOPPEL</text></svg>',
   "Chiq": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="52" y="47" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="900" fill="#ec1c24">CHiQ</text></svg>',
-  "Other Aircon Brands": '<svg viewBox="0 0 220 72" aria-hidden="true"><circle cx="42" cy="36" r="18" fill="#0676ff"/><path d="M32 36h20M42 26v20" stroke="#fff" stroke-width="5" stroke-linecap="round"/><text x="72" y="33" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900" fill="#06152f">OTHER AIRCON</text><text x="72" y="53" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900" fill="#06152f">BRANDS</text></svg>',
+  "Other Aircon Brands": '<svg viewBox="0 0 260 72" aria-hidden="true"><circle cx="34" cy="36" r="16" fill="#0676ff"/><path d="M26 36h16M34 28v16" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><text x="62" y="31" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="900" fill="#06152f">OTHER AIRCON</text><text x="62" y="51" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="900" fill="#06152f">BRANDS</text></svg>',
   "Panasonic": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="30" y="47" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900" fill="#004b9b">Panasonic</text></svg>',
   "Mitsubishi Electric": '<svg viewBox="0 0 220 72" aria-hidden="true"><path d="M65 14l17 30H48zM48 44l17 30H31zM82 44l17 30H65z" transform="translate(0 -8)" fill="#e60012"/><text x="105" y="34" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" fill="#111">MITSUBISHI</text><text x="105" y="52" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" fill="#111">ELECTRIC</text></svg>',
   "Samsung": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="36" y="47" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="900" letter-spacing="2" fill="#1428a0">SAMSUNG</text></svg>',
@@ -438,15 +471,40 @@ async function applyCmsContent() {
     }));
   }
 
+  if (saved.priceList && typeof saved.priceList === "object") {
+    priceList = {
+      ...priceList,
+      ...saved.priceList,
+      label: { ...priceList.label, ...(saved.priceList.label || {}) },
+      note: { ...priceList.note, ...(saved.priceList.note || {}) }
+    };
+  }
+
   if (Array.isArray(saved.airconUnits)) {
-    airconUnits = airconUnits.map((item, index) => ({
-      ...item,
-      ...(saved.airconUnits[index] || {})
-    }));
+    airconUnits = AIRCON_BRANDS.flatMap((brand) => {
+      const brandUnits = saved.airconUnits.filter((unit) => (unit.brand || "") === brand).slice(0, 2);
+      const legacyUnit = saved.airconUnits[AIRCON_BRANDS.indexOf(brand)] || {};
+      const slots = brandUnits.length ? brandUnits : [legacyUnit];
+      return [0, 1].map((slotIndex) => ({
+        enabled: true,
+        brand,
+        slot: slotIndex + 1,
+        tag: slotIndex === 0 ? "mostPopular" : "bestPrice",
+        model: "",
+        name: { en: "", fil: "" },
+        type: { en: "", fil: "" },
+        price: "",
+        image: "",
+        url: "#quote",
+        ...(slots[slotIndex] || {})
+      }));
+    });
   }
   airconUnits = airconUnits.map((unit, index) => ({
     ...unit,
-    brand: unit.brand || AIRCON_BRANDS[index] || "Other Aircon Brands"
+    brand: unit.brand || AIRCON_BRANDS[Math.floor(index / 2)] || "Other Aircon Brands",
+    slot: unit.slot || (index % 2) + 1,
+    tag: unit.tag || (index % 2 === 0 ? "mostPopular" : "bestPrice")
   }));
 }
 
@@ -590,12 +648,14 @@ function renderUnitCarousel() {
             const price = unit.price || "";
             const url = unit.url || "#quote";
             const image = unit.image || "";
+            const tag = unit.tag === "bestPrice" ? copy.unitBestPrice : copy.unitMostPopular;
             return `
               <article class="brand-unit-row">
                 <div class="unit-image-slot ${image ? "" : "is-empty"}">
                   ${image ? `<img src="${image}" alt="${brand} ${model || "aircon unit"}" loading="lazy">` : `<span>${copy.unitUnavailable}</span>`}
                 </div>
                 <div>
+                  <span class="unit-tag">${tag}</span>
                   <span>${copy.unitModelLabel}</span>
                   <strong>${model || copy.unitUnavailable}</strong>
                 </div>
@@ -623,7 +683,18 @@ function renderUnitCarousel() {
         </div>
       </details>
     `;
-  }).join("");
+  }).join("") + `
+    <div class="unit-full-list-card">
+      <div>
+        <span>${copy.unitCarouselText}</span>
+      </div>
+      <button class="unit-full-list-btn" type="button" data-price-list-open ${priceList.url ? "" : "disabled"}>
+        ${priceList.label?.[currentLanguage] || copy.unitFullList}
+      </button>
+      <p>${priceList.note?.[currentLanguage] || ""}</p>
+    </div>
+  `;
+  setupPriceListModal();
 }
 
 function getActivePromos() {
@@ -647,6 +718,49 @@ function renderPromos() {
   wrapper.querySelector("[data-promo-image]").src = promo.image;
   wrapper.querySelector("[data-promo-image]").alt = title;
   wrapper.querySelector("[data-promo-position]").textContent = `${activePromoIndex + 1} / ${activePromos.length}`;
+}
+
+function setupPriceListModal() {
+  const modal = document.querySelector("[data-price-list-modal]");
+  const open = document.querySelector("[data-price-list-open]");
+  const close = document.querySelector("[data-price-list-close]");
+  const viewer = document.querySelector("[data-price-list-viewer]");
+  const note = document.querySelector("[data-price-list-note]");
+  const inquire = document.querySelector("[data-price-list-inquire]");
+  if (!modal || !open || !close || !viewer) return;
+
+  const url = priceList.url || "";
+  const modalTitle = priceList.label?.[currentLanguage] || t().unitFullList;
+  const noteText = priceList.note?.[currentLanguage] || "";
+
+  note.textContent = noteText;
+  inquire.textContent = t().unitInquireNow;
+  inquire.href = `${business.messenger}?text=${encodeURIComponent("Hi KOOLMATE, I would like to inquire about the aircon price list.")}`;
+  inquire.target = "_blank";
+  inquire.rel = "noopener noreferrer";
+  document.getElementById("priceListTitle").textContent = modalTitle;
+  viewer.innerHTML = !url
+    ? `<div class="price-list-empty">${t().unitUnavailable}</div>`
+    : url.toLowerCase().endsWith(".pdf")
+    ? `<iframe src="${url}" title="${modalTitle}"></iframe>`
+    : `<img src="${url}" alt="${modalTitle}" loading="lazy">`;
+
+  const setOpen = (show) => {
+    modal.hidden = !show;
+    document.body.classList.toggle("modal-open", show);
+    if (show) close.focus();
+  };
+
+  open.onclick = () => {
+    if (priceList.url) setOpen(true);
+  };
+  close.onclick = () => setOpen(false);
+  modal.onclick = (event) => {
+    if (event.target === modal) setOpen(false);
+  };
+  document.onkeydown = (event) => {
+    if (event.key === "Escape" && !modal.hidden) setOpen(false);
+  };
 }
 
 function setupPromos() {
@@ -785,6 +899,7 @@ function setupReveal() {
 }
 
 async function bootSite() {
+  resetHorizontalScroll();
   const savedLanguage = localStorage.getItem("koolMateLanguage");
   if (savedLanguage && translations[savedLanguage]) currentLanguage = savedLanguage;
   await applyCmsContent();
@@ -797,6 +912,9 @@ async function bootSite() {
   setupForm();
   setupPromos();
   setupReveal();
+  window.addEventListener("resize", resetHorizontalScroll);
+  window.addEventListener("orientationchange", () => setTimeout(resetHorizontalScroll, 120));
+  setTimeout(resetHorizontalScroll, 250);
 }
 
 bootSite();

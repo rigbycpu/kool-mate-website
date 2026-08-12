@@ -19,28 +19,481 @@
     "workText": "Malapit nang maipakita ang totoong installation, cleaning at repair project photos."
   },
   "workItems": [
-    { "type": "empty", "title": { "en": "Installation Work", "fil": "Installation Work" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" },
-    { "type": "empty", "title": { "en": "Aircon Cleaning", "fil": "Aircon Cleaning" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" },
-    { "type": "empty", "title": { "en": "Repair Service", "fil": "Repair Service" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" },
-    { "type": "empty", "title": { "en": "Maintenance Visit", "fil": "Maintenance Visit" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" },
-    { "type": "empty", "title": { "en": "Commercial Service", "fil": "Commercial Service" }, "status": { "en": "", "fil": "" }, "image": "", "url": "" }
+    {
+      "type": "empty",
+      "title": {
+        "en": "Installation Work",
+        "fil": "Installation Work"
+      },
+      "status": {
+        "en": "",
+        "fil": ""
+      },
+      "image": "",
+      "url": ""
+    },
+    {
+      "type": "empty",
+      "title": {
+        "en": "Aircon Cleaning",
+        "fil": "Aircon Cleaning"
+      },
+      "status": {
+        "en": "",
+        "fil": ""
+      },
+      "image": "",
+      "url": ""
+    },
+    {
+      "type": "empty",
+      "title": {
+        "en": "Repair Service",
+        "fil": "Repair Service"
+      },
+      "status": {
+        "en": "",
+        "fil": ""
+      },
+      "image": "",
+      "url": ""
+    },
+    {
+      "type": "empty",
+      "title": {
+        "en": "Maintenance Visit",
+        "fil": "Maintenance Visit"
+      },
+      "status": {
+        "en": "",
+        "fil": ""
+      },
+      "image": "",
+      "url": ""
+    },
+    {
+      "type": "empty",
+      "title": {
+        "en": "Commercial Service",
+        "fil": "Commercial Service"
+      },
+      "status": {
+        "en": "",
+        "fil": ""
+      },
+      "image": "",
+      "url": ""
+    }
   ],
   "promos": [
-    { "enabled": true, "title": { "en": "Cooler, cleaner comfort", "fil": "Mas malamig at malinis" }, "image": "assets/promo-cool-home.jpg", "url": "#quote" },
-    { "enabled": true, "title": { "en": "Aircon not cooling?", "fil": "Hindi nagpapalamig ang aircon?" }, "image": "assets/promo-aircon-solution.jpg", "url": "#services" },
-    { "enabled": true, "title": { "en": "Cool comfort every day", "fil": "Komportableng lamig araw-araw" }, "image": "assets/promo-comfort-everyday.jpg", "url": "#quote" },
-    { "enabled": true, "title": { "en": "Fast maintenance service", "fil": "Mabilis na maintenance service" }, "image": "assets/promo-lamig-solusyon.jpg", "url": "#services" }
+    {
+      "enabled": true,
+      "title": {
+        "en": "Cooler, cleaner comfort",
+        "fil": "Mas malamig at malinis"
+      },
+      "image": "assets/promo-cool-home.jpg",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "title": {
+        "en": "Aircon not cooling?",
+        "fil": "Hindi nagpapalamig ang aircon?"
+      },
+      "image": "assets/promo-aircon-solution.jpg",
+      "url": "#services"
+    },
+    {
+      "enabled": true,
+      "title": {
+        "en": "Cool comfort every day",
+        "fil": "Komportableng lamig araw-araw"
+      },
+      "image": "assets/promo-comfort-everyday.jpg",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "title": {
+        "en": "Fast maintenance service",
+        "fil": "Mabilis na maintenance service"
+      },
+      "image": "assets/promo-lamig-solusyon.jpg",
+      "url": "#services"
+    }
   ],
   "airconUnits": [
-    { "enabled": true, "brand": "Midea", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
-    { "enabled": true, "brand": "Carrier", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
-    { "enabled": true, "brand": "American Home", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
-    { "enabled": true, "brand": "TCL", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
-    { "enabled": true, "brand": "Daikin", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
-    { "enabled": true, "brand": "LG", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
-    { "enabled": true, "brand": "Haier", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
-    { "enabled": true, "brand": "Koppel", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
-    { "enabled": true, "brand": "Chiq", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" },
-    { "enabled": true, "brand": "Other Aircon Brands", "model": "", "name": { "en": "", "fil": "" }, "type": { "en": "", "fil": "" }, "price": "", "image": "", "url": "#quote" }
-  ]
+    {
+      "enabled": true,
+      "brand": "Midea",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Midea",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Carrier",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Carrier",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "American Home",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "American Home",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "TCL",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "TCL",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Daikin",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Daikin",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "LG",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "LG",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Haier",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Haier",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Koppel",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Koppel",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Chiq",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Chiq",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Other Aircon Brands",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Other Aircon Brands",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    }
+  ],
+  "priceList": {
+    "url": "",
+    "label": {
+      "en": "View Full Price List",
+      "fil": "Tingnan ang Full Price List"
+    },
+    "note": {
+      "en": "Prices and availability may change. Please message us to confirm the latest stock and final quote.",
+      "fil": "Maaaring magbago ang presyo at availability. Mag-message para ma-confirm ang latest stock at final quote."
+    }
+  }
 }

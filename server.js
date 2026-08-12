@@ -22,6 +22,7 @@ const mimeTypes = {
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".webp": "image/webp",
+  ".pdf": "application/pdf",
   ".svg": "image/svg+xml",
   ".ico": "image/x-icon"
 };
@@ -125,12 +126,12 @@ function serveStatic(req, res, pathname) {
 }
 
 function saveUpload(payload) {
-  const match = String(payload.dataUrl || "").match(/^data:(image\/(?:png|jpeg|jpg|webp));base64,([A-Za-z0-9+/=]+)$/);
-  if (!match) throw new Error("Upload must be a PNG, JPG, or WEBP image.");
-  const extension = match[1].includes("png") ? ".png" : match[1].includes("webp") ? ".webp" : ".jpg";
-  const filename = `work-${Date.now()}-${crypto.randomBytes(4).toString("hex")}${extension}`;
+  const match = String(payload.dataUrl || "").match(/^data:(image\/(?:png|jpeg|jpg|webp)|application\/pdf);base64,([A-Za-z0-9+/=]+)$/);
+  if (!match) throw new Error("Upload must be a PNG, JPG, WEBP, or PDF file.");
+  const extension = match[1] === "application/pdf" ? ".pdf" : match[1].includes("png") ? ".png" : match[1].includes("webp") ? ".webp" : ".jpg";
+  const filename = `cms-${Date.now()}-${crypto.randomBytes(4).toString("hex")}${extension}`;
   const buffer = Buffer.from(match[2], "base64");
-  if (buffer.length > 5_000_000) throw new Error("Image must be 5MB or smaller.");
+  if (buffer.length > 5_000_000) throw new Error("File must be 5MB or smaller.");
   fs.writeFileSync(path.join(uploadsDir, filename), buffer);
   return `/uploads/${filename}`;
 }
