@@ -2,8 +2,24 @@
   publish = "."
   functions = "netlify/functions"
 
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
+  force = true
+
 [[headers]]
   for = "/admin.html"
+  [headers.values]
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/admin.js"
+  [headers.values]
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/script.js"
   [headers.values]
     Cache-Control = "no-store"
 
