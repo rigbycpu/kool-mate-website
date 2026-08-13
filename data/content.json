@@ -140,7 +140,7 @@
       "brand": "Midea",
       "slot": 1,
       "tag": "mostPopular",
-      "model": "Celest PRO MSCE-13CRFN8",
+      "model": "Celest PRO MSCE-13CRFN8-F.DC",
       "capacity": "1.5HP",
       "name": {
         "en": "",
@@ -156,11 +156,11 @@
     },
     {
       "enabled": true,
-      "brand": "Midea",
+      "brand": "Carrier",
       "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "capacity": "",
+      "tag": "mostPopular",
+      "model": "AURA FP-53CP009308-1",
+      "capacity": "1.0HP",
       "name": {
         "en": "",
         "fil": ""
@@ -169,17 +169,17 @@
         "en": "",
         "fil": ""
       },
-      "price": "",
+      "price": "123456",
       "image": "",
       "url": "#quote"
     },
     {
       "enabled": true,
-      "brand": "Carrier",
+      "brand": "American Home",
       "slot": 1,
       "tag": "mostPopular",
-      "model": "",
-      "capacity": "",
+      "model": "F.DC INVERTER AHACMINV3HP24",
+      "capacity": "3.0HP",
       "name": {
         "en": "",
         "fil": ""
@@ -188,7 +188,7 @@
         "en": "",
         "fil": ""
       },
-      "price": "",
+      "price": "123456",
       "image": "",
       "url": "#quote"
     },
