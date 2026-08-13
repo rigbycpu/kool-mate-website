@@ -514,7 +514,7 @@ function imagePreview(src, alt, fallbackText) {
   if (!url) return `<span>${fallbackText}</span>`;
   const retryUrl = url.replace(/^\//, "");
   const blocked = uiText[cmsLanguage].imageBlocked;
-  return `<img src="${url}" alt="${alt}" data-retry-src="${retryUrl}" onerror="if (!this.dataset.retried && this.dataset.retrySrc && this.dataset.retrySrc !== this.getAttribute('src')) { this.dataset.retried = 'true'; this.src = this.dataset.retrySrc; } else { this.replaceWith(Object.assign(document.createElement('span'), { className: 'image-blocked-message', textContent: '${blocked}' })); }">`;
+  return `<img src="${escapeAttribute(url)}" alt="${escapeAttribute(alt)}" data-retry-src="${escapeAttribute(retryUrl)}" onerror="if (!this.dataset.retried && this.dataset.retrySrc && this.dataset.retrySrc !== this.getAttribute('src')) { this.dataset.retried = 'true'; this.src = this.dataset.retrySrc; } else { this.replaceWith(Object.assign(document.createElement('span'), { className: 'image-blocked-message', textContent: '${escapeAttribute(blocked)}' })); }">`;
 }
 
 function sourceChoiceNote(source) {
@@ -711,6 +711,14 @@ function stripHtml(value) {
   const template = document.createElement("template");
   template.innerHTML = (value || "").replace(/<br\s*\/?>/gi, " ");
   return template.content.textContent || "";
+}
+
+function escapeAttribute(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 function collectFormState() {

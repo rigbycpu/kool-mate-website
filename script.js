@@ -574,6 +574,14 @@ function t() {
   return translations[currentLanguage];
 }
 
+function escapeAttribute(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
 function renderBrandMark(brand, compact = false) {
   const safeBrand = brand || "Aircon Brand";
   return `
@@ -588,7 +596,7 @@ function renderSafeImage(src, alt, attrs = "") {
   const url = normalizeAssetUrl(src);
   if (!url) return "";
   const retryUrl = url.replace(/^\//, "");
-  return `<img src="${url}" alt="${alt}" ${attrs} data-retry-src="${retryUrl}" onerror="if (!this.dataset.retried && this.dataset.retrySrc && this.dataset.retrySrc !== this.getAttribute('src')) { this.dataset.retried = 'true'; this.src = this.dataset.retrySrc; } else { this.closest('.unit-image-slot,.work-placeholder,.promo-card')?.classList.add('image-error'); this.remove(); }">`;
+  return `<img src="${escapeAttribute(url)}" alt="${escapeAttribute(alt)}" ${attrs} data-retry-src="${escapeAttribute(retryUrl)}" onerror="if (!this.dataset.retried && this.dataset.retrySrc && this.dataset.retrySrc !== this.getAttribute('src')) { this.dataset.retried = 'true'; this.src = this.dataset.retrySrc; } else { this.closest('.unit-image-slot,.work-placeholder,.promo-card')?.classList.add('image-error'); this.remove(); }">`;
 }
 
 function applyTranslations() {
