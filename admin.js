@@ -733,6 +733,10 @@ function readFileAsDataUrl(file) {
 async function uploadFile(file, statusMessage) {
   setStatus(statusMessage);
   const dataUrl = await readFileAsDataUrl(file);
+  if (file.type.startsWith("image/")) {
+    if (file.size > 1_500_000) throw new Error("Image must be 1.5MB or smaller. Please compress it first.");
+    return { ok: true, url: dataUrl, embedded: true };
+  }
   const response = await fetch(API_UPLOAD, {
     method: "POST",
     headers: { "content-type": "application/json" },
