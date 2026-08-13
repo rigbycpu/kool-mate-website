@@ -232,6 +232,25 @@
     },
     {
       "enabled": true,
+      "brand": "American Home",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
       "brand": "TCL",
       "slot": 1,
       "tag": "mostPopular",
@@ -251,25 +270,6 @@
     },
     {
       "enabled": true,
-      "brand": "Daikin",
-      "slot": 1,
-      "tag": "mostPopular",
-      "model": "AMIHAN ECO FTKE25AV/RKE25AVA",
-      "capacity": "1.5",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "123456",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "enabled": true,
       "brand": "TCL",
       "slot": 2,
       "tag": "bestPrice",
@@ -292,8 +292,8 @@
       "brand": "Daikin",
       "slot": 1,
       "tag": "mostPopular",
-      "model": "",
-      "capacity": "",
+      "model": "AMIHAN ECO FTKE25AV",
+      "capacity": "1.5",
       "name": {
         "en": "",
         "fil": ""
@@ -302,15 +302,15 @@
         "en": "",
         "fil": ""
       },
-      "price": "",
+      "price": "123456",
       "image": "",
       "url": "#quote"
     },
     {
       "enabled": true,
       "brand": "Daikin",
-      "slot": 2,
-      "tag": "bestPrice",
+      "slot": 1,
+      "tag": "mostPopular",
       "model": "",
       "capacity": "",
       "name": {
