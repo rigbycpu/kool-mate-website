@@ -15,7 +15,7 @@ const productImages = {
 };
 
 const CMS_STORAGE_KEY = "koolMateCmsContent";
-const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Koppel", "Chiq", "Other Aircon Brands"];
+const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Koppel", "Chiq", "Hisense"];
 const UNIT_TAGS = {
   mostPopular: "Most Popular",
   bestPrice: "Best Price"
@@ -399,7 +399,7 @@ const brandLogoMap = new Map([
   ["Haier", "assets/brand-haier.svg"],
   ["Koppel", "assets/brand-koppel.svg"],
   ["Chiq", "assets/brand-chiq.svg"],
-  ["Other Aircon Brands", "assets/brand-other-aircon.svg"]
+  ["Hisense", "assets/brand-hisense.svg"]
 ]);
 
 const inlineBrandMarks = {
@@ -412,7 +412,7 @@ const inlineBrandMarks = {
   "Haier": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="42" y="48" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#005baa">Haier</text></svg>',
   "Koppel": '<svg viewBox="0 0 220 72" aria-hidden="true"><path d="M36 20h28l-22 16 24 16H37L21 39v13H6V20h15v13z" fill="#073f8f"/><text x="76" y="47" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900" fill="#073f8f">KOPPEL</text></svg>',
   "Chiq": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="52" y="47" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="900" fill="#ec1c24">CHiQ</text></svg>',
-  "Other Aircon Brands": '<svg viewBox="0 0 260 72" aria-hidden="true"><circle cx="34" cy="36" r="16" fill="#0676ff"/><path d="M26 36h16M34 28v16" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><text x="62" y="31" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="900" fill="#06152f">OTHER AIRCON</text><text x="62" y="51" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="900" fill="#06152f">BRANDS</text></svg>',
+  "Hisense": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="31" y="47" font-family="Arial, Helvetica, sans-serif" font-size="35" font-weight="900" fill="#00a0df">Hisense</text></svg>',
   "Panasonic": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="30" y="47" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900" fill="#004b9b">Panasonic</text></svg>',
   "Mitsubishi Electric": '<svg viewBox="0 0 220 72" aria-hidden="true"><path d="M65 14l17 30H48zM48 44l17 30H31zM82 44l17 30H65z" transform="translate(0 -8)" fill="#e60012"/><text x="105" y="34" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" fill="#111">MITSUBISHI</text><text x="105" y="52" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" fill="#111">ELECTRIC</text></svg>',
   "Samsung": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="36" y="47" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="900" letter-spacing="2" fill="#1428a0">SAMSUNG</text></svg>',
@@ -528,7 +528,7 @@ async function applyCmsContent() {
   }
   airconUnits = airconUnits.map((unit, index) => ({
     ...unit,
-    brand: unit.brand || AIRCON_BRANDS[Math.floor(index / 2)] || "Other Aircon Brands",
+    brand: unit.brand || AIRCON_BRANDS[Math.floor(index / 2)] || "Hisense",
     slot: unit.slot || (index % 2) + 1,
     tag: unit.tag || (index % 2 === 0 ? "mostPopular" : "bestPrice"),
     image: normalizeAssetUrl(unit.image),

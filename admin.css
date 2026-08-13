@@ -659,6 +659,25 @@ legend {
   font-weight: 900;
   text-transform: uppercase;
 }
+.unit-edit-preview .image-blocked-message,
+.promo-edit-preview .image-blocked-message,
+.mini-work-card .image-blocked-message {
+  display: grid;
+  place-items: center;
+  width: calc(100% - 20px);
+  min-height: 96px;
+  margin: 10px;
+  padding: 12px;
+  border: 1px solid rgba(255,209,26,.5);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(255,209,26,.18), rgba(255,255,255,.8));
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.35;
+  text-align: center;
+  text-transform: none;
+}
 .promo-edit-fields,
 .unit-edit-fields {
   min-width: 0;

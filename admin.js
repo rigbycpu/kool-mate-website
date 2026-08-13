@@ -1,5 +1,5 @@
 const CMS_STORAGE_KEY = "koolMateCmsContent";
-const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Koppel", "Chiq", "Other Aircon Brands"];
+const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Koppel", "Chiq", "Hisense"];
 const UNIT_TAGS = {
   mostPopular: "Most Popular",
   bestPrice: "Best Price"
@@ -21,7 +21,7 @@ const sectionManuals = {
       lead: "Use this section for the units the client wants to highlight.",
       items: [
         "Each brand has 1-2 featured slots only: best sellers, best price, or most popular.",
-        "Upload a clean unit photo or paste an image URL, but do not use both at the same time.",
+        "Upload a clean unit photo, or paste a direct image URL only. Google image/search links may not preview.",
         "Fill Model No., Capacity, and Price when available.",
         "Use the Full Price List upload for the complete list image/PDF."
       ]
@@ -33,7 +33,7 @@ const sectionManuals = {
         "Upload square or vertical promo posters for best display.",
         "Use the Show Ad checkbox to hide or show each promo.",
         "Click Link can be #quote, #services, a Facebook post, or Messenger.",
-        "Upload a poster OR paste a poster image URL. The latest choice replaces the old one."
+        "Upload a poster OR paste a direct poster image URL. Google image/search links may not preview."
       ]
     },
     inquiries: {
@@ -62,7 +62,7 @@ const sectionManuals = {
       lead: "Gamitin ito para sa units na gustong i-highlight ng client.",
       items: [
         "Bawat brand ay may 1-2 featured slots lang: best sellers, best price, o most popular.",
-        "Mag-upload ng malinaw na unit photo o mag-paste ng image URL, pero huwag sabay.",
+        "Mag-upload ng malinaw na unit photo, o mag-paste ng direct image URL lang. Google image/search links minsan hindi lumalabas.",
         "Ilagay ang Model No., Capacity, at Price kapag available.",
         "Gamitin ang Full Price List upload para sa kumpletong list image/PDF."
       ]
@@ -74,7 +74,7 @@ const sectionManuals = {
         "Square o vertical promo posters ang pinaka-ok tingnan.",
         "Gamitin ang Show Ad checkbox para itago o ipakita ang promo.",
         "Ang Click Link puwedeng #quote, #services, Facebook post, o Messenger.",
-        "Mag-upload ng poster O mag-paste ng poster image URL. Ang huling pinili ang papalit."
+        "Mag-upload ng poster O mag-paste ng direct poster image URL. Google image/search links minsan hindi lumalabas."
       ]
     },
     inquiries: {
@@ -208,11 +208,12 @@ const uiText = {
     promoUrl: "Promo destination link",
     unitsHelp: "Edit 1-2 featured units per brand. Use the Full Price List upload/link for the complete available aircon list.",
     priceListTitle: "Full price list",
-    priceListUrl: "Price list link",
+    priceListUrl: "Price list file/link URL",
     priceListUpload: "Upload price list image/PDF",
-    sourceChoiceNote: "Choose only one source: upload a file OR paste a link. The latest choice will be used.",
+    sourceChoiceNote: "Upload the price list file OR paste an existing public file link. Do not use both. The latest choice will be used.",
     usingUpload: "Currently using uploaded file. Pasting a new link will replace this source.",
     usingLink: "Currently using pasted link. Uploading a file will replace this source.",
+    imageBlocked: "Image preview did not load. Google/search-result links are often blocked. Please upload the image file instead.",
     priceListLabelEn: "Button label English",
     priceListLabelFil: "Button label Filipino",
     priceListNoteEn: "Small note English",
@@ -230,7 +231,7 @@ const uiText = {
     unitTypeFil: "Unit type Filipino",
     unitPrice: "Price label",
     unitImage: "Unit image URL",
-    unitUrl: "Inquire button link",
+    unitUrl: "Inquire button destination",
     previewLabel: "Live Look",
     inquiriesTitle: "Customer inquiries",
     inquiriesHelp: "New quote requests from the website form appear here.",
@@ -293,11 +294,12 @@ const uiText = {
     promoUrl: "Promo destination link",
     unitsHelp: "Mag-edit ng 1-2 featured units kada brand. Gamitin ang Full Price List upload/link para sa kumpletong available aircon list.",
     priceListTitle: "Full price list",
-    priceListUrl: "Price list link",
+    priceListUrl: "Price list file/link URL",
     priceListUpload: "Upload price list image/PDF",
-    sourceChoiceNote: "Pumili lang ng isa: mag-upload ng file O mag-paste ng link. Ang pinakahuling pinili ang gagamitin.",
+    sourceChoiceNote: "I-upload ang price list file O mag-paste ng existing public file link. Huwag pagsabayin. Ang huling pinili ang gagamitin.",
     usingUpload: "Uploaded file ang ginagamit ngayon. Kapag nag-paste ng bagong link, ito ang papalit.",
     usingLink: "Pasted link ang ginagamit ngayon. Kapag nag-upload ng file, ito ang papalit.",
+    imageBlocked: "Hindi nag-load ang image preview. Madalas blocked ang Google/search-result links. Mas okay i-upload ang image file mismo.",
     priceListLabelEn: "Button label English",
     priceListLabelFil: "Button label Filipino",
     priceListNoteEn: "Small note English",
@@ -315,7 +317,7 @@ const uiText = {
     unitTypeFil: "Unit type Filipino",
     unitPrice: "Price label",
     unitImage: "Unit image URL",
-    unitUrl: "Inquire button link",
+    unitUrl: "Inquire button destination",
     previewLabel: "Live Look",
     inquiriesTitle: "Customer inquiries",
     inquiriesHelp: "Dito lalabas ang bagong quote requests mula sa website form.",
@@ -495,7 +497,8 @@ function fillForm() {
 function imagePreview(src, alt, fallbackText) {
   const url = normalizeAssetUrl(src);
   if (!url) return `<span>${fallbackText}</span>`;
-  return `<img src="${url}" alt="${alt}" onerror="this.replaceWith(Object.assign(document.createElement('span'), { textContent: 'Image link blocked' }))">`;
+  const blocked = uiText[cmsLanguage].imageBlocked;
+  return `<img src="${url}" alt="${alt}" onerror="this.replaceWith(Object.assign(document.createElement('span'), { className: 'image-blocked-message', textContent: '${blocked}' }))">`;
 }
 
 function sourceChoiceNote(source) {
@@ -663,7 +666,10 @@ function renderUnitEditor() {
           <label><span>${copy.unitImage}</span><input name="airconUnits.${index}.image" placeholder="assets/unit.jpg or https://..."></label>
           <label><span>${copy.workUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp" data-unit-upload="${index}"></label>
           <div class="wide">${sourceChoiceNote(unit.imageSource)}</div>
-          <label><span>${copy.unitUrl}</span><input name="airconUnits.${index}.url" placeholder="#quote"></label>
+          <label class="locked-field">
+            <span>${copy.unitUrl} <em>${copy.lockedBadge}</em></span>
+            <input name="airconUnits.${index}.url" placeholder="#quote" data-code-lock readonly aria-readonly="true">
+          </label>
         </div>
       </div>
     </article>
