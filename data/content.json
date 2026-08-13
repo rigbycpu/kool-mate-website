@@ -151,7 +151,7 @@
         "fil": ""
       },
       "price": "123456",
-      "image": "/uploads/cms-1786589277393-de8d6f93.jpg",
+      "image": "/uploads/cms-1786589850241-45b8e92d.jpg",
       "url": "#quote"
     },
     {
@@ -233,8 +233,8 @@
     {
       "enabled": true,
       "brand": "American Home",
-      "slot": 2,
-      "tag": "bestPrice",
+      "slot": 1,
+      "tag": "mostPopular",
       "model": "",
       "capacity": "",
       "name": {
@@ -254,8 +254,8 @@
       "brand": "TCL",
       "slot": 1,
       "tag": "mostPopular",
-      "model": "COOLPRO OBSIDIAN PLUS (TAC-19CSA/BEI)",
-      "capacity": "2.0HP",
+      "model": "",
+      "capacity": "",
       "name": {
         "en": "",
         "fil": ""
@@ -264,7 +264,7 @@
         "en": "",
         "fil": ""
       },
-      "price": "123456",
+      "price": "",
       "image": "",
       "url": "#quote"
     },
@@ -292,8 +292,8 @@
       "brand": "Daikin",
       "slot": 1,
       "tag": "mostPopular",
-      "model": "AMIHAN ECO FTKE25AV",
-      "capacity": "1.5",
+      "model": "",
+      "capacity": "",
       "name": {
         "en": "",
         "fil": ""
@@ -302,15 +302,15 @@
         "en": "",
         "fil": ""
       },
-      "price": "123456",
+      "price": "",
       "image": "",
       "url": "#quote"
     },
     {
       "enabled": true,
       "brand": "Daikin",
-      "slot": 1,
-      "tag": "mostPopular",
+      "slot": 2,
+      "tag": "bestPrice",
       "model": "",
       "capacity": "",
       "name": {
