@@ -459,6 +459,60 @@ legend {
   color: var(--muted);
   font-weight: 700;
 }
+.section-manual {
+  display: grid;
+  grid-template-columns: minmax(210px, .8fr) minmax(0, 1.6fr);
+  gap: 16px;
+  margin: 0 0 16px;
+  padding: 15px 16px;
+  border: 1px solid rgba(6,118,255,.18);
+  border-left: 4px solid var(--blue);
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, rgba(6,118,255,.08), rgba(255,209,26,.08)),
+    #fff;
+  box-shadow: 0 14px 34px rgba(8,42,91,.07);
+}
+.section-manual strong {
+  display: block;
+  color: var(--navy);
+  font-size: 15px;
+  text-transform: uppercase;
+}
+.section-manual p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+.section-manual ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.section-manual li {
+  position: relative;
+  padding-left: 18px;
+  color: #33425e;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+.section-manual li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .58em;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(255,209,26,.18);
+}
 .lock-note {
   display: grid;
   gap: 4px;
@@ -652,6 +706,24 @@ legend {
   gap: 12px;
 }
 .work-fields .wide { grid-column: 1 / -1; }
+.source-choice-note {
+  margin: -2px 0 2px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,209,26,.42);
+  border-left: 4px solid var(--gold);
+  border-radius: 9px;
+  background: linear-gradient(90deg, rgba(255,209,26,.15), rgba(6,118,255,.05));
+  color: #31415e;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+.source-choice-note.is-active {
+  border-color: rgba(6,118,255,.26);
+  border-left-color: var(--blue);
+  background: linear-gradient(90deg, rgba(6,118,255,.12), rgba(255,255,255,.78));
+  color: var(--navy);
+}
 .inquiry-toolbar {
   display: flex;
   align-items: center;
@@ -818,6 +890,10 @@ legend {
   .two-lang,
   .work-fields,
   .inquiry-meta {
+    grid-template-columns: 1fr;
+  }
+  .section-manual,
+  .section-manual ul {
     grid-template-columns: 1fr;
   }
   .promo-edit-card,

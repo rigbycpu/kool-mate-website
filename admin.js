@@ -4,6 +4,90 @@ const UNIT_TAGS = {
   mostPopular: "Most Popular",
   bestPrice: "Best Price"
 };
+const sectionManuals = {
+  en: {
+    work: {
+      title: "Our Work Manual",
+      lead: "Use this section only when real project proof is ready.",
+      items: [
+        "Choose Empty if there is no public work sample yet.",
+        "Choose Photo to upload an installation, cleaning, repair, or maintenance photo.",
+        "Choose Link if the proof is already posted on Facebook or another page.",
+        "Use only one source for the photo: upload a file OR paste a Photo URL."
+      ]
+    },
+    units: {
+      title: "Aircon Units Manual",
+      lead: "Use this section for the units the client wants to highlight.",
+      items: [
+        "Each brand has 1-2 featured slots only: best sellers, best price, or most popular.",
+        "Upload a clean unit photo or paste an image URL, but do not use both at the same time.",
+        "Fill Model No., Capacity, and Price when available.",
+        "Use the Full Price List upload for the complete list image/PDF."
+      ]
+    },
+    promos: {
+      title: "Featured Promos Manual",
+      lead: "These are the floating ad cards on the public website.",
+      items: [
+        "Upload square or vertical promo posters for best display.",
+        "Use the Show Ad checkbox to hide or show each promo.",
+        "Click Link can be #quote, #services, a Facebook post, or Messenger.",
+        "Upload a poster OR paste a poster image URL. The latest choice replaces the old one."
+      ]
+    },
+    inquiries: {
+      title: "Inquiries Manual",
+      lead: "This section is for checking customer messages sent through the website form.",
+      items: [
+        "Click Refresh to check new inquiries.",
+        "Mark done after the customer has been contacted.",
+        "Messenger and SMS buttons on the public site are still the fastest customer contact options."
+      ]
+    }
+  },
+  fil: {
+    work: {
+      title: "Manual Para sa Our Work",
+      lead: "Gamitin lang ito kapag may totoong project proof na ready ipakita.",
+      items: [
+        "Piliin ang Empty kung wala pang public work sample.",
+        "Piliin ang Photo para mag-upload ng installation, cleaning, repair, o maintenance photo.",
+        "Piliin ang Link kung naka-post na ang proof sa Facebook o ibang page.",
+        "Isa lang ang gamitin sa photo source: file upload O Photo URL."
+      ]
+    },
+    units: {
+      title: "Manual Para sa Aircon Units",
+      lead: "Gamitin ito para sa units na gustong i-highlight ng client.",
+      items: [
+        "Bawat brand ay may 1-2 featured slots lang: best sellers, best price, o most popular.",
+        "Mag-upload ng malinaw na unit photo o mag-paste ng image URL, pero huwag sabay.",
+        "Ilagay ang Model No., Capacity, at Price kapag available.",
+        "Gamitin ang Full Price List upload para sa kumpletong list image/PDF."
+      ]
+    },
+    promos: {
+      title: "Manual Para sa Featured Promos",
+      lead: "Ito ang floating ad cards sa public website.",
+      items: [
+        "Square o vertical promo posters ang pinaka-ok tingnan.",
+        "Gamitin ang Show Ad checkbox para itago o ipakita ang promo.",
+        "Ang Click Link puwedeng #quote, #services, Facebook post, o Messenger.",
+        "Mag-upload ng poster O mag-paste ng poster image URL. Ang huling pinili ang papalit."
+      ]
+    },
+    inquiries: {
+      title: "Manual Para sa Inquiries",
+      lead: "Dito makikita ang customer messages mula sa website form.",
+      items: [
+        "Pindutin ang Refresh para makita ang bagong inquiries.",
+        "I-mark as done kapag nakausap na ang customer.",
+        "Messenger at SMS buttons sa public site pa rin ang pinakamabilis na contact option."
+      ]
+    }
+  }
+};
 const API_BASE = location.hostname === "localhost" ? "/api" : "/.netlify/functions";
 const API_CONTENT = `${API_BASE}/content`;
 const API_SESSION = `${API_BASE}/session`;
@@ -47,6 +131,7 @@ const defaults = {
   ],
   priceList: {
     url: "",
+    source: "",
     label: { en: "View Full Price List", fil: "Tingnan ang Full Price List" },
     note: {
       en: "Prices and availability may change. Please message us to confirm the latest stock and final quote.",
@@ -120,11 +205,14 @@ const uiText = {
     promoTitleEn: "Promo title English",
     promoTitleFil: "Promo title Filipino",
     promoImage: "Poster image URL",
-    promoUrl: "Click link",
+    promoUrl: "Promo destination link",
     unitsHelp: "Edit 1-2 featured units per brand. Use the Full Price List upload/link for the complete available aircon list.",
     priceListTitle: "Full price list",
     priceListUrl: "Price list link",
     priceListUpload: "Upload price list image/PDF",
+    sourceChoiceNote: "Choose only one source: upload a file OR paste a link. The latest choice will be used.",
+    usingUpload: "Currently using uploaded file. Pasting a new link will replace this source.",
+    usingLink: "Currently using pasted link. Uploading a file will replace this source.",
     priceListLabelEn: "Button label English",
     priceListLabelFil: "Button label Filipino",
     priceListNoteEn: "Small note English",
@@ -202,11 +290,14 @@ const uiText = {
     promoTitleEn: "Promo title English",
     promoTitleFil: "Promo title Filipino",
     promoImage: "Poster image URL",
-    promoUrl: "Click link",
+    promoUrl: "Promo destination link",
     unitsHelp: "Mag-edit ng 1-2 featured units kada brand. Gamitin ang Full Price List upload/link para sa kumpletong available aircon list.",
     priceListTitle: "Full price list",
     priceListUrl: "Price list link",
     priceListUpload: "Upload price list image/PDF",
+    sourceChoiceNote: "Pumili lang ng isa: mag-upload ng file O mag-paste ng link. Ang pinakahuling pinili ang gagamitin.",
+    usingUpload: "Uploaded file ang ginagamit ngayon. Kapag nag-paste ng bagong link, ito ang papalit.",
+    usingLink: "Pasted link ang ginagamit ngayon. Kapag nag-upload ng file, ito ang papalit.",
     priceListLabelEn: "Button label English",
     priceListLabelFil: "Button label Filipino",
     priceListNoteEn: "Small note English",
@@ -351,7 +442,10 @@ function normalizeCmsAssets() {
     image: normalizeAssetUrl(unit.image),
     url: normalizeAssetUrl(unit.url)
   }));
-  if (state.priceList) state.priceList.url = normalizeAssetUrl(state.priceList.url);
+  if (state.priceList) {
+    state.priceList.url = normalizeAssetUrl(state.priceList.url);
+    if (!state.priceList.url) state.priceList.source = "";
+  }
 }
 
 function applyUiLanguage() {
@@ -363,9 +457,27 @@ function applyUiLanguage() {
   document.querySelectorAll("[data-lang]").forEach((button) => {
     button.classList.toggle("active", button.dataset.lang === cmsLanguage);
   });
+  renderSectionManuals();
   renderWorkEditor();
   renderUnitEditor();
   renderPromoEditor();
+}
+
+function renderSectionManuals() {
+  const manuals = sectionManuals[cmsLanguage] || sectionManuals.en;
+  document.querySelectorAll("[data-manual]").forEach((node) => {
+    const manual = manuals[node.dataset.manual];
+    if (!manual) return;
+    node.innerHTML = `
+      <div>
+        <strong>${manual.title}</strong>
+        <p>${manual.lead}</p>
+      </div>
+      <ul>
+        ${manual.items.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+    `;
+  });
 }
 
 function fillForm() {
@@ -384,6 +496,40 @@ function imagePreview(src, alt, fallbackText) {
   const url = normalizeAssetUrl(src);
   if (!url) return `<span>${fallbackText}</span>`;
   return `<img src="${url}" alt="${alt}" onerror="this.replaceWith(Object.assign(document.createElement('span'), { textContent: 'Image link blocked' }))">`;
+}
+
+function sourceChoiceNote(source) {
+  const copy = uiText[cmsLanguage];
+  const message = source === "upload" ? copy.usingUpload : source === "link" ? copy.usingLink : copy.sourceChoiceNote;
+  return `<p class="source-choice-note ${source ? "is-active" : ""}">${message}</p>`;
+}
+
+function markUrlSourceFromInput(name) {
+  if (name === "priceList.url") {
+    state.priceList = state.priceList || clone(defaults.priceList);
+    state.priceList.source = state.priceList.url ? "link" : "";
+    return;
+  }
+
+  const workMatch = name.match(/^workItems\.(\d+)\.image$/);
+  if (workMatch) {
+    const item = state.workItems[Number(workMatch[1])];
+    if (item) item.imageSource = item.image ? "link" : "";
+    return;
+  }
+
+  const promoMatch = name.match(/^promos\.(\d+)\.image$/);
+  if (promoMatch) {
+    const promo = state.promos[Number(promoMatch[1])];
+    if (promo) promo.imageSource = promo.image ? "link" : "";
+    return;
+  }
+
+  const unitMatch = name.match(/^airconUnits\.(\d+)\.image$/);
+  if (unitMatch) {
+    const unit = state.airconUnits[Number(unitMatch[1])];
+    if (unit) unit.imageSource = unit.image ? "link" : "";
+  }
 }
 
 function lockCodeFields() {
@@ -419,6 +565,7 @@ function renderWorkEditor() {
         <label><span>${copy.workTitleFil}</span><input name="workItems.${index}.title.fil"></label>
         <label><span>${copy.workImage}</span><input name="workItems.${index}.image" placeholder="assets/work-photo.jpg or https://..."></label>
         <label><span>${copy.workUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp" data-work-upload="${index}"></label>
+        <div class="wide">${sourceChoiceNote(item.imageSource)}</div>
         <label><span>${copy.workUrl}</span><input name="workItems.${index}.url" placeholder="https://facebook.com/..."></label>
         <label><span>${copy.workStatusEn}</span><input name="workItems.${index}.status.en" placeholder="Optional"></label>
         <label><span>${copy.workStatusFil}</span><input name="workItems.${index}.status.fil" placeholder="Optional"></label>
@@ -451,7 +598,11 @@ function renderPromoEditor() {
           <label><span>${copy.promoTitleFil}</span><input name="promos.${index}.title.fil"></label>
           <label><span>${copy.promoImage}</span><input name="promos.${index}.image" placeholder="assets/promo.jpg or https://..."></label>
           <label><span>${copy.workUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp" data-promo-upload="${index}"></label>
-          <label class="wide"><span>${copy.promoUrl}</span><input name="promos.${index}.url" placeholder="#quote or https://..."></label>
+          <div class="wide">${sourceChoiceNote(promo.imageSource)}</div>
+          <label class="wide locked-field">
+            <span>${copy.promoUrl} <em>${copy.lockedBadge}</em></span>
+            <input name="promos.${index}.url" placeholder="#quote or https://..." data-code-lock readonly aria-readonly="true">
+          </label>
         </div>
       </div>
     </article>
@@ -472,6 +623,7 @@ function renderUnitEditor() {
       <div class="work-fields">
         <label class="wide"><span>${copy.priceListUrl}</span><input name="priceList.url" placeholder="assets/aircon-price-list.jpg or https://..."></label>
         <label><span>${copy.priceListUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp,application/pdf" data-price-list-upload></label>
+        <div class="wide">${sourceChoiceNote(state.priceList?.source)}</div>
         <label><span>${copy.priceListLabelEn}</span><input name="priceList.label.en"></label>
         <label><span>${copy.priceListLabelFil}</span><input name="priceList.label.fil"></label>
         <label><span>${copy.priceListNoteEn}</span><input name="priceList.note.en"></label>
@@ -510,6 +662,7 @@ function renderUnitEditor() {
           <label><span>${copy.unitPrice}</span><input name="airconUnits.${index}.price" placeholder=""></label>
           <label><span>${copy.unitImage}</span><input name="airconUnits.${index}.image" placeholder="assets/unit.jpg or https://..."></label>
           <label><span>${copy.workUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp" data-unit-upload="${index}"></label>
+          <div class="wide">${sourceChoiceNote(unit.imageSource)}</div>
           <label><span>${copy.unitUrl}</span><input name="airconUnits.${index}.url" placeholder="#quote"></label>
         </div>
       </div>
@@ -575,11 +728,14 @@ function setupUploads() {
       try {
         const payload = await uploadFile(file, "Uploading price list...");
         state.priceList = state.priceList || clone(defaults.priceList);
+        const replacedLink = state.priceList.source === "link" && state.priceList.url;
         state.priceList.url = payload.url;
+        state.priceList.source = "upload";
+        input.value = "";
         fillForm();
         renderUnitEditor();
         updatePreview();
-        setStatus("Price list uploaded. Click Save Changes to publish.");
+        setStatus(replacedLink ? "Uploaded file replaced the pasted price list link. Click Save Changes to publish." : "Price list uploaded. Click Save Changes to publish.");
       } catch (error) {
         setStatus(error.message || "Upload failed.");
       }
@@ -592,11 +748,15 @@ function setupUploads() {
       const index = Number(input.dataset.workUpload);
       try {
         const payload = await uploadFile(file, "Uploading image...");
+        const replacedLink = state.workItems[index].imageSource === "link" && state.workItems[index].image;
         state.workItems[index].image = payload.url;
+        state.workItems[index].imageSource = "upload";
         state.workItems[index].type = "photo";
+        input.value = "";
         fillForm();
+        renderWorkEditor();
         updatePreview();
-        setStatus("Image uploaded. Click Save Changes to publish.");
+        setStatus(replacedLink ? "Uploaded photo replaced the pasted photo URL. Click Save Changes to publish." : "Image uploaded. Click Save Changes to publish.");
       } catch (error) {
         setStatus(error.message || "Upload failed.");
       }
@@ -609,11 +769,14 @@ function setupUploads() {
       const index = Number(input.dataset.promoUpload);
       try {
         const payload = await uploadFile(file, "Uploading promo image...");
+        const replacedLink = state.promos[index].imageSource === "link" && state.promos[index].image;
         state.promos[index].image = payload.url;
+        state.promos[index].imageSource = "upload";
         state.promos[index].enabled = true;
+        input.value = "";
         fillForm();
         renderPromoEditor();
-        setStatus("Promo image uploaded. Click Save Changes to publish.");
+        setStatus(replacedLink ? "Uploaded promo replaced the pasted poster URL. Click Save Changes to publish." : "Promo image uploaded. Click Save Changes to publish.");
       } catch (error) {
         setStatus(error.message || "Upload failed.");
       }
@@ -626,11 +789,14 @@ function setupUploads() {
       const index = Number(input.dataset.unitUpload);
       try {
         const payload = await uploadFile(file, "Uploading unit image...");
+        const replacedLink = state.airconUnits[index].imageSource === "link" && state.airconUnits[index].image;
         state.airconUnits[index].image = payload.url;
+        state.airconUnits[index].imageSource = "upload";
         state.airconUnits[index].enabled = true;
+        input.value = "";
         fillForm();
         renderUnitEditor();
-        setStatus("Unit image uploaded. Click Save Changes to publish.");
+        setStatus(replacedLink ? "Uploaded unit image replaced the pasted unit image URL. Click Save Changes to publish." : "Unit image uploaded. Click Save Changes to publish.");
       } catch (error) {
         setStatus(error.message || "Upload failed.");
       }
@@ -768,13 +934,15 @@ document.getElementById("cmsForm").addEventListener("submit", async (event) => {
   }
 });
 
-document.getElementById("cmsForm").addEventListener("input", () => {
+document.getElementById("cmsForm").addEventListener("input", (event) => {
   collectFormState();
+  if (event.target?.name) markUrlSourceFromInput(event.target.name);
   updatePreview();
 });
 
-document.getElementById("cmsForm").addEventListener("change", () => {
+document.getElementById("cmsForm").addEventListener("change", (event) => {
   collectFormState();
+  if (event.target?.name) markUrlSourceFromInput(event.target.name);
   updatePreview();
 });
 
