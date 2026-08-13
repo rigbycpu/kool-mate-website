@@ -20,7 +20,7 @@
   },
   "workItems": [
     {
-      "type": "photo",
+      "type": "empty",
       "title": {
         "en": "Installation Work",
         "fil": "Installation Work"
