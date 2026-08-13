@@ -123,388 +123,6 @@
       "url": "#services"
     }
   ],
-  "airconUnits": [
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Midea",
-      "slot": 1,
-      "tag": "mostPopular",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Midea",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Carrier",
-      "slot": 1,
-      "tag": "mostPopular",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Carrier",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "American Home",
-      "slot": 1,
-      "tag": "mostPopular",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "American Home",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "TCL",
-      "slot": 1,
-      "tag": "mostPopular",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "TCL",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Daikin",
-      "slot": 1,
-      "tag": "mostPopular",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Daikin",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "LG",
-      "slot": 1,
-      "tag": "mostPopular",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "LG",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Haier",
-      "slot": 1,
-      "tag": "mostPopular",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Haier",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Koppel",
-      "slot": 1,
-      "tag": "mostPopular",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Koppel",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Chiq",
-      "slot": 1,
-      "tag": "mostPopular",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Chiq",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Hisense",
-      "slot": 1,
-      "tag": "mostPopular",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "capacity": "",
-      "enabled": true,
-      "brand": "Hisense",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    }
-  ],
   "priceList": {
     "url": "",
     "label": {
@@ -515,5 +133,387 @@
       "en": "Prices and availability may change. Please message us to confirm the latest stock and final quote.",
       "fil": "Maaaring magbago ang presyo at availability. Mag-message para ma-confirm ang latest stock at final quote."
     }
-  }
+  },
+  "airconUnits": [
+    {
+      "enabled": true,
+      "brand": "Midea",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "/uploads/cms-1786593097100-316c9ef5.jpg",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Midea",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Carrier",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Carrier",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "American Home",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "American Home",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "TCL",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "TCL",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Daikin",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Daikin",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "LG",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "LG",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Haier",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Haier",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Koppel",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Koppel",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Chiq",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Chiq",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Daikin",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Other Aircon Brands",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    }
+  ]
 }
