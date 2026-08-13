@@ -21,7 +21,7 @@ const sectionManuals = {
       lead: "Use this section for the units the client wants to highlight.",
       items: [
         "Each brand has 1-2 featured slots only: best sellers, best price, or most popular.",
-        "Upload a clean unit photo, or paste a direct image URL only. Google image/search links may not preview.",
+        "Upload any photo file. The CMS will optimize it for the website automatically.",
         "Fill Model No., Capacity, and Price when available.",
         "Use the Full Price List upload for the complete list image/PDF."
       ]
@@ -33,7 +33,7 @@ const sectionManuals = {
         "Upload square or vertical promo posters for best display.",
         "Use the Show Ad checkbox to hide or show each promo.",
         "Click Link can be #quote, #services, a Facebook post, or Messenger.",
-        "Upload a poster OR paste a direct poster image URL. Google image/search links may not preview."
+        "Upload any promo photo/poster. The CMS will optimize it for the website automatically."
       ]
     },
     inquiries: {
@@ -62,7 +62,7 @@ const sectionManuals = {
       lead: "Gamitin ito para sa units na gustong i-highlight ng client.",
       items: [
         "Bawat brand ay may 1-2 featured slots lang: best sellers, best price, o most popular.",
-        "Mag-upload ng malinaw na unit photo, o mag-paste ng direct image URL lang. Google image/search links minsan hindi lumalabas.",
+        "Mag-upload ng kahit anong photo file. I-o-optimize ito ng CMS para gumana sa website.",
         "Ilagay ang Model No., Capacity, at Price kapag available.",
         "Gamitin ang Full Price List upload para sa kumpletong list image/PDF."
       ]
@@ -74,7 +74,7 @@ const sectionManuals = {
         "Square o vertical promo posters ang pinaka-ok tingnan.",
         "Gamitin ang Show Ad checkbox para itago o ipakita ang promo.",
         "Ang Click Link puwedeng #quote, #services, Facebook post, o Messenger.",
-        "Mag-upload ng poster O mag-paste ng direct poster image URL. Google image/search links minsan hindi lumalabas."
+        "Mag-upload ng kahit anong promo photo/poster. I-o-optimize ito ng CMS para gumana sa website."
       ]
     },
     inquiries: {
@@ -583,7 +583,7 @@ function renderWorkEditor() {
         <label><span>${copy.workTitleEn}</span><input name="workItems.${index}.title.en"></label>
         <label><span>${copy.workTitleFil}</span><input name="workItems.${index}.title.fil"></label>
         <label><span>${copy.workImage}</span><input name="workItems.${index}.image" placeholder="assets/work-photo.jpg or https://..."></label>
-        <label><span>${copy.workUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp" data-work-upload="${index}"></label>
+        <label><span>${copy.workUpload}</span><input type="file" accept="image/*" data-work-upload="${index}"></label>
         <div class="wide">${sourceChoiceNote(item.imageSource)}</div>
         <label><span>${copy.workUrl}</span><input name="workItems.${index}.url" placeholder="https://facebook.com/..."></label>
         <label><span>${copy.workStatusEn}</span><input name="workItems.${index}.status.en" placeholder="Optional"></label>
@@ -616,7 +616,7 @@ function renderPromoEditor() {
           <label><span>${copy.promoTitleEn}</span><input name="promos.${index}.title.en"></label>
           <label><span>${copy.promoTitleFil}</span><input name="promos.${index}.title.fil"></label>
           <label><span>${copy.promoImage}</span><input name="promos.${index}.image" placeholder="assets/promo.jpg or https://..."></label>
-          <label><span>${copy.workUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp" data-promo-upload="${index}"></label>
+          <label><span>${copy.workUpload}</span><input type="file" accept="image/*" data-promo-upload="${index}"></label>
           <div class="wide">${sourceChoiceNote(promo.imageSource)}</div>
           <label class="wide locked-field">
             <span>${copy.promoUrl} <em>${copy.lockedBadge}</em></span>
@@ -641,7 +641,7 @@ function renderUnitEditor() {
       </div>
       <div class="work-fields">
         <label class="wide"><span>${copy.priceListUrl}</span><input name="priceList.url" placeholder="assets/aircon-price-list.jpg or https://..."></label>
-        <label><span>${copy.priceListUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp,application/pdf" data-price-list-upload></label>
+        <label><span>${copy.priceListUpload}</span><input type="file" accept="image/*,application/pdf" data-price-list-upload></label>
         <div class="wide">${sourceChoiceNote(state.priceList?.source)}</div>
         <label><span>${copy.priceListLabelEn}</span><input name="priceList.label.en"></label>
         <label><span>${copy.priceListLabelFil}</span><input name="priceList.label.fil"></label>
@@ -680,7 +680,7 @@ function renderUnitEditor() {
           <label><span>${copy.unitCapacity}</span><input name="airconUnits.${index}.capacity" placeholder="Example: 1.5HP"></label>
           <label><span>${copy.unitPrice}</span><input name="airconUnits.${index}.price" placeholder=""></label>
           <label><span>${copy.unitImage}</span><input name="airconUnits.${index}.image" placeholder="assets/unit.jpg or https://..."></label>
-          <label><span>${copy.workUpload}</span><input type="file" accept="image/png,image/jpeg,image/webp" data-unit-upload="${index}"></label>
+          <label><span>${copy.workUpload}</span><input type="file" accept="image/*" data-unit-upload="${index}"></label>
           <div class="wide">${sourceChoiceNote(unit.imageSource)}</div>
           <label class="locked-field">
             <span>${copy.unitUrl} <em>${copy.lockedBadge}</em></span>
@@ -738,13 +738,40 @@ function readFileAsDataUrl(file) {
   });
 }
 
+function convertImageFileToDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Unable to read image file."));
+    reader.onload = () => {
+      const image = new Image();
+      image.onerror = () => reject(new Error("This file could not be read as a photo. Please choose an image file."));
+      image.onload = () => {
+        const maxSide = 1400;
+        const scale = Math.min(1, maxSide / Math.max(image.naturalWidth || image.width, image.naturalHeight || image.height));
+        const width = Math.max(1, Math.round((image.naturalWidth || image.width) * scale));
+        const height = Math.max(1, Math.round((image.naturalHeight || image.height) * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const context = canvas.getContext("2d");
+        context.fillStyle = "#fff";
+        context.fillRect(0, 0, width, height);
+        context.drawImage(image, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", 0.86));
+      };
+      image.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 async function uploadFile(file, statusMessage) {
   setStatus(statusMessage);
-  const dataUrl = await readFileAsDataUrl(file);
   if (file.type.startsWith("image/")) {
-    if (file.size > 1_500_000) throw new Error("Image must be 1.5MB or smaller. Please compress it first.");
+    const dataUrl = await convertImageFileToDataUrl(file);
     return { ok: true, url: dataUrl, embedded: true };
   }
+  const dataUrl = await readFileAsDataUrl(file);
   const response = await fetch(API_UPLOAD, {
     method: "POST",
     headers: { "content-type": "application/json" },
