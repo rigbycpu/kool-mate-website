@@ -1,4 +1,4 @@
-const { json } = require("./_github");
+const { json } = require("./_backend");
 
 exports.handler = async () => {
   return json(200, { ok: true }, {

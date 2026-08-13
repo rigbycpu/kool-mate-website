@@ -1,22 +1,16 @@
-const { decodeBase64, getGithubFile, inquiriesFile, json, putGithubFile, requireAuth } = require("./_github");
+const { inquiriesFile, json, readJsonFile, requireAuth, writeJsonFile } = require("./_backend");
 
 function clean(value, max = 500) {
   return String(value || "").trim().slice(0, max);
 }
 
 async function readInquiries() {
-  const file = await getGithubFile(inquiriesFile);
-  if (!file?.content) return [];
-  try {
-    const parsed = JSON.parse(decodeBase64(file.content));
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+  const parsed = await readJsonFile(inquiriesFile, []);
+  return Array.isArray(parsed) ? parsed : [];
 }
 
 async function writeInquiries(items) {
-  await putGithubFile(inquiriesFile, `${JSON.stringify(items, null, 2)}\n`, "Update KOOLMATE inquiries");
+  await writeJsonFile(inquiriesFile, items);
 }
 
 exports.handler = async (event) => {

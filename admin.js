@@ -793,11 +793,7 @@ function convertImageFileToDataUrl(file) {
 
 async function uploadFile(file, statusMessage) {
   setStatus(statusMessage);
-  if (file.type.startsWith("image/")) {
-    const dataUrl = await convertImageFileToDataUrl(file);
-    return { ok: true, url: dataUrl, embedded: true };
-  }
-  const dataUrl = await readFileAsDataUrl(file);
+  const dataUrl = file.type.startsWith("image/") ? await convertImageFileToDataUrl(file) : await readFileAsDataUrl(file);
   const response = await fetch(API_UPLOAD, {
     method: "POST",
     headers: { "content-type": "application/json" },
