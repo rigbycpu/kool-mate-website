@@ -151,7 +151,7 @@
         "fil": ""
       },
       "price": "123456",
-      "image": "/uploads/cms-1786586116515-b7ceedcf.jpg",
+      "image": "/uploads/cms-1786588677959-c7d7d522.jpg",
       "url": "#quote"
     },
     {
@@ -251,11 +251,11 @@
     },
     {
       "enabled": true,
-      "brand": "TCL",
+      "brand": "Daikin",
       "slot": 1,
       "tag": "mostPopular",
-      "model": "",
-      "capacity": "",
+      "model": "AMIHAN ECO FTKE25AV/RKE25AVA",
+      "capacity": "1.5",
       "name": {
         "en": "",
         "fil": ""
@@ -264,7 +264,7 @@
         "en": "",
         "fil": ""
       },
-      "price": "",
+      "price": "123456",
       "image": "",
       "url": "#quote"
     },
