@@ -3,6 +3,7 @@ const inquiriesFile = "data/inquiries.json";
 const supabaseUrl = (process.env.SUPABASE_URL || "").replace(/\/$/, "");
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY || "";
 const supabaseBucket = process.env.SUPABASE_BUCKET || "koolmate";
+const bucketCandidates = [...new Set([supabaseBucket, "koolmate-cms", "koolmate"].filter(Boolean))];
 
 function json(statusCode, body, extraHeaders = {}) {
   return {
@@ -58,8 +59,38 @@ async function supabaseFetch(path, options = {}) {
   return response;
 }
 
+async function supabaseBucketFetch(bucket, filePath, options = {}) {
+  return supabaseFetch(`/storage/v1/object/${bucket}/${filePath}`, options);
+}
+
+async function writeToBucketCandidates(filePath, options = {}) {
+  const errors = [];
+  for (const bucket of bucketCandidates) {
+    try {
+      const response = await supabaseBucketFetch(bucket, filePath, options);
+      return { bucket, response };
+    } catch (error) {
+      errors.push(`${bucket}: ${error.message}`);
+    }
+  }
+  throw new Error(`Supabase write failed. Tried buckets: ${errors.join(" | ")}`);
+}
+
+async function withAvailableBucket(filePath, options = {}) {
+  const errors = [];
+  for (const bucket of bucketCandidates) {
+    try {
+      const response = await supabaseBucketFetch(bucket, filePath, options);
+      return { bucket, response };
+    } catch (error) {
+      errors.push(`${bucket}: ${error.message}`);
+    }
+  }
+  throw new Error(`Supabase bucket/file failed. Tried: ${errors.join(" | ")}`);
+}
+
 async function readJsonFile(filePath, fallback) {
-  const response = await supabaseFetch(`/storage/v1/object/${supabaseBucket}/${filePath}`, {
+  const { response } = await withAvailableBucket(filePath, {
     headers: { accept: "application/json" }
   });
   const text = await response.text();
@@ -71,7 +102,7 @@ async function readJsonFile(filePath, fallback) {
 }
 
 async function writeJsonFile(filePath, payload) {
-  await supabaseFetch(`/storage/v1/object/${supabaseBucket}/${filePath}`, {
+  await writeToBucketCandidates(filePath, {
     method: "POST",
     headers: {
       "cache-control": "no-store",
@@ -84,7 +115,7 @@ async function writeJsonFile(filePath, payload) {
 
 async function uploadBase64File(filePath, contentType, base64Content) {
   const buffer = Buffer.from(base64Content, "base64");
-  await supabaseFetch(`/storage/v1/object/${supabaseBucket}/${filePath}`, {
+  const { bucket } = await writeToBucketCandidates(filePath, {
     method: "POST",
     headers: {
       "cache-control": "31536000",
@@ -93,7 +124,7 @@ async function uploadBase64File(filePath, contentType, base64Content) {
     },
     body: buffer
   });
-  return `${supabaseUrl}/storage/v1/object/public/${supabaseBucket}/${filePath}`;
+  return `${supabaseUrl}/storage/v1/object/public/${bucket}/${filePath}`;
 }
 
 module.exports = {
