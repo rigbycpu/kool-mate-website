@@ -156,6 +156,25 @@
     },
     {
       "enabled": true,
+      "brand": "Midea",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
       "brand": "Carrier",
       "slot": 2,
       "tag": "mostPopular",
@@ -170,6 +189,25 @@
         "fil": ""
       },
       "price": "1234567",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "brand": "Carrier",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "capacity": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
       "image": "",
       "url": "#quote"
     },
@@ -194,30 +232,11 @@
     },
     {
       "enabled": true,
-      "brand": "Carrier",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "capacity": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "enabled": true,
-      "brand": "American Home",
+      "brand": "TCL",
       "slot": 1,
       "tag": "mostPopular",
-      "model": "",
-      "capacity": "",
+      "model": "COOLPRO OBSIDIAN PLUS (TAC-19CSA/BEI)",
+      "capacity": "2.0HP",
       "name": {
         "en": "",
         "fil": ""
@@ -226,26 +245,7 @@
         "en": "",
         "fil": ""
       },
-      "price": "",
-      "image": "",
-      "url": "#quote"
-    },
-    {
-      "enabled": true,
-      "brand": "American Home",
-      "slot": 2,
-      "tag": "bestPrice",
-      "model": "",
-      "capacity": "",
-      "name": {
-        "en": "",
-        "fil": ""
-      },
-      "type": {
-        "en": "",
-        "fil": ""
-      },
-      "price": "",
+      "price": "123456",
       "image": "",
       "url": "#quote"
     },
