@@ -19,7 +19,7 @@ exports.handler = async (event) => {
     const filename = `uploads/cms-${Date.now()}-${crypto.randomBytes(4).toString("hex")}${extension}`;
     await putGithubFile(filename, buffer.toString("base64"), "Upload KOOLMATE CMS file", { base64: true });
 
-    return json(200, { ok: true, url: `/${filename}` });
+    return json(200, { ok: true, url: filename });
   } catch (error) {
     return json(500, { ok: false, message: error.message || "Server error." });
   }

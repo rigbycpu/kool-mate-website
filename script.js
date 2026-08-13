@@ -426,6 +426,8 @@ function normalizeAssetUrl(value) {
   if (!url) return "";
   url = url.replace(/^url\((.*)\)$/i, "$1").trim().replace(/^["']|["']$/g, "");
   url = url.replace(/&amp;/g, "&");
+  url = url.replace(/^\/uploads\//i, "uploads/");
+  url = url.replace(/^\/assets\//i, "assets/");
 
   const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/i) || url.match(/[?&]id=([^&]+)/i);
   if (driveMatch && url.includes("drive.google.com")) {

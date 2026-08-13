@@ -133,7 +133,7 @@ function saveUpload(payload) {
   const buffer = Buffer.from(match[2], "base64");
   if (buffer.length > 5_000_000) throw new Error("File must be 5MB or smaller.");
   fs.writeFileSync(path.join(uploadsDir, filename), buffer);
-  return `/uploads/${filename}`;
+  return `uploads/${filename}`;
 }
 
 async function handleApi(req, res, pathname) {
