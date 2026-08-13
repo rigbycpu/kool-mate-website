@@ -499,8 +499,9 @@ function fillForm() {
 function imagePreview(src, alt, fallbackText) {
   const url = normalizeAssetUrl(src);
   if (!url) return `<span>${fallbackText}</span>`;
+  const retryUrl = url.replace(/^\//, "");
   const blocked = uiText[cmsLanguage].imageBlocked;
-  return `<img src="${url}" alt="${alt}" onerror="this.replaceWith(Object.assign(document.createElement('span'), { className: 'image-blocked-message', textContent: '${blocked}' }))">`;
+  return `<img src="${url}" alt="${alt}" data-retry-src="${retryUrl}" onerror="if (!this.dataset.retried && this.dataset.retrySrc && this.dataset.retrySrc !== this.getAttribute('src')) { this.dataset.retried = 'true'; this.src = this.dataset.retrySrc; } else { this.replaceWith(Object.assign(document.createElement('span'), { className: 'image-blocked-message', textContent: '${blocked}' })); }">`;
 }
 
 function sourceChoiceNote(source) {
