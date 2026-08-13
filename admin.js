@@ -331,6 +331,7 @@ const uiText = {
 let cmsLanguage = localStorage.getItem("koolMateCmsLanguage") || "en";
 let state = clone(defaults);
 let inquiries = [];
+let autosaveTimer = null;
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -450,6 +451,18 @@ function normalizeCmsAssets() {
     state.priceList.url = normalizeAssetUrl(state.priceList.url);
     if (!state.priceList.url) state.priceList.source = "";
   }
+}
+
+function scheduleAutosave() {
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(async () => {
+    try {
+      await saveState();
+      setStatus("Autosaved to the website.");
+    } catch (error) {
+      setStatus(error.message || "Autosave failed. Click Save Changes before leaving.");
+    }
+  }, 900);
 }
 
 function applyUiLanguage() {
@@ -741,10 +754,11 @@ function setupUploads() {
         state.priceList.url = payload.url;
         state.priceList.source = "upload";
         input.value = "";
+        await saveState();
         fillForm();
         renderUnitEditor();
         updatePreview();
-        setStatus(replacedLink ? "Uploaded file replaced the pasted price list link. Click Save Changes to publish." : "Price list uploaded. Click Save Changes to publish.");
+        setStatus(replacedLink ? "Uploaded file replaced the pasted price list link and saved to the website." : "Price list uploaded and saved to the website.");
       } catch (error) {
         setStatus(error.message || "Upload failed.");
       }
@@ -762,10 +776,11 @@ function setupUploads() {
         state.workItems[index].imageSource = "upload";
         state.workItems[index].type = "photo";
         input.value = "";
+        await saveState();
         fillForm();
         renderWorkEditor();
         updatePreview();
-        setStatus(replacedLink ? "Uploaded photo replaced the pasted photo URL. Click Save Changes to publish." : "Image uploaded. Click Save Changes to publish.");
+        setStatus(replacedLink ? "Uploaded photo replaced the pasted photo URL and saved to the website." : "Image uploaded and saved to the website.");
       } catch (error) {
         setStatus(error.message || "Upload failed.");
       }
@@ -783,9 +798,11 @@ function setupUploads() {
         state.promos[index].imageSource = "upload";
         state.promos[index].enabled = true;
         input.value = "";
+        await saveState();
         fillForm();
         renderPromoEditor();
-        setStatus(replacedLink ? "Uploaded promo replaced the pasted poster URL. Click Save Changes to publish." : "Promo image uploaded. Click Save Changes to publish.");
+        updatePreview();
+        setStatus(replacedLink ? "Uploaded promo replaced the pasted poster URL and saved to the website." : "Promo image uploaded and saved to the website.");
       } catch (error) {
         setStatus(error.message || "Upload failed.");
       }
@@ -803,9 +820,11 @@ function setupUploads() {
         state.airconUnits[index].imageSource = "upload";
         state.airconUnits[index].enabled = true;
         input.value = "";
+        await saveState();
         fillForm();
         renderUnitEditor();
-        setStatus(replacedLink ? "Uploaded unit image replaced the pasted unit image URL. Click Save Changes to publish." : "Unit image uploaded. Click Save Changes to publish.");
+        updatePreview();
+        setStatus(replacedLink ? "Uploaded unit image replaced the pasted unit image URL and saved to the website." : "Unit image uploaded and saved to the website.");
       } catch (error) {
         setStatus(error.message || "Upload failed.");
       }
@@ -947,12 +966,14 @@ document.getElementById("cmsForm").addEventListener("input", (event) => {
   collectFormState();
   if (event.target?.name) markUrlSourceFromInput(event.target.name);
   updatePreview();
+  scheduleAutosave();
 });
 
 document.getElementById("cmsForm").addEventListener("change", (event) => {
   collectFormState();
   if (event.target?.name) markUrlSourceFromInput(event.target.name);
   updatePreview();
+  scheduleAutosave();
 });
 
 document.getElementById("exportBtn").addEventListener("click", () => {
