@@ -421,6 +421,20 @@ const inlineBrandMarks = {
 
 let currentLanguage = "en";
 
+function normalizeAssetUrl(value) {
+  let url = String(value || "").trim();
+  if (!url) return "";
+  url = url.replace(/^url\((.*)\)$/i, "$1").trim().replace(/^["']|["']$/g, "");
+  url = url.replace(/&amp;/g, "&");
+
+  const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/i) || url.match(/[?&]id=([^&]+)/i);
+  if (driveMatch && url.includes("drive.google.com")) {
+    return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
+  }
+
+  return url;
+}
+
 async function loadCmsContent() {
   const cmsApi = location.hostname === "localhost" ? "/api/content" : "/.netlify/functions/content";
   for (const url of [cmsApi, "data/content.json"]) {
@@ -464,6 +478,10 @@ async function applyCmsContent() {
     workItems = workItems.map((item, index) => ({
       ...item,
       ...(saved.workItems[index] || {})
+    })).map((item) => ({
+      ...item,
+      image: normalizeAssetUrl(item.image),
+      url: normalizeAssetUrl(item.url)
     }));
   }
 
@@ -471,6 +489,10 @@ async function applyCmsContent() {
     promos = saved.promos.map((item, index) => ({
       ...(promos[index] || {}),
       ...item
+    })).map((promo) => ({
+      ...promo,
+      image: normalizeAssetUrl(promo.image),
+      url: normalizeAssetUrl(promo.url)
     }));
   }
 
@@ -508,8 +530,11 @@ async function applyCmsContent() {
     ...unit,
     brand: unit.brand || AIRCON_BRANDS[Math.floor(index / 2)] || "Other Aircon Brands",
     slot: unit.slot || (index % 2) + 1,
-    tag: unit.tag || (index % 2 === 0 ? "mostPopular" : "bestPrice")
+    tag: unit.tag || (index % 2 === 0 ? "mostPopular" : "bestPrice"),
+    image: normalizeAssetUrl(unit.image),
+    url: normalizeAssetUrl(unit.url)
   }));
+  priceList.url = normalizeAssetUrl(priceList.url);
 }
 
 function phoneHref(phone) {
@@ -557,6 +582,11 @@ function renderBrandMark(brand, compact = false) {
   `;
 }
 
+function renderSafeImage(src, alt, attrs = "") {
+  const url = normalizeAssetUrl(src);
+  return `<img src="${url}" alt="${alt}" ${attrs} onerror="this.closest('.unit-image-slot,.work-placeholder,.promo-card')?.classList.add('image-error'); this.remove();">`;
+}
+
 function applyTranslations() {
   const copy = t();
   document.documentElement.lang = currentLanguage === "fil" ? "fil" : "en";
@@ -591,7 +621,7 @@ function renderCards() {
     const hasPhoto = item.type === "photo" && item.image;
     const hasLink = item.type === "link" && item.url;
     const media = hasPhoto
-      ? `<img src="${item.image}" alt="${title}" loading="lazy">`
+      ? renderSafeImage(item.image, title, 'loading="lazy"')
       : `<span>${number}</span>`;
     const status = item.status?.[currentLanguage] || (hasPhoto ? copy.workViewPhoto : hasLink ? copy.workOpenLink : copy.workUnavailable);
     const content = `
@@ -657,7 +687,7 @@ function renderUnitCarousel() {
             return `
               <article class="brand-unit-row">
                 <div class="unit-image-slot ${image ? "" : "is-empty"}">
-                  ${image ? `<img src="${image}" alt="${brand} ${model || "aircon unit"}" loading="lazy">` : `<span>${copy.unitUnavailable}</span>`}
+                  ${image ? renderSafeImage(image, `${brand} ${model || "aircon unit"}`, 'loading="lazy"') : `<span>${copy.unitUnavailable}</span>`}
                 </div>
                 <div>
                   <span class="unit-tag">${tag}</span>

@@ -859,6 +859,15 @@ h2 { font-size: clamp(30px, 4vw, 52px); line-height: 1.04; text-transform: upper
   font-size: 10px;
   text-align: center;
 }
+.unit-image-slot.image-error::after,
+.work-placeholder.image-error::after {
+  content: "Image link blocked";
+  color: #6d7b91;
+  font-size: 10px;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+}
 .unit-inquire {
   display: inline-flex;
   justify-content: center;

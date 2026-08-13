@@ -320,6 +320,40 @@ function setPath(object, path, value) {
   target[last] = value;
 }
 
+function normalizeAssetUrl(value) {
+  let url = String(value || "").trim();
+  if (!url) return "";
+  url = url.replace(/^url\((.*)\)$/i, "$1").trim().replace(/^["']|["']$/g, "");
+  url = url.replace(/&amp;/g, "&");
+
+  const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/i) || url.match(/[?&]id=([^&]+)/i);
+  if (driveMatch && url.includes("drive.google.com")) {
+    return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
+  }
+
+  return url;
+}
+
+function normalizeCmsAssets() {
+  state.workItems = (state.workItems || []).map((item) => {
+    const image = normalizeAssetUrl(item.image);
+    const url = normalizeAssetUrl(item.url);
+    const type = image ? "photo" : item.type;
+    return { ...item, image, url, type };
+  });
+  state.promos = (state.promos || []).map((promo) => ({
+    ...promo,
+    image: normalizeAssetUrl(promo.image),
+    url: normalizeAssetUrl(promo.url)
+  }));
+  state.airconUnits = (state.airconUnits || []).map((unit) => ({
+    ...unit,
+    image: normalizeAssetUrl(unit.image),
+    url: normalizeAssetUrl(unit.url)
+  }));
+  if (state.priceList) state.priceList.url = normalizeAssetUrl(state.priceList.url);
+}
+
 function applyUiLanguage() {
   const copy = uiText[cmsLanguage];
   document.documentElement.lang = cmsLanguage === "fil" ? "fil" : "en";
@@ -344,6 +378,12 @@ function fillForm() {
     input.value = value || "";
   });
   lockCodeFields();
+}
+
+function imagePreview(src, alt, fallbackText) {
+  const url = normalizeAssetUrl(src);
+  if (!url) return `<span>${fallbackText}</span>`;
+  return `<img src="${url}" alt="${alt}" onerror="this.replaceWith(Object.assign(document.createElement('span'), { textContent: 'Image link blocked' }))">`;
 }
 
 function lockCodeFields() {
@@ -396,7 +436,7 @@ function renderPromoEditor() {
   editor.innerHTML = state.promos.map((promo, index) => `
     <article class="promo-edit-card">
       <div class="promo-edit-preview">
-        <img src="${promo.image || "assets/promo-cool-home.jpg"}" alt="">
+        ${imagePreview(promo.image || "assets/promo-cool-home.jpg", "", "Poster image")}
       </div>
       <div class="promo-edit-fields">
         <div class="promo-edit-head">
@@ -441,7 +481,7 @@ function renderUnitEditor() {
     ${state.airconUnits.map((unit, index) => `
     <article class="unit-edit-card">
       <div class="unit-edit-preview">
-        ${unit.image ? `<img src="${unit.image}" alt="${unit.brand || "Aircon"} unit preview">` : `<span>Unit image</span>`}
+        ${imagePreview(unit.image, `${unit.brand || "Aircon"} unit preview`, "Unit image")}
       </div>
       <div class="unit-edit-fields">
         <div class="promo-edit-head">
@@ -503,6 +543,7 @@ function collectFormState() {
     if (input.type === "file") return;
     setPath(state, input.name, input.type === "checkbox" ? input.checked : input.value.trim());
   });
+  normalizeCmsAssets();
 }
 
 function readFileAsDataUrl(file) {
@@ -613,7 +654,7 @@ function updatePreview() {
     const title = item.title?.en || `Work ${index + 1}`;
     const isPhoto = type === "photo" && item.image;
     const isLink = type === "link" && item.url;
-    const media = isPhoto ? `<img src="${item.image}" alt="">` : `<span>${String(index + 1).padStart(2, "0")}</span>`;
+    const media = isPhoto ? imagePreview(item.image, "", "Image link blocked") : `<span>${String(index + 1).padStart(2, "0")}</span>`;
     const status = item.status?.en || (isPhoto ? "View Photo" : isLink ? "Open Link" : "Unavailable");
     return `<article class="mini-work-card ${isPhoto ? "has-photo" : ""}">${media}<strong>${title}</strong><small>${status}</small></article>`;
   }).join("") : `<p class="mini-work-empty">Work photos or links will appear here after publishing.</p>`;
