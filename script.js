@@ -596,7 +596,25 @@ function renderSafeImage(src, alt, attrs = "") {
   const url = normalizeAssetUrl(src);
   if (!url) return "";
   const retryUrl = url.replace(/^\//, "");
-  return `<img src="${escapeAttribute(url)}" alt="${escapeAttribute(alt)}" ${attrs} data-retry-src="${escapeAttribute(retryUrl)}" onerror="if (!this.dataset.retried && this.dataset.retrySrc && this.dataset.retrySrc !== this.getAttribute('src')) { this.dataset.retried = 'true'; this.src = this.dataset.retrySrc; } else { this.closest('.unit-image-slot,.work-placeholder,.promo-card')?.classList.add('image-error'); this.remove(); }">`;
+  return `<img data-safe-src="${escapeAttribute(url)}" alt="${escapeAttribute(alt)}" ${attrs} data-retry-src="${escapeAttribute(retryUrl)}">`;
+}
+
+function hydrateSafeImages(root = document) {
+  root.querySelectorAll("[data-safe-src]").forEach((image) => {
+    const primary = image.dataset.safeSrc || "";
+    const retry = image.dataset.retrySrc || "";
+    image.onerror = () => {
+      if (!image.dataset.retried && retry && retry !== primary) {
+        image.dataset.retried = "true";
+        image.src = retry;
+        return;
+      }
+      image.closest(".unit-image-slot,.work-placeholder,.promo-card")?.classList.add("image-error");
+      image.remove();
+    };
+    image.onload = () => image.classList.add("is-loaded");
+    image.src = primary;
+  });
 }
 
 function applyTranslations() {
@@ -669,7 +687,10 @@ function renderCards() {
   document.querySelector('[data-render="service-brands"]').innerHTML = brandLogos.map((brand) => renderBrandLogo(brand)).join("");
 
   const workGrid = document.querySelector('[data-render="work"]');
-  if (workGrid) workGrid.innerHTML = workItems.map(renderWorkItem).join("");
+  if (workGrid) {
+    workGrid.innerHTML = workItems.map(renderWorkItem).join("");
+    hydrateSafeImages(workGrid);
+  }
   renderUnitCarousel();
   renderPromos();
 }
@@ -749,6 +770,7 @@ function renderUnitCarousel() {
       <p>${priceList.note?.[currentLanguage] || ""}</p>
     </div>
   `;
+  hydrateSafeImages(carousel);
   setupPriceListModal();
 }
 

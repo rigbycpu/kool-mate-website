@@ -513,8 +513,27 @@ function imagePreview(src, alt, fallbackText) {
   const url = normalizeAssetUrl(src);
   if (!url) return `<span>${fallbackText}</span>`;
   const retryUrl = url.replace(/^\//, "");
-  const blocked = uiText[cmsLanguage].imageBlocked;
-  return `<img src="${escapeAttribute(url)}" alt="${escapeAttribute(alt)}" data-retry-src="${escapeAttribute(retryUrl)}" onerror="if (!this.dataset.retried && this.dataset.retrySrc && this.dataset.retrySrc !== this.getAttribute('src')) { this.dataset.retried = 'true'; this.src = this.dataset.retrySrc; } else { this.replaceWith(Object.assign(document.createElement('span'), { className: 'image-blocked-message', textContent: '${escapeAttribute(blocked)}' })); }">`;
+  return `<img data-preview-src="${escapeAttribute(url)}" data-retry-src="${escapeAttribute(retryUrl)}" alt="${escapeAttribute(alt)}" data-fallback-text="${escapeAttribute(fallbackText)}">`;
+}
+
+function hydratePreviewImages(root = document) {
+  root.querySelectorAll("[data-preview-src]").forEach((image) => {
+    const primary = image.dataset.previewSrc || "";
+    const retry = image.dataset.retrySrc || "";
+    image.onerror = () => {
+      if (!image.dataset.retried && retry && retry !== primary) {
+        image.dataset.retried = "true";
+        image.src = retry;
+        return;
+      }
+      const fallback = document.createElement("span");
+      fallback.className = "image-blocked-message";
+      fallback.textContent = uiText[cmsLanguage].imageBlocked || image.dataset.fallbackText || "Image preview unavailable.";
+      image.replaceWith(fallback);
+    };
+    image.onload = () => image.classList.add("is-loaded");
+    image.src = primary;
+  });
 }
 
 function sourceChoiceNote(source) {
@@ -593,6 +612,7 @@ function renderWorkEditor() {
   `).join("");
   fillForm();
   setupUploads();
+  hydratePreviewImages(editor);
 }
 
 function renderPromoEditor() {
@@ -628,6 +648,7 @@ function renderPromoEditor() {
   `).join("");
   fillForm();
   setupUploads();
+  hydratePreviewImages(editor);
 }
 
 function renderUnitEditor() {
@@ -679,7 +700,11 @@ function renderUnitEditor() {
           <label><span>${copy.unitModel}</span><input name="airconUnits.${index}.model" placeholder="Example: MSAG-09CRN8"></label>
           <label><span>${copy.unitCapacity}</span><input name="airconUnits.${index}.capacity" placeholder="Example: 1.5HP"></label>
           <label><span>${copy.unitPrice}</span><input name="airconUnits.${index}.price" placeholder=""></label>
-          <label><span>${copy.unitImage}</span><input name="airconUnits.${index}.image" placeholder="assets/unit.jpg or https://..."></label>
+          <input type="hidden" name="airconUnits.${index}.image">
+          <label class="locked-field">
+            <span>${copy.unitImage} <em>${copy.lockedBadge}</em></span>
+            <input value="${unit.image ? "Uploaded photo saved" : "No photo uploaded yet"}" readonly aria-readonly="true" tabindex="-1">
+          </label>
           <label><span>${copy.workUpload}</span><input type="file" accept="image/*" data-unit-upload="${index}"></label>
           <div class="wide">${sourceChoiceNote(unit.imageSource)}</div>
           <label class="locked-field">
@@ -693,6 +718,7 @@ function renderUnitEditor() {
   `;
   fillForm();
   setupUploads();
+  hydratePreviewImages(editor);
 }
 
 function setStatus(message) {
