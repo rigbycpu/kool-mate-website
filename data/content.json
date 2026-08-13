@@ -170,7 +170,7 @@
         "fil": ""
       },
       "price": "",
-      "image": "https://web-res.midea.com/content/dam/midea-aem/ph/ph-new/pdp/cooling-solutions/residential/msce-13crfn8/MSCE-13CRFN8-EF1-front-close-new.jpg",
+      "image": "",
       "url": "#quote"
     },
     {
@@ -479,7 +479,7 @@
     },
     {
       "enabled": true,
-      "brand": "Daikin",
+      "brand": "Other Aircon Brands",
       "slot": 2,
       "tag": "bestPrice",
       "model": "",
