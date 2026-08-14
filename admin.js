@@ -1,5 +1,5 @@
 const CMS_STORAGE_KEY = "koolMateCmsContent";
-const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Koppel", "Chiq", "Hisense"];
+const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Samsung", "Chiq", "Hisense"];
 const UNIT_TAGS = {
   mostPopular: "Most Popular",
   bestPrice: "Best Price"
@@ -102,19 +102,20 @@ const defaults = {
     phoneSms: "+639935515531",
     email: "koolmateadmin070826@gmail.com",
     address: "244 Mikas Street, Real 1, Bacoor, Cavite, Philippines, 4102",
-    messenger: "https://m.me/61591997337938"
+    messenger: "https://m.me/61591997337938",
+    maps: "https://www.google.com/maps/place/KOOLMATE+AIR-CONDITIONING+SERVICES+AND+MAINTENANCE,+240+Mikas,+Bacoor,+Cavite/data=!4m2!3m1!1s0x3397d30049c80b31:0xbc7452a11a6e8bd1!18m1!1e1?utm_source=mstt_1&entry=gps&coh=192189&g_ep=CAESBzI2LjMyLjYYACCenQoqnwEsOTQyNjc3MjcsOTQyOTIxOTUsOTQyOTk1MzIsMTAwNzk2NDk4LDEwMDc5Nzc2MSwxMDA3OTY1MzUsOTQyODA1NzYsOTQyMDczOTQsOTQyMDc1MDYsOTQyMDg1MDYsOTQyMTg2NTMsOTQyMjk4MzksOTQyNzUxNjgsOTQyNzk2MTksMTAwODE1NjM1LDEwMDgyMDIzNywxMDA4MjI0ODlCAlBI&skid=4953a404-f13c-484f-ade5-13ce73ac64d2&g_st=afm"
   },
   en: {
     heroTitle: "Cooler Air.<br><span>Cleaner Comfort.</span><br>Smarter Savings.",
     heroTagline: "Choose KOOLMATE!",
     heroLead: "Professional air-conditioning service for a cooler, cleaner and more energy-efficient home or business.",
-    workText: "Real installation, cleaning and repair project photos will be posted soon."
+    workText: "Browse real KOOLMATE service highlights featuring aircon installation, cleaning, repair and maintenance work."
   },
   fil: {
     heroTitle: "Mas Malamig.<br><span>Mas Malinis.</span><br>Mas Tipid.",
     heroTagline: "I-KOOLMATE Mo Yan!",
     heroLead: "Propesyonal na aircon service para sa mas malamig, malinis at matipid na tahanan o negosyo.",
-    workText: "Malapit nang maipakita ang totoong installation, cleaning at repair project photos."
+    workText: "Tingnan ang totoong KOOLMATE service highlights mula sa aircon installation, cleaning, repair at maintenance work."
   },
   workItems: [
     { type: "empty", title: { en: "Installation Work", fil: "Installation Work" }, status: { en: "", fil: "" }, image: "", url: "" },
@@ -180,6 +181,7 @@ const uiText = {
     smsPhone: "SMS Phone",
     email: "Email",
     messenger: "Messenger Link",
+    maps: "Google Maps Link",
     address: "Address",
     languageNote: "Edit English and Filipino public text separately.",
     lockedTitle: "Developer locked fields",
@@ -266,6 +268,7 @@ const uiText = {
     smsPhone: "SMS Phone",
     email: "Email",
     messenger: "Messenger Link",
+    maps: "Google Maps Link",
     address: "Address",
     languageNote: "I-edit nang hiwalay ang English at Filipino public text.",
     lockedTitle: "Developer locked fields",
@@ -342,6 +345,12 @@ function normalizeStateContent(content) {
   next.business = { ...defaults.business, ...(content?.business || {}) };
   next.en = { ...defaults.en, ...(content?.en || {}) };
   next.fil = { ...defaults.fil, ...(content?.fil || {}) };
+  if (String(next.en.workText || "").includes("posted soon")) {
+    next.en.workText = defaults.en.workText;
+  }
+  if (String(next.fil.workText || "").includes("Malapit nang maipakita")) {
+    next.fil.workText = defaults.fil.workText;
+  }
   next.priceList = {
     ...defaults.priceList,
     ...(content?.priceList || {}),
@@ -351,12 +360,11 @@ function normalizeStateContent(content) {
 
   const savedUnits = Array.isArray(content?.airconUnits) ? content.airconUnits : [];
   next.airconUnits = AIRCON_BRANDS.flatMap((brand) => {
-    const brandUnits = savedUnits.filter((unit) => (unit.brand || "") === brand).slice(0, 2);
+    const brandUnits = savedUnits.filter((unit) => ((unit.brand || "") === brand) || (brand === "Samsung" && (unit.brand || "") === "Koppel")).slice(0, 2);
     const legacyUnit = savedUnits[AIRCON_BRANDS.indexOf(brand)] || {};
     const slots = brandUnits.length ? brandUnits : [legacyUnit];
     return [0, 1].map((slotIndex) => ({
       enabled: true,
-      brand,
       slot: slotIndex + 1,
       tag: slotIndex === 0 ? "mostPopular" : "bestPrice",
       model: "",
@@ -366,7 +374,8 @@ function normalizeStateContent(content) {
       price: "",
       image: "",
       url: "#quote",
-      ...(slots[slotIndex] || {})
+      ...(slots[slotIndex] || {}),
+      brand
     }));
   });
 
@@ -444,6 +453,7 @@ function normalizeCmsAssets() {
   }));
   state.airconUnits = (state.airconUnits || []).map((unit) => ({
     ...unit,
+    brand: unit.brand === "Koppel" ? "Samsung" : unit.brand,
     image: normalizeAssetUrl(unit.image),
     url: normalizeAssetUrl(unit.url)
   }));

@@ -3,7 +3,9 @@ const business = {
   phoneSms: "+639935515531",
   email: "koolmateadmin070826@gmail.com",
   address: "244 Mikas Street, Real 1, Bacoor, Cavite, Philippines, 4102",
-  messenger: "https://m.me/61591997337938"
+  messenger: "https://m.me/61591997337938",
+  facebook: "https://www.facebook.com/profile.php?id=61591997337938",
+  maps: "https://www.google.com/maps/place/KOOLMATE+AIR-CONDITIONING+SERVICES+AND+MAINTENANCE,+240+Mikas,+Bacoor,+Cavite/data=!4m2!3m1!1s0x3397d30049c80b31:0xbc7452a11a6e8bd1!18m1!1e1?utm_source=mstt_1&entry=gps&coh=192189&g_ep=CAESBzI2LjMyLjYYACCenQoqnwEsOTQyNjc3MjcsOTQyOTIxOTUsOTQyOTk1MzIsMTAwNzk2NDk4LDEwMDc5Nzc2MSwxMDA3OTY1MzUsOTQyODA1NzYsOTQyMDczOTQsOTQyMDc1MDYsOTQyMDg1MDYsOTQyMTg2NTMsOTQyMjk4MzksOTQyNzUxNjgsOTQyNzk2MTksMTAwODE1NjM1LDEwMDgyMDIzNywxMDA4MjI0ODlCAlBI&skid=4953a404-f13c-484f-ade5-13ce73ac64d2&g_st=afm"
 };
 
 const productImages = {
@@ -15,7 +17,7 @@ const productImages = {
 };
 
 const CMS_STORAGE_KEY = "koolMateCmsContent";
-const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Koppel", "Chiq", "Hisense"];
+const AIRCON_BRANDS = ["Midea", "Carrier", "American Home", "TCL", "Daikin", "LG", "Haier", "Samsung", "Chiq", "Hisense"];
 const UNIT_TAGS = {
   mostPopular: "Most Popular",
   bestPrice: "Best Price"
@@ -139,8 +141,8 @@ const translations = {
     brandsEyebrow: "We Service All Major Brands",
     brandsTitle: "Reliable service for leading aircon brands",
     workEyebrow: "Our Work",
-    workTitle: "Project gallery coming soon",
-    workText: "Real installation, cleaning and repair project photos will be posted soon.",
+    workTitle: "Installation, cleaning and repair work",
+    workText: "Browse real KOOLMATE service highlights featuring aircon installation, cleaning, repair and maintenance work.",
     workSlotInstall: "Installation Work",
     workSlotCleaning: "Aircon Cleaning",
     workSlotRepair: "Repair Service",
@@ -156,7 +158,7 @@ const translations = {
     areaSanMateo: "San Mateo, Rizal",
     areaNearby: "Nearby areas upon inquiry",
     areaSpaces: "Homes, condos, offices and small businesses",
-    areaCta: "Ask About Your Area",
+    areaCta: "Open KOOLMATE on Google Maps",
     dispatchAvailable: "Dispatch Available",
     quoteEyebrow: "Call / Text / Message",
     quoteTitle: "Get a free quote",
@@ -187,8 +189,10 @@ const translations = {
     copyright: "© 2026 KOOLMATE Air-Conditioning Services and Maintenance. All Rights Reserved.",
     close: "Close",
     formError: "Please complete all required fields with valid information.",
-    formSuccess: "Thank you, {name}. Your inquiry has been received. You may also continue on Messenger, SMS, or call KOOLMATE for the fastest response.",
+    formSuccess: "Thank you, {name}. Your inquiry has been saved. For the fastest response, please continue through Messenger or visit our Facebook Page below.",
+    redirectingMessenger: "Inquiry saved. Redirecting you to Messenger...",
     continueMessenger: "Continue on Messenger",
+    openFacebookPage: "Open Facebook Page",
     sendSms: "Send SMS",
     callNow: "Call Now",
     services: [
@@ -284,8 +288,8 @@ const translations = {
     brandsEyebrow: "Nagseserbisyo Kami ng Major Brands",
     brandsTitle: "Maaasahang serbisyo para sa kilalang aircon brands",
     workEyebrow: "Our Work",
-    workTitle: "Malapit nang magkaroon ng project gallery",
-    workText: "Malapit nang maipakita ang totoong installation, cleaning at repair project photos.",
+    workTitle: "Installation, cleaning at repair work",
+    workText: "Tingnan ang totoong KOOLMATE service highlights mula sa aircon installation, cleaning, repair at maintenance work.",
     workSlotInstall: "Installation Work",
     workSlotCleaning: "Aircon Cleaning",
     workSlotRepair: "Repair Service",
@@ -301,7 +305,7 @@ const translations = {
     areaSanMateo: "San Mateo, Rizal",
     areaNearby: "Kalapit na lugar upon inquiry",
     areaSpaces: "Bahay, condo, opisina at small business",
-    areaCta: "Magtanong Tungkol sa Area",
+    areaCta: "Buksan ang KOOLMATE sa Google Maps",
     dispatchAvailable: "Available ang Dispatch",
     quoteEyebrow: "Call / Text / Message",
     quoteTitle: "Kumuha ng libreng quote",
@@ -332,8 +336,10 @@ const translations = {
     copyright: "© 2026 KOOLMATE Air-Conditioning Services and Maintenance. All Rights Reserved.",
     close: "Isara",
     formError: "Pakikumpleto ang lahat ng required fields gamit ang tamang impormasyon.",
-    formSuccess: "Salamat, {name}. Natanggap na ang inyong inquiry. Maaari rin kayong mag-Messenger, SMS, o tumawag para mas mabilis ang response ng KOOLMATE.",
+    formSuccess: "Salamat, {name}. Na-save na ang inyong inquiry. Para sa pinakamabilis na response, ituloy po sa Messenger o buksan ang Facebook Page sa ibaba.",
+    redirectingMessenger: "Na-save na ang inquiry. Ililipat kayo sa Messenger...",
     continueMessenger: "Ituloy sa Messenger",
+    openFacebookPage: "Buksan ang Facebook Page",
     sendSms: "Mag-send ng SMS",
     callNow: "Tumawag Ngayon",
     services: [
@@ -397,7 +403,7 @@ const brandLogoMap = new Map([
   ["Daikin", "assets/brand-daikin.svg"],
   ["LG", "assets/brand-lg.svg"],
   ["Haier", "assets/brand-haier.svg"],
-  ["Koppel", "assets/brand-koppel.svg"],
+  ["Samsung", "https://commons.wikimedia.org/wiki/Special:Redirect/file/Samsung_wordmark.svg"],
   ["Chiq", "assets/brand-chiq.svg"],
   ["Hisense", "assets/brand-hisense.svg"]
 ]);
@@ -410,12 +416,11 @@ const inlineBrandMarks = {
   "Daikin": '<svg viewBox="0 0 220 72" aria-hidden="true"><path d="M24 17h42L24 55z" fill="#00a8df"/><path d="M33 17h54L45 55H24z" fill="#008bd2" opacity=".55"/><text x="73" y="46" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="900" font-style="italic" fill="#00a8df">DAIKIN</text></svg>',
   "LG": '<svg viewBox="0 0 220 72" aria-hidden="true"><circle cx="75" cy="36" r="23" fill="#a50034"/><circle cx="67" cy="29" r="3.5" fill="#fff"/><path d="M75 21v30h17" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><text x="111" y="47" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#555">LG</text></svg>',
   "Haier": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="42" y="48" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#005baa">Haier</text></svg>',
-  "Koppel": '<svg viewBox="0 0 220 72" aria-hidden="true"><path d="M36 20h28l-22 16 24 16H37L21 39v13H6V20h15v13z" fill="#073f8f"/><text x="76" y="47" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900" fill="#073f8f">KOPPEL</text></svg>',
   "Chiq": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="52" y="47" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="900" fill="#ec1c24">CHiQ</text></svg>',
   "Hisense": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="31" y="47" font-family="Arial, Helvetica, sans-serif" font-size="35" font-weight="900" fill="#00a0df">Hisense</text></svg>',
   "Panasonic": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="30" y="47" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900" fill="#004b9b">Panasonic</text></svg>',
   "Mitsubishi Electric": '<svg viewBox="0 0 220 72" aria-hidden="true"><path d="M65 14l17 30H48zM48 44l17 30H31zM82 44l17 30H65z" transform="translate(0 -8)" fill="#e60012"/><text x="105" y="34" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" fill="#111">MITSUBISHI</text><text x="105" y="52" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" fill="#111">ELECTRIC</text></svg>',
-  "Samsung": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="36" y="47" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="900" letter-spacing="2" fill="#1428a0">SAMSUNG</text></svg>',
+  "Samsung": '<svg viewBox="0 0 340 72" aria-hidden="true" preserveAspectRatio="xMinYMid meet"><text x="24" y="48" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="900" letter-spacing="2" textLength="245" lengthAdjust="spacingAndGlyphs" fill="#1428a0">SAMSUNG</text></svg>',
   "AUX": '<svg viewBox="0 0 220 72" aria-hidden="true"><text x="55" y="46" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="900" fill="#073f8f">AUX</text><text x="73" y="58" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="800" fill="#073f8f">AIR CONDITIONER</text></svg>'
 };
 
@@ -435,6 +440,17 @@ function normalizeAssetUrl(value) {
   }
 
   return url;
+}
+
+function migrateDefaultWorkText(lang, value) {
+  const text = String(value || "");
+  if (lang === "en" && text.includes("posted soon")) {
+    return "Browse real KOOLMATE service highlights featuring aircon installation, cleaning, repair and maintenance work.";
+  }
+  if (lang === "fil" && text.includes("Malapit nang maipakita")) {
+    return "Tingnan ang totoong KOOLMATE service highlights mula sa aircon installation, cleaning, repair at maintenance work.";
+  }
+  return value;
 }
 
 async function loadCmsContent() {
@@ -464,7 +480,9 @@ async function applyCmsContent() {
       phoneSms: saved.business.phoneSms || business.phoneSms,
       email: saved.business.email || business.email,
       address: saved.business.address || business.address,
-      messenger: saved.business.messenger || business.messenger
+      messenger: saved.business.messenger || business.messenger,
+      facebook: saved.business.facebook || business.facebook,
+      maps: saved.business.maps || business.maps
     });
   }
 
@@ -472,7 +490,7 @@ async function applyCmsContent() {
     const languageContent = saved[lang];
     if (!languageContent) return;
     Object.entries(languageContent).forEach(([key, value]) => {
-      if (typeof value === "string" && value.trim()) translations[lang][key] = value;
+      if (typeof value === "string" && value.trim()) translations[lang][key] = key === "workText" ? migrateDefaultWorkText(lang, value) : value;
     });
   });
 
@@ -509,12 +527,11 @@ async function applyCmsContent() {
 
   if (Array.isArray(saved.airconUnits)) {
     airconUnits = AIRCON_BRANDS.flatMap((brand) => {
-      const brandUnits = saved.airconUnits.filter((unit) => (unit.brand || "") === brand).slice(0, 2);
+      const brandUnits = saved.airconUnits.filter((unit) => ((unit.brand || "") === brand) || (brand === "Samsung" && (unit.brand || "") === "Koppel")).slice(0, 2);
       const legacyUnit = saved.airconUnits[AIRCON_BRANDS.indexOf(brand)] || {};
       const slots = brandUnits.length ? brandUnits : [legacyUnit];
       return [0, 1].map((slotIndex) => ({
         enabled: true,
-        brand,
         slot: slotIndex + 1,
         tag: slotIndex === 0 ? "mostPopular" : "bestPrice",
         model: "",
@@ -524,13 +541,14 @@ async function applyCmsContent() {
         price: "",
         image: "",
         url: "#quote",
-        ...(slots[slotIndex] || {})
+        ...(slots[slotIndex] || {}),
+        brand
       }));
     });
   }
   airconUnits = airconUnits.map((unit, index) => ({
     ...unit,
-    brand: unit.brand || AIRCON_BRANDS[Math.floor(index / 2)] || "Hisense",
+    brand: unit.brand === "Koppel" ? "Samsung" : (unit.brand || AIRCON_BRANDS[Math.floor(index / 2)] || "Hisense"),
     slot: unit.slot || (index % 2) + 1,
     tag: unit.tag || (index % 2 === 0 ? "mostPopular" : "bestPrice"),
     image: normalizeAssetUrl(unit.image),
@@ -567,6 +585,12 @@ function updateBusinessContent() {
   });
   document.querySelectorAll("[data-business-messenger-link]").forEach((node) => {
     node.href = business.messenger;
+  });
+  document.querySelectorAll("[data-business-facebook-link]").forEach((node) => {
+    node.href = business.facebook;
+  });
+  document.querySelectorAll("[data-business-maps-link]").forEach((node) => {
+    node.href = business.maps;
   });
 }
 
@@ -937,6 +961,7 @@ function setupForm() {
   const status = form.querySelector(".form-status");
   const handoff = form.querySelector(".handoff-actions");
   const messenger = form.querySelector('[data-handoff="messenger"]');
+  const page = form.querySelector('[data-handoff="page"]');
   const sms = form.querySelector('[data-handoff="sms"]');
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -950,16 +975,24 @@ function setupForm() {
     const message = buildInquiryMessage(data);
     const encodedMessage = encodeURIComponent(message);
     status.textContent = "Sending inquiry...";
+    let savedToCms = false;
     try {
       await submitInquiry(data);
-      status.textContent = t().formSuccess.replace("{name}", data.name);
+      savedToCms = true;
+      status.textContent = t().redirectingMessenger;
       form.reset();
     } catch {
       status.textContent = "Your message is ready. Please continue through Messenger, SMS, or call KOOLMATE.";
     }
     messenger.href = `${business.messenger}?text=${encodedMessage}`;
+    page.href = business.facebook;
     sms.href = `sms:${business.phoneSms}?body=${encodedMessage}`;
     handoff.hidden = false;
+    if (savedToCms) {
+      window.setTimeout(() => {
+        window.location.href = messenger.href;
+      }, 850);
+    }
   });
 }
 
