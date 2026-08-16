@@ -1,520 +1,522 @@
-﻿{
-    "business":  {
-                     "phone":  "+63 993 551 5531",
-                     "phoneSms":  "+639935515531",
-                     "email":  "koolmateadmin070826@gmail.com",
-                     "address":  "244 Mikas Street, Real 1, Bacoor, Cavite, Philippines, 4102",
-                     "messenger":  "https://m.me/61591997337938",
-                     "maps":  "https://www.google.com/maps/place/KOOLMATE+AIR-CONDITIONING+SERVICES+AND+MAINTENANCE,+240+Mikas,+Bacoor,+Cavite/data=!4m2!3m1!1s0x3397d30049c80b31:0xbc7452a11a6e8bd1!18m1!1e1?utm_source=mstt_1\u0026entry=gps\u0026coh=192189\u0026g_ep=CAESBzI2LjMyLjYYACCenQoqnwEsOTQyNjc3MjcsOTQyOTIxOTUsOTQyOTk1MzIsMTAwNzk2NDk4LDEwMDc5Nzc2MSwxMDA3OTY1MzUsOTQyODA1NzYsOTQyMDczOTQsOTQyMDc1MDYsOTQyMDg1MDYsOTQyMTg2NTMsOTQyMjk4MzksOTQyNzUxNjgsOTQyNzk2MTksMTAwODE1NjM1LDEwMDgyMDIzNywxMDA4MjI0ODlCAlBI\u0026skid=4953a404-f13c-484f-ade5-13ce73ac64d2\u0026g_st=afm"
-                 },
-    "en":  {
-               "heroTitle":  "Cooler Air.\u003cbr\u003e\u003cspan\u003eCleaner Comfort.\u003c/span\u003e\u003cbr\u003eSmarter Savings.",
-               "heroTagline":  "Choose KOOLMATE!",
-               "heroLead":  "Professional air-conditioning service for a cooler, cleaner and more energy-efficient home or business.",
-               "workText":  "Browse real KOOLMATE service highlights featuring aircon installation, cleaning, repair and maintenance work."
-           },
-    "fil":  {
-                "heroTitle":  "Mas Malamig.\u003cbr\u003e\u003cspan\u003eMas Malinis.\u003c/span\u003e\u003cbr\u003eMas Tipid.",
-                "heroTagline":  "I-KOOLMATE Mo Yan!",
-                "heroLead":  "Propesyonal na aircon service para sa mas malamig, malinis at matipid na tahanan o negosyo.",
-                "workText":  "Tingnan ang totoong KOOLMATE service highlights mula sa aircon installation, cleaning, repair at maintenance work."
-            },
-    "workItems":  [
-                      {
-                          "type":  "empty",
-                          "title":  {
-                                        "en":  "Installation Work",
-                                        "fil":  "Installation Work"
-                                    },
-                          "status":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                          "image":  "",
-                          "url":  ""
-                      },
-                      {
-                          "type":  "empty",
-                          "title":  {
-                                        "en":  "Aircon Cleaning",
-                                        "fil":  "Aircon Cleaning"
-                                    },
-                          "status":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                          "image":  "",
-                          "url":  ""
-                      },
-                      {
-                          "type":  "empty",
-                          "title":  {
-                                        "en":  "Repair Service",
-                                        "fil":  "Repair Service"
-                                    },
-                          "status":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                          "image":  "",
-                          "url":  ""
-                      },
-                      {
-                          "type":  "empty",
-                          "title":  {
-                                        "en":  "Maintenance Visit",
-                                        "fil":  "Maintenance Visit"
-                                    },
-                          "status":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                          "image":  "",
-                          "url":  ""
-                      },
-                      {
-                          "type":  "empty",
-                          "title":  {
-                                        "en":  "Commercial Service",
-                                        "fil":  "Commercial Service"
-                                    },
-                          "status":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                          "image":  "",
-                          "url":  ""
-                      }
-                  ],
-    "promos":  [
-                   {
-                       "enabled":  true,
-                       "title":  {
-                                     "en":  "Cooler, cleaner comfort",
-                                     "fil":  "Mas malamig at malinis"
-                                 },
-                       "image":  "assets/promo-cool-home.jpg",
-                       "url":  "#quote"
-                   },
-                   {
-                       "enabled":  true,
-                       "title":  {
-                                     "en":  "Aircon not cooling?",
-                                     "fil":  "Hindi nagpapalamig ang aircon?"
-                                 },
-                       "image":  "assets/promo-aircon-solution.jpg",
-                       "url":  "#services"
-                   },
-                   {
-                       "enabled":  true,
-                       "title":  {
-                                     "en":  "Cool comfort every day",
-                                     "fil":  "Komportableng lamig araw-araw"
-                                 },
-                       "image":  "assets/promo-comfort-everyday.jpg",
-                       "url":  "#quote"
-                   },
-                   {
-                       "enabled":  true,
-                       "title":  {
-                                     "en":  "Fast maintenance service",
-                                     "fil":  "Mabilis na maintenance service"
-                                 },
-                       "image":  "assets/promo-lamig-solusyon.jpg",
-                       "url":  "#services"
-                   }
-               ],
-    "airconUnits":  [
-                        {
-                            "capacity":  "1.5HP",
-                            "enabled":  true,
-                            "brand":  "Midea",
-                            "slot":  1,
-                            "tag":  "mostPopular",
-                            "model":  "Celest PRO MSCE-13CRFN8-F.DC",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "123",
-                            "image":  "data:image/jpeg;base64,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",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Midea",
-                            "slot":  2,
-                            "tag":  "bestPrice",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Carrier",
-                            "slot":  1,
-                            "tag":  "mostPopular",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Carrier",
-                            "slot":  2,
-                            "tag":  "bestPrice",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "American Home",
-                            "slot":  1,
-                            "tag":  "mostPopular",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "American Home",
-                            "slot":  2,
-                            "tag":  "bestPrice",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "TCL",
-                            "slot":  1,
-                            "tag":  "mostPopular",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "TCL",
-                            "slot":  2,
-                            "tag":  "bestPrice",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Daikin",
-                            "slot":  1,
-                            "tag":  "mostPopular",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Daikin",
-                            "slot":  2,
-                            "tag":  "bestPrice",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "LG",
-                            "slot":  1,
-                            "tag":  "mostPopular",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "LG",
-                            "slot":  2,
-                            "tag":  "bestPrice",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Haier",
-                            "slot":  1,
-                            "tag":  "mostPopular",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Haier",
-                            "slot":  2,
-                            "tag":  "bestPrice",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Samsung",
-                            "slot":  1,
-                            "tag":  "mostPopular",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Samsung",
-                            "slot":  2,
-                            "tag":  "bestPrice",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Chiq",
-                            "slot":  1,
-                            "tag":  "mostPopular",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Chiq",
-                            "slot":  2,
-                            "tag":  "bestPrice",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Hisense",
-                            "slot":  1,
-                            "tag":  "mostPopular",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        },
-                        {
-                            "capacity":  "",
-                            "enabled":  true,
-                            "brand":  "Hisense",
-                            "slot":  2,
-                            "tag":  "bestPrice",
-                            "model":  "",
-                            "name":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "type":  {
-                                         "en":  "",
-                                         "fil":  ""
-                                     },
-                            "price":  "",
-                            "image":  "",
-                            "url":  "#quote"
-                        }
-                    ],
-    "priceList":  {
-                      "url":  "",
-                      "label":  {
-                                    "en":  "View Full Price List",
-                                    "fil":  "Tingnan ang Full Price List"
-                                },
-                      "note":  {
-                                   "en":  "Prices and availability may change. Please message us to confirm the latest stock and final quote.",
-                                   "fil":  "Maaaring magbago ang presyo at availability. Mag-message para ma-confirm ang latest stock at final quote."
-                               }
-                  }
+{
+  "business": {
+    "phone": "+63 993 551 5531",
+    "phoneSms": "+639935515531",
+    "email": "koolmateadmin070826@gmail.com",
+    "address": "244 Mikas Street, Real 1, Bacoor, Cavite, Philippines, 4102",
+    "messenger": "https://m.me/61591997337938",
+    "maps": "https://www.google.com/maps/place/KOOLMATE+AIR-CONDITIONING+SERVICES+AND+MAINTENANCE,+240+Mikas,+Bacoor,+Cavite/data=!4m2!3m1!1s0x3397d30049c80b31:0xbc7452a11a6e8bd1!18m1!1e1?utm_source=mstt_1&entry=gps&coh=192189&g_ep=CAESBzI2LjMyLjYYACCenQoqnwEsOTQyNjc3MjcsOTQyOTIxOTUsOTQyOTk1MzIsMTAwNzk2NDk4LDEwMDc5Nzc2MSwxMDA3OTY1MzUsOTQyODA1NzYsOTQyMDczOTQsOTQyMDc1MDYsOTQyMDg1MDYsOTQyMTg2NTMsOTQyMjk4MzksOTQyNzUxNjgsOTQyNzk2MTksMTAwODE1NjM1LDEwMDgyMDIzNywxMDA4MjI0ODlCAlBI&skid=4953a404-f13c-484f-ade5-13ce73ac64d2&g_st=afm"
+  },
+  "en": {
+    "heroTitle": "Cooler Air.<br><span>Cleaner Comfort.</span><br>Smarter Savings.",
+    "heroTagline": "Choose KOOLMATE!",
+    "heroLead": "Professional air-conditioning service for a cooler, cleaner and more energy-efficient home or business.",
+    "workText": "Browse real KOOLMATE service highlights featuring aircon installation, cleaning, repair and maintenance work.",
+    "areaSanMateo": "San Mateo, Rizal & Nearby Areas"
+  },
+  "fil": {
+    "heroTitle": "Mas Malamig.<br><span>Mas Malinis.</span><br>Mas Tipid.",
+    "heroTagline": "I-KOOLMATE Mo Yan!",
+    "heroLead": "Propesyonal na aircon service para sa mas malamig, malinis at matipid na tahanan o negosyo.",
+    "workText": "Tingnan ang totoong KOOLMATE service highlights mula sa aircon installation, cleaning, repair at maintenance work.",
+    "areaSanMateo": "San Mateo, Rizal & Nearby Areas"
+  },
+  "workItems": [
+    {
+      "type": "empty",
+      "title": {
+        "en": "Installation Work",
+        "fil": "Installation Work"
+      },
+      "status": {
+        "en": "",
+        "fil": ""
+      },
+      "image": "",
+      "url": ""
+    },
+    {
+      "type": "empty",
+      "title": {
+        "en": "Aircon Cleaning",
+        "fil": "Aircon Cleaning"
+      },
+      "status": {
+        "en": "",
+        "fil": ""
+      },
+      "image": "",
+      "url": ""
+    },
+    {
+      "type": "empty",
+      "title": {
+        "en": "Repair Service",
+        "fil": "Repair Service"
+      },
+      "status": {
+        "en": "",
+        "fil": ""
+      },
+      "image": "",
+      "url": ""
+    },
+    {
+      "type": "empty",
+      "title": {
+        "en": "Maintenance Visit",
+        "fil": "Maintenance Visit"
+      },
+      "status": {
+        "en": "",
+        "fil": ""
+      },
+      "image": "",
+      "url": ""
+    },
+    {
+      "type": "empty",
+      "title": {
+        "en": "Commercial Service",
+        "fil": "Commercial Service"
+      },
+      "status": {
+        "en": "",
+        "fil": ""
+      },
+      "image": "",
+      "url": ""
+    }
+  ],
+  "promos": [
+    {
+      "enabled": true,
+      "title": {
+        "en": "Cooler, cleaner comfort",
+        "fil": "Mas malamig at malinis"
+      },
+      "image": "assets/promo-cool-home.jpg",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "title": {
+        "en": "Aircon not cooling?",
+        "fil": "Hindi nagpapalamig ang aircon?"
+      },
+      "image": "assets/promo-aircon-solution.jpg",
+      "url": "#services"
+    },
+    {
+      "enabled": true,
+      "title": {
+        "en": "Cool comfort every day",
+        "fil": "Komportableng lamig araw-araw"
+      },
+      "image": "assets/promo-comfort-everyday.jpg",
+      "url": "#quote"
+    },
+    {
+      "enabled": true,
+      "title": {
+        "en": "Fast maintenance service",
+        "fil": "Mabilis na maintenance service"
+      },
+      "image": "assets/promo-lamig-solusyon.jpg",
+      "url": "#services"
+    }
+  ],
+  "airconUnits": [
+    {
+      "capacity": "1.5HP",
+      "enabled": true,
+      "brand": "Midea",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "Celest PRO MSCE-13CRFN8-F.DC",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "123",
+      "image": "data:image/jpeg;base64,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",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Midea",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Carrier",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Carrier",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "American Home",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "American Home",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "TCL",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "TCL",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Daikin",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Daikin",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "LG",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "LG",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Haier",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Haier",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Samsung",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Samsung",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Chiq",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Chiq",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Hisense",
+      "slot": 1,
+      "tag": "mostPopular",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    },
+    {
+      "capacity": "",
+      "enabled": true,
+      "brand": "Hisense",
+      "slot": 2,
+      "tag": "bestPrice",
+      "model": "",
+      "name": {
+        "en": "",
+        "fil": ""
+      },
+      "type": {
+        "en": "",
+        "fil": ""
+      },
+      "price": "",
+      "image": "",
+      "url": "#quote"
+    }
+  ],
+  "priceList": {
+    "url": "",
+    "label": {
+      "en": "View Full Price List",
+      "fil": "Tingnan ang Full Price List"
+    },
+    "note": {
+      "en": "Prices and availability may change. Please message us to confirm the latest stock and final quote.",
+      "fil": "Maaaring magbago ang presyo at availability. Mag-message para ma-confirm ang latest stock at final quote."
+    }
+  }
 }
