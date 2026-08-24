@@ -542,6 +542,16 @@ function normalizeAssetUrl(value) {
   return url;
 }
 
+function getGoogleSheetEditUrl(value) {
+  const url = String(value || "").trim() || DEFAULT_PRICE_LIST_URL;
+  const match = url.match(/docs\.google\.com\/spreadsheets\/d\/([^/]+)/i);
+  if (!match) return url;
+
+  const gidMatch = url.match(/[?&#]gid=([^&#]+)/i);
+  const gid = gidMatch ? gidMatch[1] : "0";
+  return `https://docs.google.com/spreadsheets/d/${match[1]}/edit?gid=${gid}#gid=${gid}`;
+}
+
 function normalizeCmsAssets() {
   state.workItems = (state.workItems || []).map((item) => {
     const image = normalizeAssetUrl(item.image);
@@ -860,6 +870,7 @@ function renderUnitEditor() {
   const copy = uiText[cmsLanguage];
   const editor = document.getElementById("unitEditor");
   if (!editor) return;
+  const priceListEditUrl = getGoogleSheetEditUrl(state.priceList?.url || DEFAULT_PRICE_LIST_URL);
   editor.innerHTML = `
     <article class="price-list-edit-card">
       <div class="promo-edit-head">
@@ -868,7 +879,7 @@ function renderUnitEditor() {
           <p class="price-list-edit-help">The full price list now uses the connected Google Sheet. Edit prices directly in Google Sheets; the website modal will show the saved sheet.</p>
         </div>
       </div>
-      <a class="secondary" href="${escapeAttribute(state.priceList?.url || DEFAULT_PRICE_LIST_URL)}" target="_blank" rel="noopener noreferrer">Open Google Sheet</a>
+      <a class="secondary" href="${escapeAttribute(priceListEditUrl)}" target="_blank" rel="noopener noreferrer">Open Google Sheet</a>
     </article>
     ${state.airconUnits.map((unit, index) => `
     <article class="unit-edit-card">
