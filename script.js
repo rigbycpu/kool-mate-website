@@ -609,7 +609,7 @@ async function applyCmsContent() {
     image: normalizeAssetUrl(unit.image),
     url: normalizeAssetUrl(unit.url)
   }));
-  priceList.url = normalizeAssetUrl(priceList.url) || DEFAULT_PRICE_LIST_URL;
+  priceList.url = getGoogleSheetEmbedUrl(priceList.url) ? priceList.url : DEFAULT_PRICE_LIST_URL;
   priceList.rows = normalizePriceListRows(priceList.rows);
 }
 

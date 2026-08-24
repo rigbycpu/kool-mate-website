@@ -571,8 +571,11 @@ function normalizeCmsAssets() {
     url: normalizeAssetUrl(unit.url)
   }));
   if (state.priceList) {
-    state.priceList.url = normalizeAssetUrl(state.priceList.url) || DEFAULT_PRICE_LIST_URL;
-    if (!state.priceList.url) state.priceList.source = "";
+    const currentPriceListUrl = normalizeAssetUrl(state.priceList.url);
+    state.priceList.url = getGoogleSheetEditUrl(currentPriceListUrl).includes("docs.google.com/spreadsheets")
+      ? getGoogleSheetEditUrl(currentPriceListUrl)
+      : DEFAULT_PRICE_LIST_URL;
+    state.priceList.source = "link";
     state.priceList.rows = normalizePriceListRows(state.priceList.rows);
   }
 }
