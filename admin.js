@@ -5,7 +5,7 @@ const UNIT_TAGS = {
   bestPrice: "Best Price"
 };
 const PRICE_LIST_ROWS = 8;
-const DEFAULT_PRICE_LIST_URL = "https://docs.google.com/spreadsheets/d/1r9cj5aqoRgck8dTMFpux4ePGYnoENrTQd0F8Gko19uk/edit?gid=0#gid=0";
+const DEFAULT_PRICE_LIST_URL = "https://docs.google.com/spreadsheets/d/1t9oEcAhR5lvyBxgxYIsHW0f5cveyAD5-xFc74SUX4Lg/edit?gid=0#gid=0";
 
 function blankPriceRow() {
   return {
@@ -873,7 +873,7 @@ function renderUnitEditor() {
   const copy = uiText[cmsLanguage];
   const editor = document.getElementById("unitEditor");
   if (!editor) return;
-  const priceListEditUrl = getGoogleSheetEditUrl(state.priceList?.url || DEFAULT_PRICE_LIST_URL);
+  const priceListEditUrl = getGoogleSheetEditUrl(DEFAULT_PRICE_LIST_URL);
   editor.innerHTML = `
     <article class="price-list-edit-card">
       <div class="promo-edit-head">

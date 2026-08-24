@@ -23,7 +23,7 @@ const UNIT_TAGS = {
   bestPrice: "Best Price"
 };
 const PRICE_LIST_ROWS = 8;
-const DEFAULT_PRICE_LIST_URL = "https://docs.google.com/spreadsheets/d/1r9cj5aqoRgck8dTMFpux4ePGYnoENrTQd0F8Gko19uk/edit?gid=0#gid=0";
+const DEFAULT_PRICE_LIST_URL = "https://docs.google.com/spreadsheets/d/1t9oEcAhR5lvyBxgxYIsHW0f5cveyAD5-xFc74SUX4Lg/edit?gid=0#gid=0";
 
 function blankPriceRow() {
   return {
@@ -668,7 +668,81 @@ function getGoogleSheetEmbedUrl(url) {
   if (!match) return "";
   const gidMatch = value.match(/[?&#]gid=(\d+)/i);
   const gid = gidMatch ? gidMatch[1] : "0";
-  return `https://docs.google.com/spreadsheets/d/${match[1]}/preview?gid=${gid}&single=true&widget=true&headers=false`;
+  return `https://docs.google.com/spreadsheets/d/${match[1]}/gviz/tq?tqx=out:html&gid=${gid}`;
+}
+
+function getGoogleSheetCsvUrl(url) {
+  const value = String(url || "").trim();
+  const match = value.match(/docs\.google\.com\/spreadsheets\/d\/([^/]+)/i);
+  if (!match) return "";
+  const gidMatch = value.match(/[?&#]gid=(\d+)/i);
+  const gid = gidMatch ? gidMatch[1] : "0";
+  return `https://docs.google.com/spreadsheets/d/${match[1]}/gviz/tq?tqx=out:csv&gid=${gid}`;
+}
+
+function parseCsvRows(csvText) {
+  const rows = [];
+  let row = [];
+  let value = "";
+  let quoted = false;
+
+  for (let index = 0; index < csvText.length; index += 1) {
+    const char = csvText[index];
+    const next = csvText[index + 1];
+
+    if (quoted) {
+      if (char === '"' && next === '"') {
+        value += '"';
+        index += 1;
+      } else if (char === '"') {
+        quoted = false;
+      } else {
+        value += char;
+      }
+      continue;
+    }
+
+    if (char === '"') {
+      quoted = true;
+    } else if (char === ",") {
+      row.push(value.trim());
+      value = "";
+    } else if (char === "\n") {
+      row.push(value.trim());
+      if (row.some(Boolean)) rows.push(row);
+      row = [];
+      value = "";
+    } else if (char !== "\r") {
+      value += char;
+    }
+  }
+
+  row.push(value.trim());
+  if (row.some(Boolean)) rows.push(row);
+  return rows;
+}
+
+function renderGenericPriceTable(rows) {
+  if (!rows.length) return `<div class="price-list-empty">${t().priceListEmpty}</div>`;
+  const header = rows[0];
+  const bodyRows = rows.slice(1).filter((row) => row.some(Boolean));
+
+  return `
+    <div class="price-list-table-wrap">
+      <table class="price-list-table">
+        <thead>
+          <tr>${header.map((cell) => `<th>${escapeHtml(cell || "")}</th>`).join("")}</tr>
+        </thead>
+        <tbody>
+          ${bodyRows.map((row) => `
+            <tr>
+              ${header.map((heading, index) => `<td data-label="${escapeAttribute(heading || "")}">${escapeHtml(row[index] || "—")}</td>`).join("")}
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
 }
 
 function renderBrandMark(brand, compact = false) {
@@ -920,7 +994,7 @@ function setupPriceListModal() {
 
   const modalTitle = priceList.label?.[currentLanguage] || t().unitFullList;
   const noteText = priceList.note?.[currentLanguage] || "";
-  const sheetEmbedUrl = getGoogleSheetEmbedUrl(priceList.url);
+  const sheetCsvUrl = getGoogleSheetCsvUrl(priceList.url);
   const visibleRows = normalizePriceListRows(priceList.rows).filter((row) => [row.brand, row.model, row.capacity, row.srp, row.cash].some((value) => String(value || "").trim()));
 
   note.textContent = noteText;
@@ -929,13 +1003,13 @@ function setupPriceListModal() {
   inquire.target = "_blank";
   inquire.rel = "noopener noreferrer";
   document.getElementById("priceListTitle").textContent = modalTitle;
-  if (sheetEmbedUrl) {
-    viewer.innerHTML = `<iframe class="price-list-sheet-frame" src="${escapeAttribute(sheetEmbedUrl)}" title="${escapeAttribute(modalTitle)}"></iframe>`;
-  } else if (priceList.url) {
-    viewer.innerHTML = priceList.url.toLowerCase().endsWith(".pdf")
-      ? `<iframe src="${escapeAttribute(priceList.url)}" title="${escapeAttribute(modalTitle)}"></iframe>`
-      : `<img src="${escapeAttribute(priceList.url)}" alt="${escapeAttribute(modalTitle)}" loading="lazy">`;
-  } else if (visibleRows.length) {
+
+  const renderSavedRows = () => {
+    if (!visibleRows.length) {
+      viewer.innerHTML = `<div class="price-list-empty">${t().priceListEmpty}</div>`;
+      return;
+    }
+
     viewer.innerHTML = `
       <div class="price-list-table-wrap">
         <table class="price-list-table">
@@ -962,9 +1036,33 @@ function setupPriceListModal() {
         </table>
       </div>
     `;
-  } else {
-    viewer.innerHTML = `<div class="price-list-empty">${t().priceListEmpty}</div>`;
-  }
+  };
+
+  const loadSheetRows = async () => {
+    if (!sheetCsvUrl) {
+      renderSavedRows();
+      return;
+    }
+
+    viewer.innerHTML = `<div class="price-list-empty">Loading updated price list...</div>`;
+    try {
+      const response = await fetch(sheetCsvUrl, { cache: "no-store" });
+      const text = await response.text();
+      if (!response.ok || /<html|<!doctype|you need access/i.test(text)) {
+        throw new Error("Google Sheet is not public yet.");
+      }
+      const rows = parseCsvRows(text);
+      viewer.innerHTML = renderGenericPriceTable(rows);
+    } catch (error) {
+      viewer.innerHTML = `
+        <div class="price-list-empty">
+          <strong>Price list is not publicly readable yet.</strong>
+          <span>In Google Sheets, set Share to Anyone with the link - Viewer, then click Done. If it still does not show, use File > Share > Publish to web.</span>
+          <a class="btn" href="${escapeAttribute(DEFAULT_PRICE_LIST_URL)}" target="_blank" rel="noopener noreferrer">Open Google Sheet</a>
+        </div>
+      `;
+    }
+  };
 
   const setOpen = (show) => {
     modal.hidden = !show;
@@ -972,7 +1070,10 @@ function setupPriceListModal() {
     if (show) close.focus();
   };
 
-  open.onclick = () => setOpen(true);
+  open.onclick = () => {
+    setOpen(true);
+    loadSheetRows();
+  };
   close.onclick = () => setOpen(false);
   modal.onclick = (event) => {
     if (event.target === modal) setOpen(false);
