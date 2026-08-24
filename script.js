@@ -23,6 +23,7 @@ const UNIT_TAGS = {
   bestPrice: "Best Price"
 };
 const PRICE_LIST_ROWS = 8;
+const DEFAULT_PRICE_LIST_URL = "https://docs.google.com/spreadsheets/d/1r9cj5aqoRgck8dTMFpux4ePGYnoENrTQd0F8Gko19uk/edit?gid=0#gid=0";
 
 function blankPriceRow() {
   return {
@@ -73,7 +74,7 @@ let promos = [
 ];
 
 let priceList = {
-  url: "",
+  url: DEFAULT_PRICE_LIST_URL,
   label: { en: "View Full Price List", fil: "Tingnan ang Full Price List" },
   note: {
     en: "Prices and availability may change. Please message us to confirm the latest stock and final quote.",
@@ -608,7 +609,7 @@ async function applyCmsContent() {
     image: normalizeAssetUrl(unit.image),
     url: normalizeAssetUrl(unit.url)
   }));
-  priceList.url = normalizeAssetUrl(priceList.url);
+  priceList.url = normalizeAssetUrl(priceList.url) || DEFAULT_PRICE_LIST_URL;
   priceList.rows = normalizePriceListRows(priceList.rows);
 }
 
@@ -659,6 +660,15 @@ function escapeAttribute(value) {
     .replace(/"/g, "&quot;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
+}
+
+function getGoogleSheetEmbedUrl(url) {
+  const value = String(url || "").trim();
+  const match = value.match(/docs\.google\.com\/spreadsheets\/d\/([^/]+)/i);
+  if (!match) return "";
+  const gidMatch = value.match(/[?&#]gid=(\d+)/i);
+  const gid = gidMatch ? gidMatch[1] : "0";
+  return `https://docs.google.com/spreadsheets/d/${match[1]}/preview?gid=${gid}&single=true&widget=true&headers=false`;
 }
 
 function renderBrandMark(brand, compact = false) {
@@ -910,6 +920,7 @@ function setupPriceListModal() {
 
   const modalTitle = priceList.label?.[currentLanguage] || t().unitFullList;
   const noteText = priceList.note?.[currentLanguage] || "";
+  const sheetEmbedUrl = getGoogleSheetEmbedUrl(priceList.url);
   const visibleRows = normalizePriceListRows(priceList.rows).filter((row) => [row.brand, row.model, row.capacity, row.srp, row.cash].some((value) => String(value || "").trim()));
 
   note.textContent = noteText;
@@ -918,7 +929,13 @@ function setupPriceListModal() {
   inquire.target = "_blank";
   inquire.rel = "noopener noreferrer";
   document.getElementById("priceListTitle").textContent = modalTitle;
-  if (visibleRows.length) {
+  if (sheetEmbedUrl) {
+    viewer.innerHTML = `<iframe class="price-list-sheet-frame" src="${escapeAttribute(sheetEmbedUrl)}" title="${escapeAttribute(modalTitle)}"></iframe>`;
+  } else if (priceList.url) {
+    viewer.innerHTML = priceList.url.toLowerCase().endsWith(".pdf")
+      ? `<iframe src="${escapeAttribute(priceList.url)}" title="${escapeAttribute(modalTitle)}"></iframe>`
+      : `<img src="${escapeAttribute(priceList.url)}" alt="${escapeAttribute(modalTitle)}" loading="lazy">`;
+  } else if (visibleRows.length) {
     viewer.innerHTML = `
       <div class="price-list-table-wrap">
         <table class="price-list-table">
@@ -945,10 +962,6 @@ function setupPriceListModal() {
         </table>
       </div>
     `;
-  } else if (priceList.url) {
-    viewer.innerHTML = priceList.url.toLowerCase().endsWith(".pdf")
-      ? `<iframe src="${priceList.url}" title="${modalTitle}"></iframe>`
-      : `<img src="${priceList.url}" alt="${modalTitle}" loading="lazy">`;
   } else {
     viewer.innerHTML = `<div class="price-list-empty">${t().priceListEmpty}</div>`;
   }

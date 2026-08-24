@@ -5,6 +5,7 @@ const UNIT_TAGS = {
   bestPrice: "Best Price"
 };
 const PRICE_LIST_ROWS = 8;
+const DEFAULT_PRICE_LIST_URL = "https://docs.google.com/spreadsheets/d/1r9cj5aqoRgck8dTMFpux4ePGYnoENrTQd0F8Gko19uk/edit?gid=0#gid=0";
 
 function blankPriceRow() {
   return {
@@ -222,7 +223,7 @@ const defaults = {
     { enabled: true, title: { en: "Fast maintenance service", fil: "Mabilis na maintenance service" }, image: "assets/promo-lamig-solusyon.jpg", url: "#services" }
   ],
   priceList: {
-    url: "",
+    url: DEFAULT_PRICE_LIST_URL,
     source: "",
     rows: normalizePriceListRows([]),
     label: { en: "View Full Price List", fil: "Tingnan ang Full Price List" },
@@ -560,7 +561,7 @@ function normalizeCmsAssets() {
     url: normalizeAssetUrl(unit.url)
   }));
   if (state.priceList) {
-    state.priceList.url = normalizeAssetUrl(state.priceList.url);
+    state.priceList.url = normalizeAssetUrl(state.priceList.url) || DEFAULT_PRICE_LIST_URL;
     if (!state.priceList.url) state.priceList.source = "";
     state.priceList.rows = normalizePriceListRows(state.priceList.rows);
   }
@@ -859,44 +860,15 @@ function renderUnitEditor() {
   const copy = uiText[cmsLanguage];
   const editor = document.getElementById("unitEditor");
   if (!editor) return;
-  const priceRows = normalizePriceListRows(state.priceList?.rows);
   editor.innerHTML = `
     <article class="price-list-edit-card">
       <div class="promo-edit-head">
         <div>
           <strong>${copy.priceListTitle}</strong>
-          <p class="price-list-edit-help">${copy.priceListHelp}</p>
+          <p class="price-list-edit-help">The full price list now uses the connected Google Sheet. Edit prices directly in Google Sheets; the website modal will show the saved sheet.</p>
         </div>
-        <button type="button" class="secondary" data-price-row-add>${copy.priceListAddRow}</button>
       </div>
-      <div class="price-list-table-editor">
-        <div class="price-list-table-head">
-          <span>#</span>
-          <span>${copy.priceRowBrand}</span>
-          <span>${copy.priceRowModel}</span>
-          <span>${copy.priceRowCapacity}</span>
-          <span>${copy.priceRowSrp}</span>
-          <span>${copy.priceRowCash}</span>
-          <span></span>
-        </div>
-        ${priceRows.map((row, index) => `
-          <div class="price-list-table-row">
-            <strong>${String(index + 1).padStart(2, "0")}</strong>
-            <label><span>${copy.priceRowBrand}</span><input name="priceList.rows.${index}.brand" placeholder="Midea" value="${escapeAttribute(row.brand)}"></label>
-            <label><span>${copy.priceRowModel}</span><input name="priceList.rows.${index}.model" placeholder="MSCE-13CRFN8-F.DC" value="${escapeAttribute(row.model)}"></label>
-            <label><span>${copy.priceRowCapacity}</span><input name="priceList.rows.${index}.capacity" placeholder="1.5HP" value="${escapeAttribute(row.capacity)}"></label>
-            <label><span>${copy.priceRowSrp}</span><input name="priceList.rows.${index}.srp" placeholder="P27,500" value="${escapeAttribute(row.srp)}"></label>
-            <label><span>${copy.priceRowCash}</span><input name="priceList.rows.${index}.cash" placeholder="P23,900" value="${escapeAttribute(row.cash)}"></label>
-            <button type="button" class="secondary danger-lite" data-price-row-remove="${index}">${copy.priceListRemoveRow}</button>
-          </div>
-        `).join("")}
-      </div>
-      <div class="work-fields price-list-foot">
-        <label><span>${copy.priceListLabelEn}</span><input name="priceList.label.en"></label>
-        <label><span>${copy.priceListLabelFil}</span><input name="priceList.label.fil"></label>
-        <label class="wide"><span>${copy.priceListNoteEn}</span><textarea name="priceList.note.en" rows="2"></textarea></label>
-        <label class="wide"><span>${copy.priceListNoteFil}</span><textarea name="priceList.note.fil" rows="2"></textarea></label>
-      </div>
+      <a class="secondary" href="${escapeAttribute(state.priceList?.url || DEFAULT_PRICE_LIST_URL)}" target="_blank" rel="noopener noreferrer">Open Google Sheet</a>
     </article>
     ${state.airconUnits.map((unit, index) => `
     <article class="unit-edit-card">

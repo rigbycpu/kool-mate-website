@@ -509,65 +509,8 @@
     }
   ],
   "priceList": {
-    "url": "",
-    "rows": [
-      {
-        "brand": "",
-        "model": "",
-        "capacity": "",
-        "srp": "",
-        "cash": ""
-      },
-      {
-        "brand": "",
-        "model": "",
-        "capacity": "",
-        "srp": "",
-        "cash": ""
-      },
-      {
-        "brand": "",
-        "model": "",
-        "capacity": "",
-        "srp": "",
-        "cash": ""
-      },
-      {
-        "brand": "",
-        "model": "",
-        "capacity": "",
-        "srp": "",
-        "cash": ""
-      },
-      {
-        "brand": "",
-        "model": "",
-        "capacity": "",
-        "srp": "",
-        "cash": ""
-      },
-      {
-        "brand": "",
-        "model": "",
-        "capacity": "",
-        "srp": "",
-        "cash": ""
-      },
-      {
-        "brand": "",
-        "model": "",
-        "capacity": "",
-        "srp": "",
-        "cash": ""
-      },
-      {
-        "brand": "",
-        "model": "",
-        "capacity": "",
-        "srp": "",
-        "cash": ""
-      }
-    ],
+    "url": "https://docs.google.com/spreadsheets/d/1r9cj5aqoRgck8dTMFpux4ePGYnoENrTQd0F8Gko19uk/edit?gid=0#gid=0",
+    "rows": [],
     "label": {
       "en": "View Full Price List",
       "fil": "Tingnan ang Full Price List"
