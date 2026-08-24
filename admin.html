@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="admin.css?v=20260812-cms-preview-clean">
+    <link rel="stylesheet" href="admin.css?v=20260824-about-cms">
   </head>
   <body>
     <section class="login-screen" id="loginScreen" hidden>
@@ -91,6 +91,7 @@
         <nav class="tabs" aria-label="Editor sections">
           <button type="button" class="active" data-tab="business" data-ui="tabBusiness">Business</button>
           <button type="button" data-tab="home" data-ui="tabHome">Home Text</button>
+          <button type="button" data-tab="about" data-ui="tabAbout">About Us</button>
           <button type="button" data-tab="work" data-ui="tabWork">Our Work</button>
           <button type="button" data-tab="units" data-ui="tabUnits">Aircon Units</button>
           <button type="button" data-tab="promos" data-ui="tabPromos">Promos</button>
@@ -139,13 +140,19 @@
             </div>
           </section>
 
+          <section class="tab-panel" data-panel="about">
+            <div class="language-note" data-ui="aboutHelp">Edit the text shown on the About Us page. Layout and styling are locked.</div>
+            <div class="section-manual" data-manual="about"></div>
+            <div class="about-editor" id="aboutEditor"></div>
+          </section>
+
           <section class="tab-panel" data-panel="work">
             <div class="section-manual" data-manual="work"></div>
             <div class="work-editor" id="workEditor"></div>
           </section>
 
           <section class="tab-panel" data-panel="units">
-            <div class="language-note" data-ui="unitsHelp">Edit the 10 aircon unit slots shown in the product carousel.</div>
+            <div class="language-note" data-ui="unitsHelp">Edit the 10 aircon unit slots shown in the product carousel. Use the Full Price List table below for the complete available aircon list.</div>
             <div class="section-manual" data-manual="units"></div>
             <div class="unit-editor" id="unitEditor"></div>
           </section>
@@ -177,6 +184,6 @@
       </section>
     </main>
 
-    <script src="admin.js?v=20260813-upload-preview-fix"></script>
+    <script src="admin.js?v=20260824-about-cms"></script>
   </body>
 </html>

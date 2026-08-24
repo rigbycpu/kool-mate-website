@@ -22,6 +22,40 @@ const UNIT_TAGS = {
   mostPopular: "Most Popular",
   bestPrice: "Best Price"
 };
+const PRICE_LIST_ROWS = 8;
+
+function blankPriceRow() {
+  return {
+    brand: "",
+    model: "",
+    capacity: "",
+    srp: "",
+    cash: ""
+  };
+}
+
+function normalizePriceListRows(rows) {
+  const savedRows = Array.isArray(rows) ? rows : [];
+  const normalized = savedRows.map((row) => ({
+    ...blankPriceRow(),
+    ...(row || {}),
+    brand: String(row?.brand || "").trim(),
+    model: String(row?.model || "").trim(),
+    capacity: String(row?.capacity || "").trim(),
+    srp: String(row?.srp || "").trim(),
+    cash: String(row?.cash || "").trim()
+  }));
+  if (normalized.length) return normalized;
+  return Array.from({ length: PRICE_LIST_ROWS }, () => blankPriceRow());
+}
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
 
 let workItems = [
   { titleKey: "workSlotInstall", type: "empty", image: "", url: "" },
@@ -44,7 +78,8 @@ let priceList = {
   note: {
     en: "Prices and availability may change. Please message us to confirm the latest stock and final quote.",
     fil: "Maaaring magbago ang presyo at availability. Mag-message para ma-confirm ang latest stock at final quote."
-  }
+  },
+  rows: normalizePriceListRows([])
 };
 
 let airconUnits = AIRCON_BRANDS.flatMap((brand) => [1, 2].map((slot) => ({
@@ -109,8 +144,11 @@ const translations = {
     miniRepair: "Repair",
     miniCleaning: "Cleaning",
     servicesEyebrow: "Our Services",
-    servicesTitle: "Complete air-conditioning services for homes and businesses",
+    servicesTitle: "Air-conditioning support from purchase to long-term care.",
+    servicesIntro: "From choosing the right unit to regular maintenance and repairs, we keep your space cool, efficient, and worry-free.",
     registered: "DTI & BIR Registered",
+    quickCtaTitle: "Not sure which aircon or service you need?",
+    quickCtaText: "We'll help you find the right cooling solution for your space and needs.",
     whyEyebrow: "Trusted Aircon Service",
     whyTitle: "Why choose KOOLMATE?",
     sellEyebrow: "We Sell",
@@ -126,9 +164,14 @@ const translations = {
     unitBadgeQuoteText: "Ask for the right unit for your space",
     unitFreeInstallTitle: "Free installation included",
     unitFreeInstallText: "All brand-new aircon units come with free standard installation.",
+    priceRowBrand: "Brand",
+    priceRowModel: "Model No.",
+    priceRowCapacity: "Capacity",
+    priceRowSrp: "SRP",
+    priceRowCash: "Cash",
     unitCarouselEyebrow: "Available Brands",
     unitCarouselTitle: "Featured aircon units by brand",
-    unitCarouselText: "View our recommended and best-value units below. For the full available list, open the complete price list or message us for the latest stock and prices.",
+    unitCarouselText: "View our recommended and best-value units below. Open the full price list table for the latest stock and pricing, or message us for details.",
     unitInquireNow: "Inquire Now",
     unitFullList: "View Full Price List",
     unitUnavailable: "Unavailable",
@@ -138,6 +181,7 @@ const translations = {
     unitMostPopular: "Most Popular",
     unitBestPrice: "Best Price",
     unitPriceFallback: "",
+    priceListEmpty: "Add full pricelist rows in the CMS to display the public table.",
     brandsEyebrow: "We Service All Major Brands",
     brandsTitle: "Reliable service for leading aircon brands",
     workEyebrow: "Our Work",
@@ -196,13 +240,13 @@ const translations = {
     sendSms: "Send SMS",
     callNow: "Call Now",
     services: [
-      ["install", "Aircon Installation", "Professional installation for reliable and efficient cooling."],
-      ["maintenance", "Preventive Maintenance", "Regular maintenance to keep your aircon efficient and extend its lifespan."],
-      ["cleaning", "General Cleaning", "Thorough cleaning to remove dirt, dust and buildup."],
-      ["charging", "Refrigerant Charging", "Proper refrigerant charging for better cooling performance."],
-      ["repair", "Check Up / Repair", "Inspection and repair for air-conditioning problems."],
-      ["relocation", "Relocation / Dismantling", "Safe dismantling and relocation of air-conditioning units."],
-      ["reprocess", "System Reprocess", "System reprocessing and service to restore proper air-conditioning performance."]
+      ["sales", "Aircon Sales", "Brand-new air conditioning units suitable for homes, offices, stores, and other establishments."],
+      ["installation", "Aircon Installation", "Professional installation to help ensure proper operation, performance, and efficiency."],
+      ["cleaning", "General Cleaning", "Regular cleaning to maintain performance and provide a cleaner indoor environment."],
+      ["repair", "Aircon Repair", "Support for poor cooling, unusual sounds, water leaks, and other common issues."],
+      ["maintenance", "Preventive Maintenance", "Regular service to identify potential problems early and keep systems running properly."],
+      ["refrigerant", "Refrigerant Charging", "Refrigerant-related services after proper system checking and diagnosis."],
+      ["diagnosis", "Troubleshooting & Diagnosis", "System inspection to identify possible causes and recommend appropriate solutions."]
     ],
     features: [
       ["technician", "Experienced Technicians"],
@@ -256,8 +300,11 @@ const translations = {
     miniRepair: "Repair",
     miniCleaning: "Cleaning",
     servicesEyebrow: "Aming Serbisyo",
-    servicesTitle: "Kumpletong air-conditioning services para sa bahay at negosyo",
+    servicesTitle: "Air-conditioning support mula pagbili hanggang long-term care.",
+    servicesIntro: "Mula sa pagpili ng tamang unit hanggang regular maintenance at repair, pinapanatili naming malamig, efficient, at hassle-free ang inyong space.",
     registered: "DTI & BIR Registered",
+    quickCtaTitle: "Hindi sure kung anong aircon o service ang kailangan?",
+    quickCtaText: "Tutulungan namin kayong mahanap ang tamang cooling solution para sa inyong space at pangangailangan.",
     whyEyebrow: "Trusted Aircon Service",
     whyTitle: "Bakit KOOLMATE ang piliin?",
     sellEyebrow: "Nagbebenta Kami",
@@ -273,9 +320,14 @@ const translations = {
     unitBadgeQuoteText: "Magtanong para sa tamang unit sa inyong space",
     unitFreeInstallTitle: "Kasama ang free installation",
     unitFreeInstallText: "Lahat ng brand-new aircon units ay may kasamang free standard installation.",
+    priceRowBrand: "Brand",
+    priceRowModel: "Model No.",
+    priceRowCapacity: "Capacity",
+    priceRowSrp: "SRP",
+    priceRowCash: "Cash",
     unitCarouselEyebrow: "Available Brands",
     unitCarouselTitle: "Featured aircon units by brand",
-    unitCarouselText: "Tingnan ang recommended at best-value units sa ibaba. Para sa full available list, buksan ang complete price list o mag-message para sa latest stock at presyo.",
+    unitCarouselText: "Tingnan ang recommended at best-value units sa ibaba. Buksan ang full price list table para sa latest stock at presyo, o mag-message para sa details.",
     unitInquireNow: "Inquire Now",
     unitFullList: "Tingnan ang Full Price List",
     unitUnavailable: "Unavailable",
@@ -285,6 +337,7 @@ const translations = {
     unitMostPopular: "Most Popular",
     unitBestPrice: "Best Price",
     unitPriceFallback: "",
+    priceListEmpty: "Magdagdag ng full pricelist rows sa CMS para lumabas ang public table.",
     brandsEyebrow: "Nagseserbisyo Kami ng Major Brands",
     brandsTitle: "Maaasahang serbisyo para sa kilalang aircon brands",
     workEyebrow: "Our Work",
@@ -343,13 +396,13 @@ const translations = {
     sendSms: "Mag-send ng SMS",
     callNow: "Tumawag Ngayon",
     services: [
-      ["install", "Aircon Installation", "Propesyonal na installation para sa maaasahan at efficient na pagpapalamig."],
-      ["maintenance", "Preventive Maintenance", "Regular na maintenance para mapanatiling efficient ang aircon at humaba ang lifespan nito."],
-      ["cleaning", "General Cleaning", "Masusing paglilinis para matanggal ang dumi, alikabok at buildup."],
-      ["charging", "Refrigerant Charging", "Tamang refrigerant charging para sa mas maayos na cooling performance."],
-      ["repair", "Check Up / Repair", "Inspection at repair para sa air-conditioning problems."],
-      ["relocation", "Relocation / Dismantling", "Maingat na dismantling at relocation ng air-conditioning units."],
-      ["reprocess", "System Reprocess", "System reprocessing at service para maibalik ang maayos na air-conditioning performance."]
+      ["sales", "Aircon Sales", "Brand-new air conditioning units para sa bahay, opisina, tindahan, at iba pang establishments."],
+      ["installation", "Aircon Installation", "Professional installation para masigurong tama ang operation, performance, at efficiency."],
+      ["cleaning", "General Cleaning", "Regular cleaning para mapanatili ang performance at mas malinis na indoor environment."],
+      ["repair", "Aircon Repair", "Tulong para sa mahinang lamig, kakaibang tunog, tagas ng tubig, at iba pang common issues."],
+      ["maintenance", "Preventive Maintenance", "Regular service para maagang makita ang potential problems at mapanatiling maayos ang takbo ng system."],
+      ["refrigerant", "Refrigerant Charging", "Refrigerant-related services pagkatapos ng proper system checking at diagnosis."],
+      ["diagnosis", "Troubleshooting & Diagnosis", "System inspection para matukoy ang possible causes at mairekomenda ang tamang solusyon."]
     ],
     features: [
       ["technician", "Experienced Technicians"],
@@ -521,7 +574,8 @@ async function applyCmsContent() {
       ...priceList,
       ...saved.priceList,
       label: { ...priceList.label, ...(saved.priceList.label || {}) },
-      note: { ...priceList.note, ...(saved.priceList.note || {}) }
+      note: { ...priceList.note, ...(saved.priceList.note || {}) },
+      rows: normalizePriceListRows(saved.priceList.rows)
     };
   }
 
@@ -555,6 +609,7 @@ async function applyCmsContent() {
     url: normalizeAssetUrl(unit.url)
   }));
   priceList.url = normalizeAssetUrl(priceList.url);
+  priceList.rows = normalizePriceListRows(priceList.rows);
 }
 
 function phoneHref(phone) {
@@ -690,20 +745,41 @@ function renderCards() {
     return `<article class="work-slot reveal visible">${content}</article>`;
   };
 
-  document.querySelector('[data-render="services"]').innerHTML = copy.services.map(([icon, title, text]) => `
-    <article class="service-card reveal visible">
-      <div class="card-icon">${icons[icon] ?? icon}</div>
-      <h3>${title}</h3>
-      <p>${text}</p>
-    </article>
-  `).join("");
+  const servicesGrid = document.querySelector('[data-render="services"]');
+  const renderHomeService = (service, index) => {
+    const title = service[1];
+    const text = service[2];
+    const number = String(index + 1).padStart(2, "0");
+    return `
+      <article class="service-card home-service-card reveal visible">
+        <span class="service-number">${number}</span>
+        <h3>${title}</h3>
+        <span class="service-title-accent" aria-hidden="true"></span>
+        <p class="service-description">${text}</p>
+      </article>
+    `;
+  };
 
-  document.querySelector('[data-render="features"]').innerHTML = copy.features.map(([icon, title]) => `
-    <article class="feature-card reveal visible">
-      <div class="card-icon">${icons[icon] ?? icon}</div>
-      <h3>${title}</h3>
-    </article>
-  `).join("");
+  if (servicesGrid) {
+    servicesGrid.innerHTML = `
+      <div class="home-services-row home-services-primary">
+        ${copy.services.slice(0, 4).map(renderHomeService).join("")}
+      </div>
+      <div class="home-services-row home-services-secondary">
+        ${copy.services.slice(4).map((service, index) => renderHomeService(service, index + 4)).join("")}
+      </div>
+    `;
+  }
+
+  const featuresGrid = document.querySelector('[data-render="features"]');
+  if (featuresGrid) {
+    featuresGrid.innerHTML = copy.features.map(([icon, title]) => `
+      <article class="feature-card reveal visible">
+        <div class="card-icon">${icons[icon] ?? icon}</div>
+        <h3>${title}</h3>
+      </article>
+    `).join("");
+  }
 
   const brandStrip = document.querySelector('[data-render="brands"]');
   if (brandStrip) brandStrip.innerHTML = brandLogos.map((brand) => renderBrandLogo(brand, true)).join("");
@@ -723,6 +799,7 @@ function renderUnitCarousel() {
   const carousel = document.querySelector('[data-render="unit-carousel"]');
   if (!carousel) return;
   const copy = t();
+  const visiblePriceRows = normalizePriceListRows(priceList.rows).filter((row) => [row.brand, row.model, row.capacity, row.srp, row.cash].some((value) => String(value || "").trim()));
   carousel.innerHTML = AIRCON_BRANDS.map((brand, index) => {
     const units = airconUnits.filter((unit) => unit.enabled !== false && (unit.brand || AIRCON_BRANDS[index]) === brand);
     const availableUnits = units.filter((unit) => unit.model || unit.price || unit.image || unit.name?.[currentLanguage] || unit.name?.en);
@@ -788,12 +865,13 @@ function renderUnitCarousel() {
       <div>
         <span>${copy.unitCarouselText}</span>
       </div>
-      <button class="unit-full-list-btn" type="button" data-price-list-open ${priceList.url ? "" : "disabled"}>
+      <button class="unit-full-list-btn" type="button" data-price-list-open>
         ${priceList.label?.[currentLanguage] || copy.unitFullList}
       </button>
       <p>${priceList.note?.[currentLanguage] || ""}</p>
     </div>
   `;
+  carousel.dataset.priceRows = JSON.stringify(visiblePriceRows);
   hydrateSafeImages(carousel);
   setupPriceListModal();
 }
@@ -830,9 +908,9 @@ function setupPriceListModal() {
   const inquire = document.querySelector("[data-price-list-inquire]");
   if (!modal || !open || !close || !viewer) return;
 
-  const url = priceList.url || "";
   const modalTitle = priceList.label?.[currentLanguage] || t().unitFullList;
   const noteText = priceList.note?.[currentLanguage] || "";
+  const visibleRows = normalizePriceListRows(priceList.rows).filter((row) => [row.brand, row.model, row.capacity, row.srp, row.cash].some((value) => String(value || "").trim()));
 
   note.textContent = noteText;
   inquire.textContent = t().unitInquireNow;
@@ -840,11 +918,40 @@ function setupPriceListModal() {
   inquire.target = "_blank";
   inquire.rel = "noopener noreferrer";
   document.getElementById("priceListTitle").textContent = modalTitle;
-  viewer.innerHTML = !url
-    ? `<div class="price-list-empty">${t().unitUnavailable}</div>`
-    : url.toLowerCase().endsWith(".pdf")
-    ? `<iframe src="${url}" title="${modalTitle}"></iframe>`
-    : `<img src="${url}" alt="${modalTitle}" loading="lazy">`;
+  if (visibleRows.length) {
+    viewer.innerHTML = `
+      <div class="price-list-table-wrap">
+        <table class="price-list-table">
+          <thead>
+            <tr>
+              <th>${t().priceRowBrand || "Brand"}</th>
+              <th>${t().priceRowModel || "Model No."}</th>
+              <th>${t().priceRowCapacity || "Capacity"}</th>
+              <th>${t().priceRowSrp || "SRP"}</th>
+              <th>${t().priceRowCash || "Cash"}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${visibleRows.map((row) => `
+              <tr>
+                <td data-label="${t().priceRowBrand || "Brand"}">${escapeHtml(row.brand || "—")}</td>
+                <td data-label="${t().priceRowModel || "Model No."}">${escapeHtml(row.model || "—")}</td>
+                <td data-label="${t().priceRowCapacity || "Capacity"}">${escapeHtml(row.capacity || "—")}</td>
+                <td data-label="${t().priceRowSrp || "SRP"}">${escapeHtml(row.srp || "—")}</td>
+                <td data-label="${t().priceRowCash || "Cash"}">${escapeHtml(row.cash || "—")}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } else if (priceList.url) {
+    viewer.innerHTML = priceList.url.toLowerCase().endsWith(".pdf")
+      ? `<iframe src="${priceList.url}" title="${modalTitle}"></iframe>`
+      : `<img src="${priceList.url}" alt="${modalTitle}" loading="lazy">`;
+  } else {
+    viewer.innerHTML = `<div class="price-list-empty">${t().priceListEmpty}</div>`;
+  }
 
   const setOpen = (show) => {
     modal.hidden = !show;
@@ -852,9 +959,7 @@ function setupPriceListModal() {
     if (show) close.focus();
   };
 
-  open.onclick = () => {
-    if (priceList.url) setOpen(true);
-  };
+  open.onclick = () => setOpen(true);
   close.onclick = () => setOpen(false);
   modal.onclick = (event) => {
     if (event.target === modal) setOpen(false);

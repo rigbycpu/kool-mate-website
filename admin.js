@@ -4,8 +4,44 @@ const UNIT_TAGS = {
   mostPopular: "Most Popular",
   bestPrice: "Best Price"
 };
+const PRICE_LIST_ROWS = 8;
+
+function blankPriceRow() {
+  return {
+    brand: "",
+    model: "",
+    capacity: "",
+    srp: "",
+    cash: ""
+  };
+}
+
+function normalizePriceListRows(rows) {
+  const savedRows = Array.isArray(rows) ? rows : [];
+  const normalized = savedRows.map((row) => ({
+    ...blankPriceRow(),
+    ...(row || {}),
+    brand: String(row?.brand || "").trim(),
+    model: String(row?.model || "").trim(),
+    capacity: String(row?.capacity || "").trim(),
+    srp: String(row?.srp || "").trim(),
+    cash: String(row?.cash || "").trim()
+  }));
+  if (normalized.length) return normalized;
+  return Array.from({ length: PRICE_LIST_ROWS }, () => blankPriceRow());
+}
 const sectionManuals = {
   en: {
+    about: {
+      title: "About Us Manual",
+      lead: "Edit only the text content of the About Us page.",
+      items: [
+        "Use short headings so the layout stays clean on mobile.",
+        "Services, audience cards, and commitment items are editable text only.",
+        "Do not paste long paragraphs into title fields.",
+        "Images, layout, and styling are developer locked."
+      ]
+    },
     work: {
       title: "Our Work Manual",
       lead: "Use this section only when real project proof is ready.",
@@ -47,6 +83,16 @@ const sectionManuals = {
     }
   },
   fil: {
+    about: {
+      title: "Manual Para sa About Us",
+      lead: "Text content lang ng About Us page ang i-edit dito.",
+      items: [
+        "Panatilihing maikli ang headings para maayos sa mobile.",
+        "Editable ang text ng services, audience cards, at commitment items.",
+        "Huwag maglagay ng sobrang habang paragraph sa title fields.",
+        "Images, layout, at styling ay developer locked."
+      ]
+    },
     work: {
       title: "Manual Para sa Our Work",
       lead: "Gamitin lang ito kapag may totoong project proof na ready ipakita.",
@@ -117,6 +163,51 @@ const defaults = {
     heroLead: "Propesyonal na aircon service para sa mas malamig, malinis at matipid na tahanan o negosyo.",
     workText: "Tingnan ang totoong KOOLMATE service highlights mula sa aircon installation, cleaning, repair at maintenance work."
   },
+  about: {
+    overviewEyebrow: "About KOOLMATE",
+    overviewTitle: "We Keep You Cool, Comfortable & Productive.",
+    overviewParagraph1: "KOOLMATE is an air conditioning services and maintenance company committed to providing quality cooling solutions for residential, commercial, and business establishments.",
+    overviewParagraph2: "We specialize in the installation, maintenance, cleaning, repair, and troubleshooting of air conditioning systems. We also offer brand-new air conditioning units from various trusted brands to help our customers find the right cooling solution for their space and budget.",
+    visionTitle: "To become a trusted and preferred air conditioning sales and service provider.",
+    visionText: "We aim to be known for quality products, professional workmanship, honest service, and customer satisfaction.",
+    missionTitle: "To provide reliable air conditioning solutions customers can trust.",
+    missionItems: "Quality products and equipment\nHonest recommendations\nProfessional installation\nResponsive customer service\nSkilled and dependable technicians\nAffordable and practical cooling solutions\nProper maintenance and repair",
+    servicesTitle: "Air-conditioning support from purchase to long-term care.",
+    servicesIntro: "From choosing the right unit to regular maintenance and repairs, we keep your space cool, efficient, and worry-free.",
+    service1Title: "Aircon Sales",
+    service1Text: "Brand-new air conditioning units suitable for homes, offices, stores, and other establishments.",
+    service2Title: "Aircon Installation",
+    service2Text: "Professional installation to help ensure proper operation, performance, and efficiency.",
+    service3Title: "General Cleaning",
+    service3Text: "Regular cleaning to maintain performance and provide a cleaner indoor environment.",
+    service4Title: "Aircon Repair",
+    service4Text: "Support for poor cooling, unusual sounds, water leaks, and other common issues.",
+    service5Title: "Preventive Maintenance",
+    service5Text: "Regular service to identify potential problems early and keep systems running properly.",
+    service6Title: "Refrigerant Charging",
+    service6Text: "Refrigerant-related services after proper system checking and diagnosis.",
+    service7Title: "Troubleshooting & Diagnosis",
+    service7Text: "System inspection to identify possible causes and recommend appropriate solutions.",
+    brandsTitle: "Trusted aircon brands for different spaces and budgets.",
+    brandsText: "KOOLMATE helps customers choose an aircon based on room size, usage, number of occupants, heat exposure, and budget - not simply based on price.",
+    audienceTitle: "Comfort solutions for everyday living and business operations.",
+    audienceIntro: "We provide reliable cooling solutions designed to keep your space comfortable, efficient, and worry-free.",
+    audience1Title: "Homeowners & Families",
+    audience1Text: "Comfortable cooling solutions for bedrooms, living rooms, and homes.",
+    audience2Title: "Offices & Professionals",
+    audience2Text: "Reliable air conditioning for productive and comfortable workplaces.",
+    audience3Title: "Stores & Businesses",
+    audience3Text: "Cooling solutions for shops, restaurants, offices, and other commercial spaces.",
+    audience4Title: "Commercial Establishments",
+    audience4Text: "Sales and services for various business and commercial requirements.",
+    chooseTitle: "Quality service, reliable solutions, better comfort.",
+    chooseText: "At KOOLMATE, we understand that an air conditioner is an investment. We do not simply sell an aircon - we help customers find the right cooling solution for their needs.",
+    chooseItems: "Quality air conditioning products\nProfessional installation and service\nSkilled technicians\nComplete aircon solutions\nReliable after-sales service\nPractical recommendations\nCustomer-focused approach\nDTI & BIR registered",
+    commitmentQuality: "We value quality products and proper workmanship.",
+    commitmentHonesty: "We provide practical recommendations based on actual needs.",
+    commitmentProfessionalism: "We strive to deliver dependable and courteous service.",
+    commitmentSatisfaction: "Your comfort and satisfaction remain our priority."
+  },
   workItems: [
     { type: "empty", title: { en: "Installation Work", fil: "Installation Work" }, status: { en: "", fil: "" }, image: "", url: "" },
     { type: "empty", title: { en: "Aircon Cleaning", fil: "Aircon Cleaning" }, status: { en: "", fil: "" }, image: "", url: "" },
@@ -133,6 +224,7 @@ const defaults = {
   priceList: {
     url: "",
     source: "",
+    rows: normalizePriceListRows([]),
     label: { en: "View Full Price List", fil: "Tingnan ang Full Price List" },
     note: {
       en: "Prices and availability may change. Please message us to confirm the latest stock and final quote.",
@@ -173,6 +265,7 @@ const uiText = {
     resetBtn: "Reset",
     tabBusiness: "Business",
     tabHome: "Home Text",
+    tabAbout: "About Us",
     tabWork: "Our Work",
     tabUnits: "Aircon Units",
     tabPromos: "Promos",
@@ -184,6 +277,7 @@ const uiText = {
     maps: "Google Maps Link",
     address: "Address",
     languageNote: "Edit English and Filipino public text separately.",
+    aboutHelp: "Edit the About Us page text. Layout and styling are locked.",
     lockedTitle: "Developer locked fields",
     lockedNote: "Locked fields control layout or formatting and should be edited by a developer.",
     lockedBadge: "Developer locked",
@@ -208,14 +302,16 @@ const uiText = {
     promoTitleFil: "Promo title Filipino",
     promoImage: "Poster image URL",
     promoUrl: "Promo destination link",
-    unitsHelp: "Edit 1-2 featured units per brand. Use the Full Price List upload/link for the complete available aircon list.",
+    unitsHelp: "Edit 1-2 featured units per brand. Use the Full Price List table below for the complete available aircon list.",
     priceListTitle: "Full price list",
-    priceListUrl: "Price list file/link URL",
-    priceListUpload: "Upload price list image/PDF",
-    sourceChoiceNote: "Upload the price list file OR paste an existing public file link. Do not use both. The latest choice will be used.",
-    usingUpload: "Currently using uploaded file. Pasting a new link will replace this source.",
-    usingLink: "Currently using pasted link. Uploading a file will replace this source.",
-    imageBlocked: "Image preview did not load. Google/search-result links are often blocked. Please upload the image file instead.",
+    priceListHelp: "Build the public pricelist table row by row. Each row becomes one line in the website modal.",
+    priceListAddRow: "Add row",
+    priceListRemoveRow: "Remove",
+    priceRowBrand: "Brand",
+    priceRowModel: "Model No.",
+    priceRowCapacity: "Capacity",
+    priceRowSrp: "SRP",
+    priceRowCash: "Cash",
     priceListLabelEn: "Button label English",
     priceListLabelFil: "Button label Filipino",
     priceListNoteEn: "Small note English",
@@ -260,6 +356,7 @@ const uiText = {
     resetBtn: "Reset",
     tabBusiness: "Business",
     tabHome: "Home Text",
+    tabAbout: "About Us",
     tabWork: "Our Work",
     tabUnits: "Aircon Units",
     tabPromos: "Promos",
@@ -271,6 +368,7 @@ const uiText = {
     maps: "Google Maps Link",
     address: "Address",
     languageNote: "I-edit nang hiwalay ang English at Filipino public text.",
+    aboutHelp: "I-edit ang text ng About Us page. Locked ang layout at styling.",
     lockedTitle: "Developer locked fields",
     lockedNote: "Ang locked fields ay may epekto sa layout o formatting. Developer dapat ang mag-edit nito.",
     lockedBadge: "Developer locked",
@@ -295,14 +393,16 @@ const uiText = {
     promoTitleFil: "Promo title Filipino",
     promoImage: "Poster image URL",
     promoUrl: "Promo destination link",
-    unitsHelp: "Mag-edit ng 1-2 featured units kada brand. Gamitin ang Full Price List upload/link para sa kumpletong available aircon list.",
+    unitsHelp: "Mag-edit ng 1-2 featured units kada brand. Gamitin ang Full Price List table sa ibaba para sa kumpletong available aircon list.",
     priceListTitle: "Full price list",
-    priceListUrl: "Price list file/link URL",
-    priceListUpload: "Upload price list image/PDF",
-    sourceChoiceNote: "I-upload ang price list file O mag-paste ng existing public file link. Huwag pagsabayin. Ang huling pinili ang gagamitin.",
-    usingUpload: "Uploaded file ang ginagamit ngayon. Kapag nag-paste ng bagong link, ito ang papalit.",
-    usingLink: "Pasted link ang ginagamit ngayon. Kapag nag-upload ng file, ito ang papalit.",
-    imageBlocked: "Hindi nag-load ang image preview. Madalas blocked ang Google/search-result links. Mas okay i-upload ang image file mismo.",
+    priceListHelp: "Buuin ang public pricelist table row by row. Bawat row ay isang linya sa website modal.",
+    priceListAddRow: "Magdagdag ng row",
+    priceListRemoveRow: "Tanggalin",
+    priceRowBrand: "Brand",
+    priceRowModel: "Model No.",
+    priceRowCapacity: "Capacity",
+    priceRowSrp: "SRP",
+    priceRowCash: "Cash",
     priceListLabelEn: "Button label English",
     priceListLabelFil: "Button label Filipino",
     priceListNoteEn: "Small note English",
@@ -345,6 +445,7 @@ function normalizeStateContent(content) {
   next.business = { ...defaults.business, ...(content?.business || {}) };
   next.en = { ...defaults.en, ...(content?.en || {}) };
   next.fil = { ...defaults.fil, ...(content?.fil || {}) };
+  next.about = { ...defaults.about, ...(content?.about || {}) };
   if (String(next.en.workText || "").includes("posted soon")) {
     next.en.workText = defaults.en.workText;
   }
@@ -355,7 +456,8 @@ function normalizeStateContent(content) {
     ...defaults.priceList,
     ...(content?.priceList || {}),
     label: { ...defaults.priceList.label, ...(content?.priceList?.label || {}) },
-    note: { ...defaults.priceList.note, ...(content?.priceList?.note || {}) }
+    note: { ...defaults.priceList.note, ...(content?.priceList?.note || {}) },
+    rows: normalizePriceListRows(content?.priceList?.rows)
   };
 
   const savedUnits = Array.isArray(content?.airconUnits) ? content.airconUnits : [];
@@ -460,6 +562,7 @@ function normalizeCmsAssets() {
   if (state.priceList) {
     state.priceList.url = normalizeAssetUrl(state.priceList.url);
     if (!state.priceList.url) state.priceList.source = "";
+    state.priceList.rows = normalizePriceListRows(state.priceList.rows);
   }
 }
 
@@ -485,6 +588,7 @@ function applyUiLanguage() {
     button.classList.toggle("active", button.dataset.lang === cmsLanguage);
   });
   renderSectionManuals();
+  renderAboutEditor();
   renderWorkEditor();
   renderUnitEditor();
   renderPromoEditor();
@@ -595,6 +699,96 @@ function placePreviewBesideEditor() {
   editorPanel.appendChild(preview);
 }
 
+const aboutFieldGroups = [
+  {
+    title: "Main About Area",
+    fields: [
+      ["overviewEyebrow", "Small label", "input"],
+      ["overviewTitle", "Main heading", "input"],
+      ["overviewParagraph1", "Paragraph 1", "textarea"],
+      ["overviewParagraph2", "Paragraph 2", "textarea"]
+    ]
+  },
+  {
+    title: "Vision & Mission",
+    fields: [
+      ["visionTitle", "Vision headline", "textarea"],
+      ["visionText", "Vision supporting text", "textarea"],
+      ["missionTitle", "Mission headline", "textarea"],
+      ["missionItems", "Mission checklist - one item per line", "textarea"]
+    ]
+  },
+  {
+    title: "Our Services Section",
+    fields: [
+      ["servicesTitle", "Section heading", "input"],
+      ["servicesIntro", "Short intro", "textarea"],
+      ["service1Title", "Service 01 title", "input"],
+      ["service1Text", "Service 01 description", "textarea"],
+      ["service2Title", "Service 02 title", "input"],
+      ["service2Text", "Service 02 description", "textarea"],
+      ["service3Title", "Service 03 title", "input"],
+      ["service3Text", "Service 03 description", "textarea"],
+      ["service4Title", "Service 04 title", "input"],
+      ["service4Text", "Service 04 description", "textarea"],
+      ["service5Title", "Service 05 title", "input"],
+      ["service5Text", "Service 05 description", "textarea"],
+      ["service6Title", "Service 06 title", "input"],
+      ["service6Text", "Service 06 description", "textarea"],
+      ["service7Title", "Service 07 title", "input"],
+      ["service7Text", "Service 07 description", "textarea"]
+    ]
+  },
+  {
+    title: "Brands & Customers",
+    fields: [
+      ["brandsTitle", "Brands heading", "input"],
+      ["brandsText", "Brands description", "textarea"],
+      ["audienceTitle", "Who We Serve heading", "input"],
+      ["audienceIntro", "Who We Serve intro", "textarea"],
+      ["audience1Title", "Audience 01 title", "input"],
+      ["audience1Text", "Audience 01 description", "textarea"],
+      ["audience2Title", "Audience 02 title", "input"],
+      ["audience2Text", "Audience 02 description", "textarea"],
+      ["audience3Title", "Audience 03 title", "input"],
+      ["audience3Text", "Audience 03 description", "textarea"],
+      ["audience4Title", "Audience 04 title", "input"],
+      ["audience4Text", "Audience 04 description", "textarea"]
+    ]
+  },
+  {
+    title: "Why Choose & Commitment",
+    fields: [
+      ["chooseTitle", "Why Choose heading", "input"],
+      ["chooseText", "Why Choose paragraph", "textarea"],
+      ["chooseItems", "Why Choose list - one item per line", "textarea"],
+      ["commitmentQuality", "Commitment: Quality", "textarea"],
+      ["commitmentHonesty", "Commitment: Honesty", "textarea"],
+      ["commitmentProfessionalism", "Commitment: Professionalism", "textarea"],
+      ["commitmentSatisfaction", "Commitment: Customer Satisfaction", "textarea"]
+    ]
+  }
+];
+
+function renderAboutEditor() {
+  const editor = document.getElementById("aboutEditor");
+  if (!editor) return;
+  editor.innerHTML = aboutFieldGroups.map((group) => `
+    <fieldset class="about-edit-group">
+      <legend>${group.title}</legend>
+      <div class="field-grid">
+        ${group.fields.map(([key, label, type]) => {
+          const rows = key.includes("Items") ? 5 : 3;
+          return type === "textarea"
+            ? `<label class="full"><span>${label}</span><textarea name="about.${key}" rows="${rows}"></textarea></label>`
+            : `<label><span>${label}</span><input name="about.${key}"></label>`;
+        }).join("")}
+      </div>
+    </fieldset>
+  `).join("");
+  fillForm();
+}
+
 function renderWorkEditor() {
   const copy = uiText[cmsLanguage];
   const editor = document.getElementById("workEditor");
@@ -665,19 +859,43 @@ function renderUnitEditor() {
   const copy = uiText[cmsLanguage];
   const editor = document.getElementById("unitEditor");
   if (!editor) return;
+  const priceRows = normalizePriceListRows(state.priceList?.rows);
   editor.innerHTML = `
     <article class="price-list-edit-card">
       <div class="promo-edit-head">
-        <strong>${copy.priceListTitle}</strong>
+        <div>
+          <strong>${copy.priceListTitle}</strong>
+          <p class="price-list-edit-help">${copy.priceListHelp}</p>
+        </div>
+        <button type="button" class="secondary" data-price-row-add>${copy.priceListAddRow}</button>
       </div>
-      <div class="work-fields">
-        <label class="wide"><span>${copy.priceListUrl}</span><input name="priceList.url" placeholder="assets/aircon-price-list.jpg or https://..."></label>
-        <label><span>${copy.priceListUpload}</span><input type="file" accept="image/*,application/pdf" data-price-list-upload></label>
-        <div class="wide">${sourceChoiceNote(state.priceList?.source)}</div>
+      <div class="price-list-table-editor">
+        <div class="price-list-table-head">
+          <span>#</span>
+          <span>${copy.priceRowBrand}</span>
+          <span>${copy.priceRowModel}</span>
+          <span>${copy.priceRowCapacity}</span>
+          <span>${copy.priceRowSrp}</span>
+          <span>${copy.priceRowCash}</span>
+          <span></span>
+        </div>
+        ${priceRows.map((row, index) => `
+          <div class="price-list-table-row">
+            <strong>${String(index + 1).padStart(2, "0")}</strong>
+            <label><span>${copy.priceRowBrand}</span><input name="priceList.rows.${index}.brand" placeholder="Midea" value="${escapeAttribute(row.brand)}"></label>
+            <label><span>${copy.priceRowModel}</span><input name="priceList.rows.${index}.model" placeholder="MSCE-13CRFN8-F.DC" value="${escapeAttribute(row.model)}"></label>
+            <label><span>${copy.priceRowCapacity}</span><input name="priceList.rows.${index}.capacity" placeholder="1.5HP" value="${escapeAttribute(row.capacity)}"></label>
+            <label><span>${copy.priceRowSrp}</span><input name="priceList.rows.${index}.srp" placeholder="P27,500" value="${escapeAttribute(row.srp)}"></label>
+            <label><span>${copy.priceRowCash}</span><input name="priceList.rows.${index}.cash" placeholder="P23,900" value="${escapeAttribute(row.cash)}"></label>
+            <button type="button" class="secondary danger-lite" data-price-row-remove="${index}">${copy.priceListRemoveRow}</button>
+          </div>
+        `).join("")}
+      </div>
+      <div class="work-fields price-list-foot">
         <label><span>${copy.priceListLabelEn}</span><input name="priceList.label.en"></label>
         <label><span>${copy.priceListLabelFil}</span><input name="priceList.label.fil"></label>
-        <label><span>${copy.priceListNoteEn}</span><input name="priceList.note.en"></label>
-        <label><span>${copy.priceListNoteFil}</span><input name="priceList.note.fil"></label>
+        <label class="wide"><span>${copy.priceListNoteEn}</span><textarea name="priceList.note.en" rows="2"></textarea></label>
+        <label class="wide"><span>${copy.priceListNoteFil}</span><textarea name="priceList.note.fil" rows="2"></textarea></label>
       </div>
     </article>
     ${state.airconUnits.map((unit, index) => `
@@ -903,6 +1121,40 @@ function setupUploads() {
   });
 }
 
+function setupPriceListEditor() {
+  const add = document.querySelector("[data-price-row-add]");
+  if (add && !add.dataset.bound) {
+    add.dataset.bound = "true";
+    add.addEventListener("click", async () => {
+      collectFormState();
+      const rows = Array.isArray(state.priceList?.rows) ? state.priceList.rows.slice() : [];
+      state.priceList = state.priceList || clone(defaults.priceList);
+      state.priceList.rows = [...rows, blankPriceRow()];
+      await saveState().catch((error) => setStatus(error.message || "Unable to save price row."));
+      renderUnitEditor();
+      updatePreview();
+      setStatus("Price row added and saved.");
+    });
+  }
+
+  document.querySelectorAll("[data-price-row-remove]").forEach((button) => {
+    if (button.dataset.bound) return;
+    button.dataset.bound = "true";
+    button.addEventListener("click", async () => {
+      const index = Number(button.dataset.priceRowRemove);
+      collectFormState();
+      const rows = Array.isArray(state.priceList?.rows) ? state.priceList.rows.slice() : [];
+      rows.splice(index, 1);
+      state.priceList = state.priceList || clone(defaults.priceList);
+      state.priceList.rows = rows.length ? rows : [blankPriceRow()];
+      await saveState().catch((error) => setStatus(error.message || "Unable to save price row."));
+      renderUnitEditor();
+      updatePreview();
+      setStatus("Price row removed and saved.");
+    });
+  });
+}
+
 function updatePreview() {
   document.getElementById("previewHeroTitle").textContent = stripHtml(state.en.heroTitle);
   document.getElementById("previewHeroTagline").textContent = state.en.heroTagline || "Choose KOOLMATE!";
@@ -1063,6 +1315,7 @@ document.getElementById("importFile").addEventListener("change", async (event) =
   state = normalizeStateContent(JSON.parse(await file.text()));
   await saveState().catch((error) => setStatus(error.message || "Imported locally, but server save failed."));
   fillForm();
+  renderAboutEditor();
   renderWorkEditor();
   renderUnitEditor();
   renderPromoEditor();
@@ -1076,6 +1329,7 @@ document.getElementById("resetBtn").addEventListener("click", async () => {
   localStorage.removeItem(CMS_STORAGE_KEY);
   await saveState().catch((error) => setStatus(error.message || "Reset locally, but server save failed."));
   fillForm();
+  renderAboutEditor();
   renderWorkEditor();
   renderUnitEditor();
   renderPromoEditor();

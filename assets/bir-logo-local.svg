@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 180" role="img" aria-labelledby="title desc">
+  <title id="title">Bureau of Internal Revenue logo</title>
+  <desc id="desc">Text logo reading BIR with Bureau of Internal Revenue below.</desc>
+  <rect width="420" height="180" rx="18" fill="#ffffff"/>
+  <g fill="#1346a0">
+    <text x="210" y="82" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-size="72" font-weight="900" letter-spacing="4">BIR</text>
+    <text x="210" y="123" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="800" letter-spacing="2">BUREAU OF INTERNAL REVENUE</text>
+  </g>
+  <path d="M74 139H346" stroke="#d71920" stroke-width="10" stroke-linecap="round"/>
+</svg>
