@@ -1,3 +1,6 @@
+const SLOTWISE_BOOKING_URL = "https://slotwise.pages.dev/koolmate-aircon-services";
+const SLOTWISE_INQUIRY_URL = SLOTWISE_BOOKING_URL + "?mode=inquiry";
+
 const business = {
   phone: "+63 993 551 5531",
   phoneSms: "+639935515531",
@@ -135,6 +138,8 @@ const translations = {
     heroTagline: "Choose KOOLMATE!",
     heroLead: "Professional air-conditioning service for a cooler, cleaner and more energy-efficient home or business.",
     freeQuote: "Get a Free Quote",
+    bookService: "Book a Service",
+    requestQuote: "Request a Quote",
     viewServices: "View Our Services",
     promiseFast: "Fast",
     promiseReliable: "Reliable",
@@ -291,6 +296,8 @@ const translations = {
     heroTagline: "I-KOOLMATE Mo Yan!",
     heroLead: "Propesyonal na aircon service para sa mas malamig, malinis at matipid na tahanan o negosyo.",
     freeQuote: "Kumuha ng Libreng Quote",
+    bookService: "Book a Service",
+    requestQuote: "Request a Quote",
     viewServices: "Tingnan ang Serbisyo",
     promiseFast: "Mabilis",
     promiseReliable: "Maaasahan",
@@ -899,7 +906,7 @@ function renderUnitCarousel() {
             const model = unit.model || unit.name?.[currentLanguage] || unit.name?.en || "";
             const capacity = unit.capacity || "";
             const price = unit.price || "";
-            const url = unit.url || "#quote";
+            const url = SLOTWISE_INQUIRY_URL;
             const image = unit.image || "";
             const tag = unit.tag === "bestPrice" ? copy.unitBestPrice : copy.unitMostPopular;
             return `
@@ -999,9 +1006,9 @@ function setupPriceListModal() {
 
   note.textContent = noteText;
   inquire.textContent = t().unitInquireNow;
-  inquire.href = `${business.messenger}?text=${encodeURIComponent("Hi KOOLMATE, I would like to inquire about the aircon price list.")}`;
-  inquire.target = "_blank";
-  inquire.rel = "noopener noreferrer";
+  inquire.href = SLOTWISE_INQUIRY_URL;
+  inquire.removeAttribute("target");
+  inquire.removeAttribute("rel");
   document.getElementById("priceListTitle").textContent = modalTitle;
 
   const renderSavedRows = () => {
@@ -1149,72 +1156,6 @@ function setupUnitCarousel() {
   });
 }
 
-function buildInquiryMessage(data) {
-  const dateLine = data.date ? `Preferred Date: ${data.date}` : "Preferred Date: Not specified";
-  return [
-    "Hi KOOLMATE, I would like to request a quote.",
-    "",
-    `Name: ${data.name}`,
-    `Phone: ${data.phone}`,
-    `Email: ${data.email}`,
-    `Service Needed: ${data.service}`,
-    dateLine,
-    `Message: ${data.message}`,
-    "",
-    "Thank you."
-  ].join("\n");
-}
-
-async function submitInquiry(data) {
-  const apiUrl = location.hostname === "localhost" ? "/api/inquiries" : "/.netlify/functions/inquiries";
-  const response = await fetch(apiUrl, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(data)
-  });
-  if (!response.ok) throw new Error("Inquiry save failed.");
-}
-
-function setupForm() {
-  const form = document.getElementById("quoteForm");
-  const status = form.querySelector(".form-status");
-  const handoff = form.querySelector(".handoff-actions");
-  const messenger = form.querySelector('[data-handoff="messenger"]');
-  const page = form.querySelector('[data-handoff="page"]');
-  const sms = form.querySelector('[data-handoff="sms"]');
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    if (!form.checkValidity()) {
-      status.textContent = t().formError;
-      handoff.hidden = true;
-      form.reportValidity();
-      return;
-    }
-    const data = Object.fromEntries(new FormData(form).entries());
-    const message = buildInquiryMessage(data);
-    const encodedMessage = encodeURIComponent(message);
-    status.textContent = "Sending inquiry...";
-    let savedToCms = false;
-    try {
-      await submitInquiry(data);
-      savedToCms = true;
-      status.textContent = t().redirectingMessenger;
-      form.reset();
-    } catch {
-      status.textContent = "Your message is ready. Please continue through Messenger, SMS, or call KOOLMATE.";
-    }
-    messenger.href = `${business.messenger}?text=${encodedMessage}`;
-    page.href = business.facebook;
-    sms.href = `sms:${business.phoneSms}?body=${encodedMessage}`;
-    handoff.hidden = false;
-    if (savedToCms) {
-      window.setTimeout(() => {
-        window.location.href = messenger.href;
-      }, 850);
-    }
-  });
-}
-
 function setupReveal() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -1238,7 +1179,6 @@ async function bootSite() {
   setupMenu();
   setupLanguageSwitcher();
   setupUnitCarousel();
-  setupForm();
   setupPromos();
   setupReveal();
   window.addEventListener("resize", resetHorizontalScroll);

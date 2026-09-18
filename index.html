@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20260825-new-sheet-pricelist">
+    <link rel="stylesheet" href="styles.css?v=20260918-slotwise">
   </head>
   <body>
     <header class="site-header" id="top">
@@ -59,7 +59,7 @@
           <p class="hero-tagline" data-i18n="heroTagline">Choose KOOLMATE!</p>
           <p class="lead" data-i18n="heroLead">Professional air-conditioning service for a cooler, cleaner and more energy-efficient home or business.</p>
           <div class="hero-actions">
-            <a class="btn primary" href="#quote" data-i18n="freeQuote">Get a Free Quote</a>
+            <a class="btn primary" href="https://slotwise.pages.dev/koolmate-aircon-services" data-i18n="bookService">Book a Service</a>
             <a class="btn secondary" href="#services" data-i18n="viewServices">View Our Services</a>
           </div>
           <div class="fast-strip" aria-label="KOOLMATE service promise">
@@ -109,7 +109,7 @@
             <h2 data-i18n="quickCtaTitle">Not sure which aircon or service you need?</h2>
             <p data-i18n="quickCtaText">We'll help you find the right cooling solution for your space and needs.</p>
           </div>
-          <a class="home-quick-cta-button" href="#quote" data-i18n="freeQuote">Get a Free Quote</a>
+          <a class="home-quick-cta-button" href="https://slotwise.pages.dev/koolmate-aircon-services?mode=inquiry" data-i18n="freeQuote">Get a Free Quote</a>
         </div>
       </section>
 
@@ -206,27 +206,13 @@
             <h2 data-i18n="quoteTitle">Get a free quote</h2>
             <p data-i18n="quoteText">Tell us what air-conditioning service you need and we'll get back to you as soon as possible.</p>
           </div>
-          <form class="quote-form" id="quoteForm" novalidate>
-            <label><span data-i18n="fieldName">Full Name</span><input name="name" autocomplete="name" required></label>
-            <label><span data-i18n="fieldPhone">Phone Number</span><input name="phone" type="tel" autocomplete="tel" required></label>
-            <label><span data-i18n="fieldEmail">Email Address</span><input name="email" type="email" autocomplete="email" required></label>
-            <label><span data-i18n="fieldService">Service Needed</span><select name="service" required>
-              <option value="" data-i18n="selectService">Select service</option>
-              <option data-service-option="install">Aircon Installation</option>
-              <option data-service-option="maintenance">Preventive Maintenance</option>
-              <option data-service-option="cleaning">General Cleaning</option>
-              <option data-service-option="charging">Refrigerant Charging</option>
-              <option data-service-option="repair">Check Up / Repair</option>
-              <option data-service-option="relocation">Relocation / Dismantling</option>
-              <option data-service-option="reprocess">System Reprocess</option>
-              <option data-service-option="purchase">Aircon Unit Purchase</option>
-              <option data-service-option="other">Other</option>
-            </select></label>
-            <label><span data-i18n="fieldDate">Preferred Date</span><input name="date" type="date" required></label>
-            <label class="wide"><span data-i18n="fieldMessage">Message</span><textarea name="message" rows="4" required></textarea></label>
-            <button class="btn gold" type="submit" data-i18n="sendMessage">Send Message</button>
-            <p class="form-status" role="status" aria-live="polite"></p>
-            <div class="handoff-actions" hidden>
+          <div class="quote-form slotwise-panel" aria-labelledby="slotwise-title">
+            <h3 class="wide" id="slotwise-title">BOOK OR REQUEST A QUOTE ONLINE</h3>
+            <p class="wide">Choose your aircon service, check the applicable rate, select your preferred schedule, or send us an inquiry for services that require assessment.</p>
+            <a class="btn gold" href="https://slotwise.pages.dev/koolmate-aircon-services" data-i18n="bookService">Book a Service</a>
+            <a class="btn primary" href="https://slotwise.pages.dev/koolmate-aircon-services?mode=inquiry" data-i18n="requestQuote">Request a Quote</a>
+            <small class="wide slotwise-credit">Powered by Slotwise • Online Booking &amp; Inquiry System</small>
+            <div class="handoff-actions">
               <a class="handoff-btn messenger" href="https://m.me/61591997337938" target="_blank" rel="noopener noreferrer" data-handoff="messenger">
                 <span aria-hidden="true">f</span>
                 <strong data-i18n="continueMessenger">Continue on Messenger</strong>
@@ -248,7 +234,7 @@
                 <strong data-i18n="callNow">Call Now</strong>
               </a>
             </div>
-          </form>
+          </div>
         </div>
         <div class="quote-mascot reveal" aria-hidden="true">
           <img src="assets/quote-mascot-cutout.png" alt="">
@@ -389,11 +375,11 @@
         <div class="price-list-viewer" data-price-list-viewer></div>
         <div class="price-list-actions">
           <p data-price-list-note>Prices and availability may change. Please message us to confirm the latest stock and final quote.</p>
-          <a class="btn primary" href="#quote" data-price-list-inquire data-i18n="unitInquireNow">Inquire Now</a>
+          <a class="btn primary" href="https://slotwise.pages.dev/koolmate-aircon-services?mode=inquiry" data-price-list-inquire data-i18n="unitInquireNow">Inquire Now</a>
         </div>
       </div>
     </div>
 
-    <script src="script.js?v=20260825-new-sheet-pricelist"></script>
+    <script src="script.js?v=20260918-slotwise"></script>
   </body>
 </html>

@@ -2787,6 +2787,29 @@ body.modal-open { overflow: hidden; }
   font-weight: 900;
   text-transform: uppercase;
 }
+.price-list-empty {
+  min-height: min(520px, 58vh);
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  align-content: center;
+  padding: 28px;
+  border: 1px solid rgba(6,118,255,.14);
+  border-radius: 10px;
+  background: #fff;
+  color: #52627d;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.price-list-empty strong {
+  display: block;
+  color: var(--navy);
+  font-size: 18px;
+}
+.price-list-empty span {
+  max-width: 560px;
+}
 .price-list-viewer img,
 .price-list-viewer iframe {
   display: block;
@@ -4234,3 +4257,8 @@ body.modal-open { overflow: hidden; }
     width: 100%;
   }
 }
+
+/* Slotwise panel: reuse the existing quote card and button styling. */
+.slotwise-panel h3, .slotwise-panel p { margin: 0; }
+.slotwise-panel .slotwise-credit { opacity: .7; font-size: 12px; }
+.slotwise-panel > .btn { white-space: normal; text-align: center; }
