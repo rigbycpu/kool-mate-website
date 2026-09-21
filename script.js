@@ -1100,6 +1100,7 @@ function setupPromos() {
   const setOpen = (open) => {
     wrapper.classList.toggle("is-open", open);
     toggle.setAttribute("aria-expanded", String(open));
+    requestAnimationFrame(updateKoolmateFloatingPlacement);
   };
 
   toggle.addEventListener("click", () => setOpen(!wrapper.classList.contains("is-open")));
@@ -1117,7 +1118,19 @@ function setupPromos() {
 
   setTimeout(() => {
     if (getActivePromos().length) setOpen(true);
+    updateKoolmateFloatingPlacement();
   }, 1600);
+  updateKoolmateFloatingPlacement();
+}
+
+function updateKoolmateFloatingPlacement() {
+  const player = document.getElementById("kmPlayer");
+  const promos = document.querySelector(".floating-promos:not([hidden])");
+  if (!player) return;
+  const edge = window.innerWidth <= 600 ? Math.max(70, 14 + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--safe-area-bottom")) || 0)) : 20;
+  const gap = 18;
+  const promoHeight = promos ? promos.getBoundingClientRect().height : 0;
+  player.style.bottom = `${Math.max(edge, edge + promoHeight + gap)}px`;
 }
 
 function setupMenu() {
@@ -1182,6 +1195,8 @@ async function bootSite() {
   setupPromos();
   setupReveal();
   setupKoolmatePlayer();
+  updateKoolmateFloatingPlacement();
+  window.addEventListener("resize", updateKoolmateFloatingPlacement, { passive: true });
   window.addEventListener("resize", resetHorizontalScroll);
   window.addEventListener("orientationchange", () => setTimeout(resetHorizontalScroll, 120));
   setTimeout(resetHorizontalScroll, 250);
@@ -1198,7 +1213,7 @@ function setupKoolmatePlayer() {
     { title: "KOOLMATE Service Jingle", src: "assets/Timothy Mark Pasco - August 30 V1.mp3" }
   ];
   const saved = JSON.parse(localStorage.getItem("koolmateMusic") || "null") || {};
-  let index = Number.isInteger(saved.index) ? Math.min(saved.index, tracks.length - 1) : 0;
+  let index = 0;
   audio.volume = typeof saved.volume === "number" ? saved.volume : 0.8;
   const title = document.getElementById("kmTitle");
   const status = document.getElementById("kmStatus");
@@ -1209,7 +1224,7 @@ function setupKoolmatePlayer() {
   const persist = () => localStorage.setItem("koolmateMusic", JSON.stringify({ index, position: audio.currentTime, volume: audio.volume, paused: audio.paused }));
   const update = () => { const duration = audio.duration || 0; seek.value = duration ? (audio.currentTime / duration) * 100 : 0; time.textContent = `${Math.floor(audio.currentTime / 60)}:${String(Math.floor(audio.currentTime % 60)).padStart(2, "0")}`; play.textContent = audio.paused ? "▶" : "Ⅱ"; play.setAttribute("aria-label", audio.paused ? "Play KOOLMATE Music" : "Pause KOOLMATE Music"); };
   const start = () => audio.play().then(() => { status.textContent = "Now playing"; update(); }).catch(() => { status.textContent = "Play KOOLMATE Music"; });
-  setTrack(saved.position && !saved.paused ? saved.position : 0);
+  setTrack(0);
   play.addEventListener("click", () => audio.paused ? start() : audio.pause());
   document.getElementById("kmPrev").addEventListener("click", () => { index = (index + tracks.length - 1) % tracks.length; setTrack(); start(); });
   document.getElementById("kmNext").addEventListener("click", () => { index = (index + 1) % tracks.length; setTrack(); start(); });
@@ -1218,6 +1233,7 @@ function setupKoolmatePlayer() {
   seek.addEventListener("input", () => { if (audio.duration) audio.currentTime = (Number(seek.value) / 100) * audio.duration; });
   audio.addEventListener("loadedmetadata", update); audio.addEventListener("timeupdate", update); audio.addEventListener("pause", () => { status.textContent = "Paused"; persist(); update(); }); audio.addEventListener("play", update); audio.addEventListener("ended", () => { index = (index + 1) % tracks.length; setTrack(); start(); }); audio.addEventListener("error", () => { status.textContent = "Music unavailable"; });
   window.addEventListener("beforeunload", persist); update();
+  audio.load();
   start();
 }
 
