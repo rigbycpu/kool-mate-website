@@ -1181,9 +1181,44 @@ async function bootSite() {
   setupUnitCarousel();
   setupPromos();
   setupReveal();
+  setupKoolmatePlayer();
   window.addEventListener("resize", resetHorizontalScroll);
   window.addEventListener("orientationchange", () => setTimeout(resetHorizontalScroll, 120));
   setTimeout(resetHorizontalScroll, 250);
+}
+
+function setupKoolmatePlayer() {
+  if (window.__koolmatePlayerReady) return;
+  window.__koolmatePlayerReady = true;
+  const root = document.getElementById("kmPlayer");
+  const audio = document.getElementById("kmAudio");
+  if (!root || !audio) return;
+  const tracks = [
+    { title: "KOOLMATE Official Song", src: "assets/KOOLMATE AIR-CONDITIONING SERVICES AND MAINTENANCE.mp3" },
+    { title: "KOOLMATE Service Jingle", src: "assets/Timothy Mark Pasco - August 30 V1.mp3" }
+  ];
+  const saved = JSON.parse(localStorage.getItem("koolmateMusic") || "null") || {};
+  let index = Number.isInteger(saved.index) ? Math.min(saved.index, tracks.length - 1) : 0;
+  audio.volume = typeof saved.volume === "number" ? saved.volume : 0.8;
+  const title = document.getElementById("kmTitle");
+  const status = document.getElementById("kmStatus");
+  const play = document.getElementById("kmPlay");
+  const seek = document.getElementById("kmSeek");
+  const time = document.getElementById("kmTime");
+  const setTrack = (position = 0) => { audio.src = tracks[index].src; title.textContent = tracks[index].title; audio.currentTime = position || 0; };
+  const persist = () => localStorage.setItem("koolmateMusic", JSON.stringify({ index, position: audio.currentTime, volume: audio.volume, paused: audio.paused }));
+  const update = () => { const duration = audio.duration || 0; seek.value = duration ? (audio.currentTime / duration) * 100 : 0; time.textContent = `${Math.floor(audio.currentTime / 60)}:${String(Math.floor(audio.currentTime % 60)).padStart(2, "0")}`; play.textContent = audio.paused ? "▶" : "Ⅱ"; play.setAttribute("aria-label", audio.paused ? "Play KOOLMATE Music" : "Pause KOOLMATE Music"); };
+  const start = () => audio.play().then(() => { status.textContent = "Now playing"; update(); }).catch(() => { status.textContent = "Play KOOLMATE Music"; });
+  setTrack(saved.position && !saved.paused ? saved.position : 0);
+  play.addEventListener("click", () => audio.paused ? start() : audio.pause());
+  document.getElementById("kmPrev").addEventListener("click", () => { index = (index + tracks.length - 1) % tracks.length; setTrack(); start(); });
+  document.getElementById("kmNext").addEventListener("click", () => { index = (index + 1) % tracks.length; setTrack(); start(); });
+  document.getElementById("kmMute").addEventListener("click", event => { audio.muted = !audio.muted; event.currentTarget.textContent = audio.muted ? "🔇" : "🔊"; });
+  document.getElementById("kmMinimize").addEventListener("click", () => root.classList.toggle("is-minimized"));
+  seek.addEventListener("input", () => { if (audio.duration) audio.currentTime = (Number(seek.value) / 100) * audio.duration; });
+  audio.addEventListener("loadedmetadata", update); audio.addEventListener("timeupdate", update); audio.addEventListener("pause", () => { status.textContent = "Paused"; persist(); update(); }); audio.addEventListener("play", update); audio.addEventListener("ended", () => { index = (index + 1) % tracks.length; setTrack(); start(); }); audio.addEventListener("error", () => { status.textContent = "Music unavailable"; });
+  window.addEventListener("beforeunload", persist); update();
+  start();
 }
 
 bootSite();

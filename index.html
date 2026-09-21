@@ -381,5 +381,17 @@
     </div>
 
     <script src="script.js?v=20260918-slotwise"></script>
+    <aside class="km-player" id="kmPlayer" aria-label="KOOLMATE Music Player">
+      <audio id="kmAudio" preload="metadata"></audio>
+      <div class="km-player-main">
+        <button class="km-player-control" id="kmPrev" type="button" aria-label="Previous track">‹</button>
+        <button class="km-player-play" id="kmPlay" type="button" aria-label="Play KOOLMATE Music">▶</button>
+        <button class="km-player-control" id="kmNext" type="button" aria-label="Next track">›</button>
+        <div class="km-player-info"><strong id="kmTitle">KOOLMATE Official Song</strong><span id="kmStatus">Play KOOLMATE Music</span></div>
+        <button class="km-player-control km-player-volume" id="kmMute" type="button" aria-label="Mute">🔊</button>
+        <button class="km-player-control" id="kmMinimize" type="button" aria-label="Minimize music player">−</button>
+      </div>
+      <div class="km-player-progress"><input id="kmSeek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Track progress"><span id="kmTime">0:00</span></div>
+    </aside>
   </body>
 </html>

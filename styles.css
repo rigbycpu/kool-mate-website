@@ -1669,6 +1669,25 @@ textarea { resize: vertical; }
   color: var(--white);
   font-weight: 700;
 }
+
+/* Compact KOOLMATE music player */
+.km-player { position: fixed; z-index: 40; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); width: min(360px, calc(100vw - 32px)); padding: 10px 12px 8px; border: 1px solid rgba(255,255,255,.18); border-radius: 14px; color: #fff; background: linear-gradient(135deg, rgba(4,25,61,.97), rgba(4,73,150,.96)); box-shadow: 0 12px 34px rgba(0,0,0,.28); backdrop-filter: blur(12px); }
+.km-player-main { display: flex; align-items: center; gap: 7px; }
+.km-player button { border: 0; cursor: pointer; color: #fff; }
+.km-player-control, .km-player-play { display: grid; place-items: center; flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.13); font-size: 20px; }
+.km-player-play { width: 36px; height: 36px; background: var(--gold); color: var(--navy); font-size: 15px; }
+.km-player-info { min-width: 0; flex: 1; display: grid; gap: 2px; }
+.km-player-info strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
+.km-player-info span { color: #b9d7ff; font-size: 10px; }
+.km-player-progress { display: flex; align-items: center; gap: 7px; margin-top: 6px; }
+.km-player-progress input { min-width: 0; flex: 1; accent-color: var(--gold); height: 4px; }
+.km-player-progress span { min-width: 28px; color: #c9ddfa; font-size: 10px; text-align: right; }
+.km-player.is-minimized { width: auto; padding: 7px; border-radius: 50%; }
+.km-player.is-minimized .km-player-info, .km-player.is-minimized .km-player-control:not(#kmMinimize), .km-player.is-minimized .km-player-progress { display: none; }
+.km-player.is-minimized .km-player-main { gap: 0; }
+.km-player.is-minimized #kmMinimize { transform: rotate(180deg); }
+@media (max-width: 600px) { .km-player { right: max(10px, env(safe-area-inset-right)); bottom: max(70px, calc(14px + env(safe-area-inset-bottom))); width: min(320px, calc(100vw - 20px)); } .km-player-info strong { font-size: 11px; } }
+@media (prefers-reduced-motion: reduce) { .km-player, .km-player button { transition: none !important; } }
 .footer-desc {
   max-width: 320px;
   color: #aebfdb !important;
